@@ -1,0 +1,5 @@
+package bra.ifsp.poo.farmacia.modelo.entidade;
+
+public class Caixa {
+
+}
