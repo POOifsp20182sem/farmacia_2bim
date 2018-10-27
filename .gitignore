@@ -36,3 +36,5 @@ Thumbs.db
 # jME (binaries)
 *.so
 
+.metadata
+.recommenders
