@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
-import br.ifsp.poo.farmacia.modelo.percistencia.ProdutosPedidosDAO;
+import br.ifsp.poo.farmacia.modelo.persistencia.ProdutosPedidosDAO;
 
 public class TesteProdutosPedidos {
 

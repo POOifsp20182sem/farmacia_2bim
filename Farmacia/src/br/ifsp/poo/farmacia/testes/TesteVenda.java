@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
-import br.ifsp.poo.farmacia.modelo.percistencia.VendaDAO;
+import br.ifsp.poo.farmacia.modelo.persistencia.VendaDAO;
 
 public class TesteVenda {
 

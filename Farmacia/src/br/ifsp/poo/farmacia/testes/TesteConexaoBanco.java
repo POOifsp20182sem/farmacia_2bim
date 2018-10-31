@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import br.ifsp.poo.farmacia.modelo.percistencia.MySqlConnection;
+import br.ifsp.poo.farmacia.modelo.persistencia.MySqlConnection;
 
 public class TesteConexaoBanco {
 	public static void main(String args[]) throws IOException {

@@ -1,4 +1,4 @@
-package br.ifsp.poo.farmacia.modelo.percistencia;
+package br.ifsp.poo.farmacia.modelo.persistencia;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
