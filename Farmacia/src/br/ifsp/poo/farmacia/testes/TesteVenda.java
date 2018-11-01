@@ -30,7 +30,7 @@ public class TesteVenda {
 		venda.setTotal(40);
 		venda.setDesconto(1);
 
-		venda.setId(8);
+		venda.setId(4);
 		System.out.println(vendaDao.deleteVenda(venda));
 
 		System.out.println(vendaDao.updateVenda(venda));
