@@ -9,8 +9,6 @@ import javax.swing.border.EmptyBorder;
 import br.ifsp.poo.farmacia.control.LoginControl;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
-import java.awt.BorderLayout;
-
 //import com.sun.glass.events.WindowEvent;
 
 import java.awt.Color;
@@ -116,7 +114,6 @@ public class FormLogin extends JFrame {
 
 		btnSair.setBounds(getWidth()/2, 200, 90, 25);
 		contentPane.add(btnSair);
-		
 	}
 	
 }

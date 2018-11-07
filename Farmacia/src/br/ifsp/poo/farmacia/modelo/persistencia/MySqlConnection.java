@@ -10,7 +10,11 @@ public class MySqlConnection {
 	public static Connection getConnection() throws SQLException {
 		Connection connection = null;
 
-		connection = DriverManager.getConnection("jdbc:mysql://localhost/farmacia", "root", "");
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/farmacia", "root", "");
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao carregar o driver de conexão com o banco.");
+		}
 
 		if (connection == null)
 			throw new SQLException("Connection class could not be created.");

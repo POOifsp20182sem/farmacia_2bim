@@ -13,7 +13,6 @@ public class LoginDAO implements ILoginDAO{
 	@Override
 	public void validarLogin(Login login) throws SQLException, AccessDeniedException, Exception  {
 
-		Connection conn = null;
 		CallableStatement cs = null;
 
 		/***
@@ -23,11 +22,10 @@ public class LoginDAO implements ILoginDAO{
 		 * Caso a validação seja válida ou não, retorna mensagem
 		 * que descreve o status atual
 		 */
-		try {
+		try(Connection conn = MySqlConnection.getConnection();) {
 			boolean outputValue;
 			String query = "{? = call validar_login(?, ?)}"; 
-
-			conn = MySqlConnection.getConnection();
+			
 			cs = conn.prepareCall(query);
 
 			cs.registerOutParameter(1, java.sql.Types.BOOLEAN);
@@ -41,13 +39,11 @@ public class LoginDAO implements ILoginDAO{
 				throw new AccessDeniedException("Nome ou senha incorreto, tente novamente!");
 
 		} catch (SQLException e1) {
-			throw new SQLException("Erro no banco de dados!");
+			throw new SQLException("Erro no banco de dados!\n" + e1.getMessage());
 		} catch (AccessDeniedException e2) {
 			throw e2;
 		} catch (Exception e3) {
 			throw new Exception("Erro desconhecido.");
-		}finally {
-			conn.close();
 		}
 	}
 }

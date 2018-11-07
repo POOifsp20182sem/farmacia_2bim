@@ -16,6 +16,7 @@ public class LoginControl {
 
 	public void validarLogin(Login login){
 		try {
+			login.criptografarSenha();
 			ld.validarLogin(login);
 			FormMenuPrincipal formPrincipal = new FormMenuPrincipal();
 		} catch (AccessDeniedException e1) {

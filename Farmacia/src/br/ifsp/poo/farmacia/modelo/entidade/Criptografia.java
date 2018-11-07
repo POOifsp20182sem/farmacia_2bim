@@ -17,7 +17,7 @@ public class Criptografia {
 	}
 
 	public static String criptografarSenha(String senha) throws Exception {
-		
+		inicializa();
 		byte messageDigest[] = null;
 		try {
 			messageDigest = algorithm.digest(senha.getBytes("UTF-8"));

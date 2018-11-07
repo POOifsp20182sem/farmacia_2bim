@@ -1,13 +1,11 @@
 package br.ifsp.poo.farmacia.modelo.entidade;
 
-public class Login {
+public class Login{
+	
 	private String userName;
 	private String password;
 
-	public Login() {
-	}
-
-	public Login(String userName, String password) {
+	public Login(String userName, String password){
 		this.userName = userName;
 		this.password = password;
 	}
@@ -16,20 +14,12 @@ public class Login {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getPassword() {
 		return password;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	
 	public void criptografarSenha() throws Exception {
-		Criptografia.inicializa();
 		this.password = Criptografia.criptografarSenha(password);
 	}
+
 }
