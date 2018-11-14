@@ -4,7 +4,7 @@ USE `farmacia`;
 --
 -- Host: localhost    Database: farmacia
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.7.19-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -61,7 +61,7 @@ CREATE TABLE `cliente` (
   `data_nascimento` date NOT NULL,
   `ativo` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (7,'zé mane','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(8,'zé mane','ze@gmail.com','Rua 7','123213213','5454848444','juridica',NULL,'12409536619123','2000-10-15',0),(10,'Batman','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(11,'Éder','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(14,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','fisica','12409534612','','1995-00-04',0),(16,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','juridica','','12409534612','1995-00-04',0),(17,'aaa','asdasd','rua x','145454','45454','fisica','cpf',NULL,'1992-12-12',0),(20,'eder','adsad','asdasd','1213','12423','juridica',NULL,'1asdasd','1992-12-12',0),(21,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(22,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(23,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(24,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(25,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(26,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(27,'eder','der','c, a, b, d','2222222222','33333333333','fisica',NULL,NULL,'1111-11-11',0),(28,'joao','joao@lala.com','alameda, flor, caixa,34','1187654321','1109876543','fisica','12345678901',NULL,'2000-09-16',1),(29,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(30,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(31,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(32,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(33,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1);
+INSERT INTO `cliente` VALUES (7,'zé mane','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(8,'zé mane','ze@gmail.com','Rua 7','123213213','5454848444','juridica',NULL,'12409536619123','2000-10-15',0),(10,'Batman','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(11,'Éder','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(14,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','fisica','12409534612','','1995-00-04',0),(16,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','juridica','','12409534612','1995-00-04',0),(17,'aaa','asdasd','rua x','145454','45454','fisica','cpf',NULL,'1992-12-12',0),(20,'eder','adsad','asdasd','1213','12423','juridica',NULL,'1asdasd','1992-12-12',0),(21,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(22,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(23,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(24,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(25,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(26,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(27,'eder','der','c, a, b, d','2222222222','33333333333','fisica',NULL,NULL,'1111-11-11',0),(28,'joao','joao@lala.com','alameda, flor, caixa,34','1187654321','1109876543','fisica','12345678901',NULL,'2000-09-16',1),(29,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(30,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(31,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(32,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(34,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','fisica','12345678901',NULL,'2014-01-01',1),(35,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','fisica','12345678901',NULL,'2014-01-01',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,11 +93,8 @@ CREATE TABLE `funcionario` (
   `tipo_funcionario` enum('gerente','atendente') NOT NULL,
   `salario` double NOT NULL,
   `ativo` tinyint(1) DEFAULT '1',
-  `login_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `login_id_fk` (`login_id`),
-  CONSTRAINT `login_id_fk` FOREIGN KEY (`login_id`) REFERENCES `login` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +103,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','atendente',1200,1,1),(3,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1,1),(5,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','atendente',123,1,1);
+INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','atendente',1200,1),(3,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','atendente',123,1),(7,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(8,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(9,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(11,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(12,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1);
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,8 +146,11 @@ CREATE TABLE `login` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(40) NOT NULL,
   `senha` varchar(40) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `id_funcionario` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_funcionario` (`id_funcionario`),
+  CONSTRAINT `login_ibfk_1` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionario` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,'eder','123'),(2,'consoli','321'),(3,'admin','admin');
+INSERT INTO `login` VALUES (1,'eder','123',1),(2,'consoli','321',2),(3,'admin','admin',3),(4,'aaaa','1234',4),(5,'lalala','098700',5),(6,'aaaa','1234',12),(7,'aaaa','1234',12);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,6 +383,10 @@ INSERT INTO `sessao` VALUES (1,2,2,1000,2000,'0000-00-00 00:00:00','0000-00-00 0
 UNLOCK TABLES;
 
 --
+-- Dumping events for database 'farmacia'
+--
+
+--
 -- Dumping routines for database 'farmacia'
 --
 /*!50003 DROP FUNCTION IF EXISTS `validar_login` */;
@@ -476,7 +480,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_funcionario`(
 IN p_id int,
@@ -488,7 +492,9 @@ IN p_celular varchar(11),
 IN p_cpf varchar(11),
 IN p_data_nascimento date,
 IN p_tipo_funcionario enum('gerente','atendente'),
-IN p_salario double
+IN p_salario double,
+IN p_user varchar(40),
+IN p_senha varchar(40)
 )
 BEGIN
 	
@@ -505,6 +511,12 @@ BEGIN
     salario = p_salario
     WHERE
     id = p_id;
+    
+    UPDATE login SET
+    nome = p_user,
+    senha = p_senha
+    WHERE
+    funcionario.id = p_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1053,7 +1065,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_funcionario`(
 IN p_nome varchar(50),
@@ -1064,7 +1076,9 @@ IN p_celular varchar(11),
 IN p_cpf varchar(11),
 IN p_data_nascimento date,
 IN p_tipo_funcionario enum('gerente','atendente'),
-IN p_salario double
+IN p_salario double,
+IN p_user varchar(40),
+IN p_senha varchar(40)
 )
 BEGIN
 	INSERT INTO funcionario
@@ -1080,6 +1094,10 @@ BEGIN
     p_tipo_funcionario,
     p_salario
     );
+    
+    set @ultimo_id = last_insert_id();
+    select @ultimo_id;
+    INSERT INTO login (nome, senha, id_funcionario) VALUES (p_user, p_senha, @ultimo_id); 
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1346,4 +1364,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-01 15:56:37
+-- Dump completed on 2018-11-14  0:37:11
