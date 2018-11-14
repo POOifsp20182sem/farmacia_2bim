@@ -8,6 +8,9 @@ import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
+import br.ifsp.poo.farmacia.modelo.persistencia.ClienteDAO;
+import br.ifsp.poo.farmacia.modelo.persistencia.FuncionarioDAO;
+import br.ifsp.poo.farmacia.modelo.persistencia.ProdutoDAO;
 import br.ifsp.poo.farmacia.modelo.persistencia.ProdutosPedidosDAO;
 import br.ifsp.poo.farmacia.modelo.persistencia.VendaDAO;
 
@@ -95,16 +98,31 @@ public class VendaControl {
 	
 	public ArrayList<Cliente> selecionarCliente(){
 		ClienteDAO cli = new ClienteDAO();
-		return cli.selecionarCliente();
+		try {
+			return cli.selectCliente();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public ArrayList<Produto> selecionarMedicamento(){
 		ProdutoDAO med = new ProdutoDAO();
-		return med.selecionarProduto();
+		try {
+			return med.selectProduto();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public ArrayList<Funcionario> selecionarFuncionario() {
 		FuncionarioDAO fun = new FuncionarioDAO();
-		return fun.selecionarFuncionario();
+		try {
+			return fun.selectFuncionario();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
