@@ -122,6 +122,9 @@ public class VendaControl {
 			return fun.selectFuncionario();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}

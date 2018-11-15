@@ -272,6 +272,6 @@ public class FormProduto extends JFrame {
 		prod.setNomeComercial(txtNomeComercial.getText());
 		prod.setPrincipioAtivo((PrincipioAtivo)cboPrincipioAtivo.getSelectedItem());
 		prod.setFormaFarmaco((EnumFormaFarmaco) cboForma.getSelectedItem());
-		prod.setPrecoUnitario((double)txtPrecoUnitario.getText());
+		//prod.setPrecoUnitario((double)txtPrecoUnitario.getText());
 	}
 }

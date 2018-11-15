@@ -11,7 +11,7 @@ import br.ifsp.poo.farmacia.modelo.persistencia.FuncionarioDAO;
 
 public class TesteFuncionario {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		Funcionario fun = new Funcionario();
 		FuncionarioDAO fDao = new FuncionarioDAO();

@@ -6,32 +6,80 @@ import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class FuncionarioControl {
-	
+
 	IFuncionarioDAO fd = new FuncionarioDAO();
-	
-	public boolean cadastrarFuncionario(Funcionario func) throws SQLException {
-		return fd.insertFuncionario(func);
+
+	public void cadastrarFuncionario(Funcionario func) {
+
+		try {
+			fd.insertFuncionario(func);
+		}catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
-	
-	public boolean atualizarFuncionario(Funcionario func) throws SQLException {
-		return fd.updateFuncionario(func);
+
+	public void atualizarFuncionario(Funcionario func) {
+		try {
+			fd.updateFuncionario(func);
+		}catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
-	
-	public boolean excluirFuncionario(Funcionario func) throws SQLException {
-		return fd.deleteFuncionario(func);
+
+	public void excluirFuncionario(Funcionario func) {
+		try {
+			fd.deleteFuncionario(func);
+		}catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
-	
-	public ArrayList<Funcionario> listarFuncionarios() throws SQLException {
-		return fd.selectFuncionario();
+
+	public ArrayList<Funcionario> listarFuncionarios() {
+		try {
+			return fd.selectFuncionario();
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		return null;
 	}
-	
-	public ArrayList<Funcionario> listarFuncionarios(String filtro) throws SQLException {
-		return fd.selectFuncionario(filtro);
+
+	public ArrayList<Funcionario> listarFuncionarios(String filtro) {
+		try {
+			return fd.selectFuncionario(filtro);
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		return null;
 	}
-	
-	public Funcionario buscarFuncionario(int id) throws SQLException{
-		return fd.buscarFuncionario(id);
+
+	public Funcionario buscarFuncionario(int id) {
+		try {
+			return fd.buscarFuncionario(id);
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		return null;
 	}
 
 }

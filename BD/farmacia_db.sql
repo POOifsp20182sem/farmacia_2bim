@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `farmacia`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.14, for Win64 (x86_64)
 --
 -- Host: localhost    Database: farmacia
 -- ------------------------------------------------------
--- Server version	5.7.19-log
+-- Server version	5.7.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -94,7 +94,7 @@ CREATE TABLE `funcionario` (
   `salario` double NOT NULL,
   `ativo` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','atendente',1200,1),(3,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','atendente',123,1),(7,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(8,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(9,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(11,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(12,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1);
+INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','atendente',1200,1),(3,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','atendente',123,1),(7,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(8,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(9,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(11,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(12,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(13,'xsdfs','asadsad','adasdas','1234567897','123456787','123567','1209-11-09','atendente',1234.09,1);
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,14 +143,12 @@ DROP TABLE IF EXISTS `login`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `login` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(40) NOT NULL,
-  `senha` varchar(40) NOT NULL,
+  `senha` varchar(64) NOT NULL,
   `id_funcionario` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
   KEY `id_funcionario` (`id_funcionario`),
   CONSTRAINT `login_ibfk_1` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +157,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,'eder','123',1),(2,'consoli','321',2),(3,'admin','admin',3),(4,'aaaa','1234',4),(5,'lalala','098700',5),(6,'aaaa','1234',12),(7,'aaaa','1234',12);
+INSERT INTO `login` VALUES ('eder','123',1),('consoli','321',2),('admin','admin',3),('aaaa','1234',4),('lalala','098700',5),('aaaa','1234',12),('aaaa','1234',12),('eder','1234',13);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,7 +274,7 @@ CREATE TABLE `pedido` (
   KEY `funcionario_id` (`funcionario_id`),
   CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1065,7 +1063,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_funcionario`(
 IN p_nome varchar(50),
@@ -1076,9 +1074,8 @@ IN p_celular varchar(11),
 IN p_cpf varchar(11),
 IN p_data_nascimento date,
 IN p_tipo_funcionario enum('gerente','atendente'),
-IN p_salario double,
-IN p_user varchar(40),
-IN p_senha varchar(40)
+IN p_salario double
+
 )
 BEGIN
 	INSERT INTO funcionario
@@ -1094,10 +1091,6 @@ BEGIN
     p_tipo_funcionario,
     p_salario
     );
-    
-    set @ultimo_id = last_insert_id();
-    select @ultimo_id;
-    INSERT INTO login (nome, senha, id_funcionario) VALUES (p_user, p_senha, @ultimo_id); 
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1129,6 +1122,32 @@ BEGIN
     p_quantidade,
     p_preco_unitario
     );
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `inserir_login` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_login`(
+IN p_user varchar(40),
+IN p_senha varchar(40)
+)
+BEGIN
+
+set @ultimo_id = (SELECT max(id) FROM funcionario);
+
+    INSERT INTO login (nome, senha, id_funcionario) VALUES (p_user, p_senha, @ultimo_id); 
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1364,4 +1383,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-14  0:37:11
+-- Dump completed on 2018-11-14 22:22:24

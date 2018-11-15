@@ -28,6 +28,11 @@ public class MockLoginDAO implements ILoginDAO{
 		return login.getUserName() == userName && login.getPassword().equals(password);
 	}
 
+	@Override
+	public void insertLogin(Login login) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

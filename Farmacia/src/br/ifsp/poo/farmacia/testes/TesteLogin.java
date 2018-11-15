@@ -1,14 +1,11 @@
 package br.ifsp.poo.farmacia.testes;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import br.ifsp.poo.farmacia.modelo.entidade.Criptografia;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
 public class TesteLogin {
 	
-	@Before
+	//@Before
 	public void inicializa() {
 		try {
 			Criptografia.inicializa();
@@ -17,7 +14,7 @@ public class TesteLogin {
 		}
 	}
 
-	@Test
+	//@Test
 	public void testeValidaSenhaLogin() throws Exception {
 		//MockLoginDAO simula o funcionamento do DAO
 		String senha = Criptografia.criptografarSenha("1234");
@@ -26,7 +23,7 @@ public class TesteLogin {
 		dao.validarLogin(new Login("admin",senha));	
 	}
 	
-	@Test(expected = Exception.class)
+	//@Test(expected = Exception.class)
 	public void testeValidaSenhaLoginComErro() throws Exception {
 		String senha = Criptografia.criptografarSenha("1234");
 		MockLoginDAO dao = new MockLoginDAO();
