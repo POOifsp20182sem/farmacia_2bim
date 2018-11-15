@@ -7,26 +7,25 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
-import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
-
-public class FuncionarioDAO implements IFuncionarioDAO{
+public class FuncionarioDAO implements IFuncionarioDAO {
 
 	@Override
 	public void insertFuncionario(Funcionario func) throws SQLException, Exception {
 
 		PreparedStatement ps = null;
 
-		try(Connection conn = MySqlConnection.getConnection()) {
+		try (Connection conn = MySqlConnection.getConnection()) {
 
-			String query = "{call inserir_funcionario(?, ?, ?, ?, ?, ?, ?, ?, ?)}"; 
+			String query = "{call inserir_funcionario(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
-			ps = conn.prepareStatement(query);		
+			ps = conn.prepareStatement(query);
 
 			ps.setString(1, func.getNome());
-			ps.setString(2, func.getEmail());	
+			ps.setString(2, func.getEmail());
 			ps.setString(3, func.getEndereco());
 			ps.setString(4, func.getTelefone());
 			ps.setString(5, func.getCelular());
@@ -35,11 +34,11 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 			ps.setString(8, func.getTipoFuncionario().toString());
 			ps.setString(9, Double.toString(func.getSalario()));
 
-
 			ps.execute();
 
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao inserir funcion·rio.");
+			e.printStackTrace();
+			throw new SQLException("Erro ao inserir funcion√°rio.");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -50,13 +49,15 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 	}
 
 	@Override
-	public void updateFuncionario(Funcionario func) throws SQLException,Exception {
+	public void updateFuncionario(Funcionario func) throws SQLException, Exception {
 		PreparedStatement ps = null;
+		Connection conn = null;
 
-		try(Connection conn = MySqlConnection.getConnection()) {
-			String query = "{call alterar_funcionario(?,?,?,?,?,?,?,?,?,?) }"; 
+		try {
+			String query = "{call alterar_funcionario(?,?,?,?,?,?,?,?,?,?,?,?) }";
 
-			ps = conn.prepareStatement(query);		
+			conn = MySqlConnection.getConnection();
+			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, func.getId());
 			ps.setString(2, func.getNome());
@@ -72,7 +73,7 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 			ps.execute();
 
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao alterar funcion·rio.");
+			throw new SQLException("Erro ao alterar funcion√°rio.");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -80,44 +81,41 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 	}
 
 	@Override
-	public void deleteFuncionario(Funcionario func) throws SQLException,Exception {
+	public void deleteFuncionario(Funcionario func) throws SQLException, Exception {
 		PreparedStatement ps = null;
 
-		try(Connection conn = MySqlConnection.getConnection();) {
-			String query = "{call excluir_funcionario(?) }"; 
+		try (Connection conn = MySqlConnection.getConnection();) {
+			String query = "{call excluir_funcionario(?) }";
 
-			ps = conn.prepareStatement(query);		
+			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, func.getId());
 
 			ps.execute();
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao deletar funcion·rio.");
+			throw new SQLException("Erro ao deletar funcion√°rio.");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 	}
 
 	@Override
-	public ArrayList<Funcionario> selectFuncionario(String filter) throws SQLException,Exception {
+	public ArrayList<Funcionario> selectFuncionario(String filter) throws SQLException, Exception {
 
 		PreparedStatement ps = null;
 
 		final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-		try(Connection conn = MySqlConnection.getConnection()) {
-
+		try (Connection conn = MySqlConnection.getConnection()) {
 			String query = "{call buscar_funcionarios(?)}";
-
 			ps = conn.prepareStatement(query);
-
 			ps.setString(1, filter);
 
 			ArrayList<Funcionario> funList = new ArrayList<Funcionario>();
 
 			ResultSet resultado = ps.executeQuery();
 
-			while(resultado.next()) {
+			while (resultado.next()) {
 				Funcionario func = new Funcionario();
 
 				func.setId(resultado.getInt("id"));
@@ -129,9 +127,9 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 				func.setDocumento(resultado.getString("cpf"));
 				func.setDataNascimento(LocalDate.parse(resultado.getString("data_nascimento"), dtf));
 				func.setTipoFuncionario(
-						(resultado.getString("tipo_funcionario").
-								equalsIgnoreCase(EnumFuncionario.ATENDENTE.toString()))? 
-										EnumFuncionario.ATENDENTE:EnumFuncionario.GERENTE);
+						(resultado.getString("tipo_funcionario").equalsIgnoreCase(EnumFuncionario.ATENDENTE.toString()))
+								? EnumFuncionario.ATENDENTE
+								: EnumFuncionario.GERENTE);
 				func.setSalario(resultado.getDouble("salario"));
 				funList.add(func);
 			}
@@ -177,19 +175,16 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 			f.setDocumento(resultado.getString("cpf"));
 			f.setDataNascimento(LocalDate.parse(resultado.getString("data_nascimento"), dtf));
 			f.setTipoFuncionario(
-					(resultado.getString("tipo_funcionario").
-							equalsIgnoreCase(EnumFuncionario.ATENDENTE.toString()))? 
-									EnumFuncionario.ATENDENTE:EnumFuncionario.GERENTE);
+					(resultado.getString("tipo_funcionario").equalsIgnoreCase(EnumFuncionario.ATENDENTE.toString()))
+							? EnumFuncionario.ATENDENTE
+							: EnumFuncionario.GERENTE);
 			f.setSalario(resultado.getDouble("salario"));
 
-			return f;	
-		}
-		catch (SQLException e) {
+			return f;
+		} catch (SQLException e) {
 			throw new SQLException("Erro no banco de dados.");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 	}
-
 }
-
