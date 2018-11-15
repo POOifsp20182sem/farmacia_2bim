@@ -1,23 +1,22 @@
 package br.ifsp.poo.farmacia.view;
 
-import java.awt.EventQueue;
+//import com.sun.glass.events.WindowEvent;
 
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import br.ifsp.poo.farmacia.control.LoginControl;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
-
-//import com.sun.glass.events.WindowEvent;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.Font;
 
 public class FormLogin extends JFrame {
 
@@ -37,23 +36,22 @@ public class FormLogin extends JFrame {
 		});
 	}
 
-
 	public FormLogin() {
 		criarJanela();
 		setVisible(true);
 	}
-	
+
 	public void criarJanela() {
-		
-		//Setup configurations
-		
+
+		// Setup configurations
+
 		int height = 300;
 		int width = 450;
-		
+
 		setForeground(new Color(240, 248, 255));
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(width,height);
+		setSize(width, height);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 248, 255));
 		contentPane.setForeground(new Color(255, 255, 255));
@@ -63,16 +61,16 @@ public class FormLogin extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setIconImage(new ImageIcon("resources/icon.png").getImage());
-		
-		//imageIcon
-		
+
+		// imageIcon
+
 		ImageIcon image1 = new ImageIcon("resources/login.png");
 		JLabel lblLoginImage = new JLabel(image1);
-		lblLoginImage.setBounds(20, getHeight()/7, 128, 128);
+		lblLoginImage.setBounds(20, getHeight() / 7, 128, 128);
 		contentPane.add(lblLoginImage);
 
-		//Fields
-		
+		// Fields
+
 		JLabel lblUsuario = new JLabel("Usu\u00E1rio:");
 		lblUsuario.setLabelFor(this);
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -94,26 +92,26 @@ public class FormLogin extends JFrame {
 		pswSenha.setBounds(240, 110, 120, 20);
 		contentPane.add(pswSenha);
 
-		//Buttons
-		
+		// Buttons
+
 		JButton btnAcessar = new JButton("Acessar");
 		btnAcessar.addActionListener((e) -> {
 			LoginControl loginControl = new LoginControl();
-			Login login = new Login(txtUser.getText(),new String(pswSenha.getPassword()));
+			Login login = new Login(txtUser.getText(), new String(pswSenha.getPassword()));
 			loginControl.validarLogin(login);
 		});
-		
-		btnAcessar.setBounds(getWidth()/2 - 100, 200, 90, 25);
+
+		btnAcessar.setBounds(getWidth() / 2 - 100, 200, 90, 25);
 		contentPane.add(btnAcessar);
 
 		JButton btnSair = new JButton("Sair");
 
-		btnSair.addActionListener((e)-> {
+		btnSair.addActionListener((e) -> {
 			System.exit(0);
 		});
 
-		btnSair.setBounds(getWidth()/2, 200, 90, 25);
+		btnSair.setBounds(getWidth() / 2, 200, 90, 25);
 		contentPane.add(btnSair);
 	}
-	
+
 }

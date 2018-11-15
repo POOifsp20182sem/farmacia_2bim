@@ -3,7 +3,6 @@ package br.ifsp.poo.farmacia.testes;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
@@ -15,8 +14,8 @@ public class TesteFuncionario {
 
 		Funcionario fun = new Funcionario();
 		FuncionarioDAO fDao = new FuncionarioDAO();
-		
-		/*fun.setId(1);
+
+		fun.setId(1);
 		fun.setNome("Teste");
 		fun.setEmail("email@mail.com");
 		fun.setEndereco("rua das garcas, 65, jd mario, atibaia");
@@ -26,22 +25,20 @@ public class TesteFuncionario {
 		fun.setDataNascimento(LocalDate.of(2014, Month.JANUARY, 1));
 		fun.setTipoFuncionario(EnumFuncionario.ATENDENTE);
 		fun.setSalario(1234.44);
-		fun.setUser("lalala");
-		fun.setSenha("098700");
-		
-		//deu certo
+		// fun.setUser("lalala");
+		// fun.setSenha("098700");
+
+		// deu certo
 		try {
 			fDao.insertFuncionario(fun);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-		//deu certo
+		}
+		// deu certo
 		try {
 			fun.setId(10);
 			fDao.deleteFuncionario(fun);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
