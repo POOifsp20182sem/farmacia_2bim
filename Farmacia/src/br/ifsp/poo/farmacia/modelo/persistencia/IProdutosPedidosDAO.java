@@ -7,17 +7,15 @@ import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 /**
  * @author Alice Lima
  * 
- *         Interface respons�vel por definir os m�todos que s�o implementados
- *         pela classe ProdutosPedidosDAO. Usada para o uso do padr�o de projeto
- *         MVC.
+ * Interface responsavel por definir os metodos que sao implementados
+ * pela classe ProdutosPedidosDAO. Usada para o uso do padrao de projeto
+ * MVC.
  */
 
 public interface IProdutosPedidosDAO {
 
-	public boolean insertProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException;
-
-	public boolean removeProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException;
-
-	public boolean updateProdutoPedido(ProdutosPedidos produtoPedido, ProdutosPedidos produtoPedidoNew)
-			throws SQLException;
+	public void insertProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException, Exception;
+	public void removeProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException, Exception;
+	public void updateProdutoPedido(ProdutosPedidos produtoPedido, ProdutosPedidos produtoPedidoNew)
+			throws SQLException, Exception;
 }

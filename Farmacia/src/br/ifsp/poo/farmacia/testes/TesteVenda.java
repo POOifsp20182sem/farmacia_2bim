@@ -1,8 +1,6 @@
 package br.ifsp.poo.farmacia.testes;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
@@ -10,7 +8,7 @@ import br.ifsp.poo.farmacia.modelo.persistencia.VendaDAO;
 
 public class TesteVenda {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws Exception {
 
 		VendaDAO vendaDao = new VendaDAO();
 		Venda venda = new Venda();
@@ -31,9 +29,9 @@ public class TesteVenda {
 		venda.setDesconto(1);
 
 		venda.setId(4);
-		System.out.println(vendaDao.deleteVenda(venda));
+		vendaDao.deleteVenda(venda);
 
-		System.out.println(vendaDao.updateVenda(venda));
+		vendaDao.updateVenda(venda);
 
 		ArrayList<Venda> vazio = vendaDao.selectVenda();
 		ArrayList<Venda> parametro = vendaDao.selectVenda("batatao");
@@ -50,5 +48,4 @@ public class TesteVenda {
 			System.out.println(ven.toString());
 		}
 	}
-
 }

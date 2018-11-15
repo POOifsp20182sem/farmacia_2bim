@@ -14,14 +14,12 @@ import br.ifsp.poo.farmacia.modelo.entidade.Pagamento;
 public class PagamentoDAO implements IPagamentoDAO {
 
 	@Override
-	public boolean insertPagamento(Pagamento pagamento) throws SQLException {
-		Connection conn = null;
+	public void insertPagamento(Pagamento pagamento) throws SQLException, Exception {
 		PreparedStatement ps = null;
-		try {
+		
+		try (Connection conn = MySqlConnection.getConnection()) {
 			
 			String query = "{call inserir_pagamento(?, ?, ?, ?)}"; 
-			
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);		
 
 			ps.setInt(1, pagamento.getVenda().getId());
@@ -29,48 +27,31 @@ public class PagamentoDAO implements IPagamentoDAO {
 			ps.setDate(3, pagamento.getDataPagamentoSql());
 			ps.setDouble(4, pagamento.getValorPago());
 
-			if(ps.executeUpdate() == 0) {
-				System.out.println("Erro ao inserir!");
-			}
-			else {
-				System.out.println("Dado inserido com sucesso!");
-				return true;
-			}
-			
+			ps.executeUpdate();
+				
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao registrar o pagamento.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
-
+	
 	@Override
-	public boolean removePagamento(Pagamento pagamento) throws SQLException {
-		Connection conn = null;
+	public void removePagamento(Pagamento pagamento) throws SQLException, Exception {
 		PreparedStatement ps = null;
-		try {
+		try (Connection conn = MySqlConnection.getConnection()) {
 			
 			String query = "{call excluir_pagamento(?)}"; 
-			
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);		
 
 			ps.setInt(1, pagamento.getId());
 
-			if(ps.executeUpdate() == 0) {
-				System.out.println("Erro ao excluir!");
-			}
-			else {
-				System.out.println("Dado excluído com sucesso!");
-				return true;
-			}
+			ps.executeUpdate();
 			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao remover o pagamento.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
 }

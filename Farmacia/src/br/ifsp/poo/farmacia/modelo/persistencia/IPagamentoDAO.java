@@ -10,6 +10,6 @@ import br.ifsp.poo.farmacia.modelo.entidade.Pagamento;
  */
 public interface IPagamentoDAO {
 
-	public boolean insertPagamento(Pagamento pagamento) throws SQLException;
-	public boolean removePagamento(Pagamento pagamento) throws SQLException;
+	public void insertPagamento(Pagamento pagamento) throws SQLException, Exception;
+	public void removePagamento(Pagamento pagamento) throws SQLException, Exception;
 }
