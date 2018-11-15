@@ -122,6 +122,9 @@ public class VendaControl {
 			return fun.selectFuncionario();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -129,7 +132,7 @@ public class VendaControl {
 	// TODO: VERIFICAR A FORMA DE FAZER O GET DO FUNCIONARIO LOGADO
 	public String getLogin() {
 		Funcionario f = new Funcionario();
-		return f.getLoga().getUserName();
+		return f.getLogin().getUserName();
 	}
 	
 	public double calcularSubtotal(ProdutosPedidos pp) {

@@ -1,6 +1,7 @@
 package br.ifsp.poo.farmacia.modelo.persistencia;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
@@ -22,7 +23,7 @@ public class LoginDAO implements ILoginDAO{
 		 * Caso a validação seja válida ou não, retorna mensagem
 		 * que descreve o status atual
 		 */
-		try(Connection conn = MySqlConnection.getConnection();) {
+		try(Connection conn = MySqlConnection.getConnection()) {
 			boolean outputValue;
 			String query = "{? = call validar_login(?, ?)}"; 
 			
@@ -44,6 +45,27 @@ public class LoginDAO implements ILoginDAO{
 			throw e2;
 		} catch (Exception e3) {
 			throw new Exception("Erro desconhecido.");
+		}
+	}
+
+	@Override
+	public void insertLogin(Login login) throws SQLException, Exception {
+		
+		PreparedStatement ps = null;
+		try (Connection conn = MySqlConnection.getConnection()){
+			String query = "{call inserir_login(?, ?)}"; 
+
+			ps = conn.prepareStatement(query);		
+
+			ps.setString(1, login.getUserName());
+			ps.setString(2, login.getPassword());	
+			ps.execute();
+			
+		}catch (SQLException e1) {
+			throw new SQLException("Erro ao inserir login.");
+		}
+		catch (Exception e2) {
+			throw new Exception(e2.getMessage());
 		}
 	}
 }
