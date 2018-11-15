@@ -10,17 +10,16 @@ import java.util.ArrayList;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumCliente;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
 public class FuncionarioDAO implements IFuncionarioDAO{
 	
 	@Override
 	public boolean insertFuncionario(Funcionario func) throws SQLException {
-		Connection conn = null;
 		PreparedStatement ps = null;
-		try {
+		try(Connection conn = MySqlConnection.getConnection()) {
 			String query = "{call inserir_funcionario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}"; 
 
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);		
 
 			ps.setString(1, func.getNome());
@@ -32,8 +31,8 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 			ps.setString(7, func.getStrDataNascimento());
 			ps.setString(8, func.getTipoFuncionario().toString());
 			ps.setString(9, Double.toString(func.getSalario()));
-			ps.setString(10, func.getUser());
-			ps.setString(11, func.getSenha());
+			ps.setString(10, func.getLoga().getUserName());
+			ps.setString(11, func.getLoga().getPassword());
 
 
 			if(ps.executeUpdate() == 0) {
@@ -46,8 +45,6 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			conn.close();
 		}
 
 		return false;
@@ -74,8 +71,8 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 			ps.setString(8, func.getStrDataNascimento());
 			ps.setString(9, func.getTipoFuncionario().toString());
 			ps.setDouble(10, func.getSalario());
-			ps.setString(11, func.getUser());
-			ps.setString(12, func.getSenha());
+			ps.setString(11, func.getLoga().getUserName());
+			ps.setString(12, func.getLoga().getPassword());
 
 			if(ps.executeUpdate() == 0) {
 				System.out.println("Erro ao atualizar!");
@@ -153,9 +150,10 @@ public class FuncionarioDAO implements IFuncionarioDAO{
 								equalsIgnoreCase(EnumFuncionario.ATENDENTE.toString()))? 
 										EnumFuncionario.ATENDENTE:EnumFuncionario.GERENTE);
 				f.setSalario(resultado.getDouble("salario"));
-				f.setUser("login");
-				f.setSenha("senha");
 				
+				Login log = new Login("login", "senha");
+				f.setLoga(log);
+
 				funList.add(f);
 			}
 			conn.close();

@@ -125,4 +125,15 @@ public class VendaControl {
 		}
 		return null;
 	}
+	
+	// TODO: VERIFICAR A FORMA DE FAZER O GET DO FUNCIONARIO LOGADO
+	public String getLogin() {
+		Funcionario f = new Funcionario();
+		return f.getLoga().getUserName();
+	}
+	
+	public double calcularSubtotal(ProdutosPedidos pp) {
+		pp.setValorItem(pp.getProduto().getPrecoUnitario() * pp.getQuantidade());
+		return pp.getValorItem();
+	}
 }

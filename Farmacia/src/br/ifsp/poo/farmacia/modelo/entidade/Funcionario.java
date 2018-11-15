@@ -6,34 +6,28 @@ public class Funcionario extends Pessoa {
 	private int id;
 	private double salario;
 	private EnumFuncionario tipoFuncionario;
-	private String celular, user, senha;
+	private String celular;
+	private Login  loga;
 
 	public Funcionario(String nome, LocalDate dataNascimento, String endereco, String email, String telefone,
-			String celular, double salario, EnumFuncionario tipoFuncionario, String documento, String login, String senha) {
+			String celular, double salario, EnumFuncionario tipoFuncionario, String documento, Login loga) {
 		super(nome, dataNascimento, endereco, email, telefone, documento);
 
 		this.setCelular(celular);
 		this.setSalario(salario);
 		this.setTipoFuncionario(tipoFuncionario);
-		this.setUser(login);
-		this.setSenha(senha);
 	}
 
-	public String getUser() {
-		return user;
+
+	public Login getLoga() {
+		return loga;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+
+	public void setLoga(Login loga) {
+		this.loga = loga;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 
 	public Funcionario() {
 	}

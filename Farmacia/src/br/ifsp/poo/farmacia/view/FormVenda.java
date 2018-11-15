@@ -15,12 +15,19 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import br.ifsp.poo.farmacia.control.VendaControl;
+import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
+import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
+import br.ifsp.poo.farmacia.modelo.entidade.Venda;
+
 import javax.swing.JButton;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FormVenda {
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws ParseException {
 		
 		JFrame frame = new JFrame("Venda");
@@ -29,21 +36,25 @@ public class FormVenda {
 		
 		JPanel contentPane = new JPanel();
 		
+		Venda venda = new Venda();
+		
 		JLabel lbl1 = new JLabel("Data:");
 		JLabel lblData = new JLabel();
 		lblData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-		lblData.setBounds(67, 368, 67, 14);
-		lbl1.setBounds(20, 368, 37, 14);
+		lblData.setBounds(452, 28, 67, 14);
+		lbl1.setBounds(452, 11, 37, 14);
 		contentPane.setLayout(null);
 		
 		contentPane.add(lbl1);
 		contentPane.add(lblData);
 		
+		VendaControl vc = new VendaControl();
+		
 		JLabel lbl2 = new JLabel("User:");
 		JLabel lblUser = new JLabel();
-		lblUser.setText(Login.class.getSimpleName());
-		lbl2.setBounds(197, 368, 37, 14);
-		lblUser.setBounds(244, 368, 70, 14);
+		lblUser.setText(vc.getLogin());
+		lbl2.setBounds(20, 373, 37, 14);
+		lblUser.setBounds(67, 373, 70, 14);
 		
 		contentPane.add(lbl2);
 		contentPane.add(lblUser);
@@ -51,10 +62,15 @@ public class FormVenda {
 		JLabel lblCliente = new JLabel("Cliente:");
 		lblCliente.setBounds(20, 25, 37, 14);
 		JComboBox cboCliente = new JComboBox();
-		cboCliente.setBounds(78, 22, 156, 20);
+		cboCliente.setBounds(78, 22, 236, 20);
+		
+		for(Cliente c : vc.selecionarCliente()) {
+			cboCliente.addItem(c);
+		}
 		
 		contentPane.add(lblCliente);
 		contentPane.add(cboCliente);
+		
 		
 		JLabel lblValorTotal = new JLabel("Valor Total:");
 		lblValorTotal.setBounds(20, 270, 68, 14);
@@ -154,15 +170,65 @@ public class FormVenda {
 		JTextField txtProduto = new JTextField();
 		txtProduto.setBounds(78, 57, 236, 20);
 		contentPane.add(txtProduto);
-		txtProduto.setColumns(10);
+		txtProduto.setColumns(10);		
+		
+		JButton btnAdicionarPP = new JButton("Adicionar");
+		btnAdicionarPP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ProdutosPedidos pp = new ProdutosPedidos();
+				
+				double subtotal = venda.getTotal() + vc.calcularSubtotal(pp);
+				venda.setTotal(subtotal);
+				pp.setVenda(venda);
+			}
+		});
+		btnAdicionarPP.setBounds(430, 104, 89, 23);
+		contentPane.add(btnAdicionarPP);
+		
+		JButton btnRemoverPP = new JButton("Remover");
+		btnRemoverPP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ProdutosPedidos pp = new ProdutosPedidos();
+				
+				double subtotal = venda.getTotal() - vc.calcularSubtotal(pp);
+				venda.setTotal(subtotal);
+				pp.setVenda(venda);		
+			}
+		});
+		btnRemoverPP.setBounds(430, 145, 89, 23);
+		contentPane.add(btnRemoverPP);
+		
+		JButton btnConcluir = new JButton("Concluir");
+		btnConcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vc.insertVenda(venda);
+				
+				while(dtListaMedicamentos)
+			}
+		});
+		btnConcluir.setBounds(430, 364, 89, 23);
+		contentPane.add(btnConcluir);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispose();
+			}
+		});
+		btnCancelar.setBounds(277, 364, 89, 23);
+		contentPane.add(btnCancelar);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FormBuscaProd formBusca = new FormBuscaProd();
+			}
+		});
+		btnBuscar.setBounds(330, 56, 89, 23);
+		contentPane.add(btnBuscar);
+		
 		frame.setVisible(true);
 		frame.setLocation(350, 200);
-		
-		JButton btnBuscaMed = new JButton();
-		btnBuscaMed.setSize(37, 33);
-		btnBuscaMed.setLocation(354, 46);
-		ImageIcon image1 = new ImageIcon("resources/search.ico");
-		btnBuscaMed.setIcon(image1);
-		contentPane.add(btnBuscaMed);
+		frame.setBounds(500, 500, 574, 463);
 	}
 }
