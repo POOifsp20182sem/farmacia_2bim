@@ -38,50 +38,7 @@ public class VendaControl {
 		}
 	}
 	
-	public void updateVenda(Venda ven) {
-		try {
-			vendaDao.updateVenda(ven);
-		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-	}
-	
-	public void deleteVenda(Venda ven) {
-		try {
-			vendaDao.deleteVenda(ven);
-		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-	}
-	
-	public ArrayList<Venda> selectVenda(String filter) {
-		try {
-			return vendaDao.selectVenda(filter);
-		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-		return null;
-	}
-	
-	public ArrayList<Venda> selectVenda(){
-		try {
-			return vendaDao.selectVenda();
-		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-		return null;
-	}
+
 	
 	public void insertProdutoPedido(ProdutosPedidos produtoPedido) {
 		try {

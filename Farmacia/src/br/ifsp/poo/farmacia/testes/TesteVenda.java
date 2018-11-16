@@ -27,9 +27,8 @@ public class TesteVenda {
 		venda.setData("2018-10-23");
 		venda.setTotal(40);
 		venda.setDesconto(1);
-
-		venda.setId(4);
-		vendaDao.deleteVenda(venda);
+		
+		vendaDao.deleteVenda(1);
 
 		vendaDao.updateVenda(venda);
 

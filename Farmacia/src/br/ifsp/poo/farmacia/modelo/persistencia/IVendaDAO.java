@@ -9,7 +9,7 @@ public interface IVendaDAO {
 	
 	public void insertVenda(Venda ven) throws SQLException, Exception;
 	public void updateVenda(Venda ven) throws SQLException, Exception;
-	public void deleteVenda(Venda ven) throws SQLException, Exception;
+	public void deleteVenda(int id) throws SQLException, Exception;
 	public ArrayList<Venda> selectVenda(String filter) throws SQLException, Exception;
 	public ArrayList<Venda> selectVenda() throws SQLException, Exception;
 }
