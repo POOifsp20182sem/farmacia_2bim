@@ -99,6 +99,7 @@ public class FormLogin extends JFrame {
 			LoginControl loginControl = new LoginControl();
 			Login login = new Login(txtUser.getText(), new String(pswSenha.getPassword()));
 			loginControl.validarLogin(login);
+			setVisible(false);
 		});
 
 		btnAcessar.setBounds(getWidth() / 2 - 100, 200, 90, 25);

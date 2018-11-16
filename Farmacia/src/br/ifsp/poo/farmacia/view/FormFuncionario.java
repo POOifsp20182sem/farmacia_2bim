@@ -48,6 +48,7 @@ public class FormFuncionario extends JFrame {
 	private static JComboBox<EnumCliente> cboTipo = new JComboBox<>();
 	private static JTextField txtUser;
 	private static JPasswordField pswSenha;
+	private static JList<Funcionario> funcList;
 	private static String endereco;
 
 	public static void main(String[] args) {
@@ -109,6 +110,7 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 
+		
 		MaskFormatter forData = new MaskFormatter("##/##/####");
 		JFormattedTextField mskDataNasc = new JFormattedTextField(forData);
 		mskDataNasc.setBounds(117, 60, 66, 20);
@@ -215,7 +217,6 @@ public class FormFuncionario extends JFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(
 				(e) -> {
-
 					Funcionario func = new Funcionario();
 					popularFuncionarios(func);
 					ctFunc.cadastrarFuncionario(func);
@@ -245,15 +246,14 @@ public class FormFuncionario extends JFrame {
 		btnExcluir.setBounds(468, 271, 89, 23);
 		contentPane.add(btnExcluir);
 
-		JList<Funcionario> list = null;
-		list.setBounds(425, 284, 109, -263);
+		funcList = new JList<Funcionario>();
+		funcList.setBounds(425, 284, 109, -263);
 		
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener((e) -> {
 
 			ArrayList func = ctFunc.listarFuncionarios(txtPesquisar.getText());
-			list.setModel((ListModel)func);
-			contentPane.add(list);
+			contentPane.add(funcList);
 		});
 		btnPesquisar.setBounds(292, 389, 89, 23);
 		contentPane.add(btnPesquisar);

@@ -63,6 +63,6 @@ public class FormBuscaProd {
 		
 		ProdutoControl pc = new ProdutoControl();
 		
-		pc.selectProduto();
+//		pc.selectProduto();
 	}
 }
