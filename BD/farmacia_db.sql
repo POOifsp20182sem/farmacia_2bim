@@ -1,13 +1,15 @@
--- MySQL dump 10.13  Distrib 8.0.13, for Linux (x86_64)
+CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `farmacia`;
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: farmacia
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.37-MariaDB
+-- Server version	5.5.5-10.1.29-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +23,7 @@
 
 DROP TABLE IF EXISTS `classe_terapeutica`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `classe_terapeutica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
@@ -45,7 +47,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
@@ -78,7 +80,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `funcionario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `funcionario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
@@ -111,7 +113,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `itens_pedido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `itens_pedido` (
   `produto_id` int(11) NOT NULL,
   `pedido_id` int(11) NOT NULL,
@@ -139,7 +141,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `login`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `login` (
   `nome` varchar(40) NOT NULL,
   `senha` varchar(64) NOT NULL,
@@ -155,7 +157,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES ('eder','123',1),('consoli','321',2),('admin','admin',3),('aaaa','1234',4),('lalala','098700',5),('aaaa','1234',12),('aaaa','1234',12),('eder','1234',13);
+INSERT INTO `login` VALUES ('eder','123',1),('consoli','321',2),('admin','admin',3),('aaaa','1234',4),('lalala','098700',5),('aaaa','1234',12),('aaaa','1234',12),('eder','1234',13),('admin','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',13);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +167,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `movimento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `movimento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sessao_id` int(11) NOT NULL,
@@ -203,7 +205,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `nota_fiscal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `nota_fiscal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `numero_nf` int(11) NOT NULL,
@@ -230,7 +232,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pagamento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pagamento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_pedido` int(11) NOT NULL,
@@ -259,7 +261,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pedido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pedido` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data_compra` date DEFAULT NULL,
@@ -291,7 +293,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `principio_ativo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `principio_ativo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) DEFAULT NULL,
@@ -315,7 +317,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `produto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_comercial` varchar(50) NOT NULL,
@@ -350,7 +352,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sessao`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sessao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `func_abertura_id` int(11) NOT NULL,
@@ -396,11 +398,11 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `validar_login`(p_nome VARCHAR(40), p_senha VARCHAR(40)) RETURNS double
+CREATE DEFINER=`root`@`localhost` FUNCTION `validar_login`(p_nome VARCHAR(40), p_senha VARCHAR(64)) RETURNS double
     READS SQL DATA
     DETERMINISTIC
 BEGIN
-	IF (EXISTS(SELECT id FROM login WHERE nome = p_nome AND senha = p_senha )) THEN                                             
+	IF (EXISTS(SELECT id_funcionario FROM login WHERE nome = p_nome AND senha = p_senha )) THEN                                             
 		RETURN TRUE;                                                                                                                         
 	END IF; 
 RETURN FALSE;
@@ -1306,11 +1308,11 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_login`(
 IN p_user varchar(40),
-IN p_senha varchar(40)
+IN p_senha varchar(64)
 )
 BEGIN
 
@@ -1574,4 +1576,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-15  2:19:43
+-- Dump completed on 2018-11-16 19:42:40
