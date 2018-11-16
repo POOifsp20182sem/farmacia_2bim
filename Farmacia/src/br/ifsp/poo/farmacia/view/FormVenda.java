@@ -18,6 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import br.ifsp.poo.farmacia.control.VendaControl;
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
+import br.ifsp.poo.farmacia.modelo.entidade.EnumPagamento;
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Login;
+import br.ifsp.poo.farmacia.modelo.entidade.Pagamento;
+import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
 
@@ -31,22 +36,24 @@ public class FormVenda {
 	private static JScrollPane barraRolagem;
 	private static DefaultTableModel modelo = new DefaultTableModel();
 	private static Venda venda = new Venda();
+	private static Pagamento pagamento = new Pagamento();
 	private static JTextField txtQuantidade;
+	private static JComboBox cboProduto;
 	
 	
 	public FormVenda() {
-		criaJanela();
-		criaJTable();
+		criarJanela();
+		criarJTable();
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws ParseException {
 		
-		criaJanela();
-		criaJTable();
+		criarJanela();
+		criarJTable();
 	}
 		
-	private static void criaJanela() {
+	private static void criarJanela() {
 		JFrame frame = new JFrame("Venda");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new FlowLayout());
@@ -147,10 +154,20 @@ public class FormVenda {
 
 		JRadioButton rdbtnDinheiro = new JRadioButton("Dinheiro");
 		rdbtnDinheiro.setBounds(47, 272, 109, 23);
+		rdbtnDinheiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pagamento.setFormaPagamento(EnumPagamento.DINHEIRO);
+			}
+		});
 		contentPane.add(rdbtnDinheiro);
 		
 		JRadioButton rdbtnCarto = new JRadioButton("Cartão");
 		rdbtnCarto.setBounds(171, 272, 109, 23);
+		rdbtnCarto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pagamento.setFormaPagamento(EnumPagamento.CARTAO);
+			}
+		});
 		contentPane.add(rdbtnCarto);
 
 		ButtonGroup btnGroup = new ButtonGroup();
@@ -172,13 +189,23 @@ public class FormVenda {
 		JButton btnAdicionarPP = new JButton("Adicionar");
 		btnAdicionarPP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ProdutosPedidos pp = new ProdutosPedidos();
 				
-				produtos.add(pp);
-				
-				double subtotal = venda.getTotal() + vc.calcularSubtotal(pp);
-				venda.setTotal(subtotal);
-				pp.setVenda(venda);
+				try {
+					ProdutosPedidos pp = new ProdutosPedidos();
+					pp.setProduto((Produto)cboProduto.getSelectedItem());
+					pp.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+					
+					double subtotal = venda.getTotal() + vc.calcularSubtotal(pp);
+					
+					txtValorTotal.setText(String.valueOf(subtotal));
+					txtDesconto.setText(String.valueOf(vc.calcularDesconto(subtotal, (Cliente) cboCliente.getSelectedItem(),
+							pagamento.getFormaPagamento())));		
+					
+					venda.setTotal(subtotal);
+					produtos.add(pp);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}					
 			}
 		});
 		btnAdicionarPP.setBounds(436, 154, 89, 23);
@@ -187,13 +214,26 @@ public class FormVenda {
 		JButton btnRemoverPP = new JButton("Remover");
 		btnRemoverPP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ProdutosPedidos pp = new ProdutosPedidos();
 				
-				produtos.remove(pp);
-				
-				double subtotal = venda.getTotal() - vc.calcularSubtotal(pp);
-				venda.setTotal(subtotal);
-				pp.setVenda(venda);		
+				try {
+					ProdutosPedidos pp = new ProdutosPedidos();
+					
+					int linhaSelecionada = -1;
+		            linhaSelecionada = tabela.getSelectedRow();
+		            
+		            if (linhaSelecionada >= 0) {
+		                int Produto = (int) tabela.getValueAt(linhaSelecionada, 0);
+		                modelo.removeRow(linhaSelecionada);
+		                produtos.remove(pp);
+		            } else {
+		                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+		            }
+					
+					double subtotal = venda.getTotal() - vc.calcularSubtotal(pp);
+					venda.setTotal(subtotal);	
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
 			}
 		});
 		btnRemoverPP.setBounds(436, 195, 89, 23);
@@ -202,8 +242,27 @@ public class FormVenda {
 		JButton btnConcluir = new JButton("Concluir");
 		btnConcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				venda.setProdutos(produtos);
-				vc.insertVenda(venda);
+				
+				try {									
+					// TODO: BUSCAR UMA FORMA DE PEGAR O FUNCIONARIO LOGADO
+					venda.setFuncionario(null);
+					venda.setCliente((Cliente)cboCliente.getSelectedItem());				
+					venda.setData(lblData.getText());
+					venda.setTotal(Double.parseDouble(txtValorFinal.getText()));
+					venda.setDesconto(Double.parseDouble(txtDesconto.getText()));
+					venda.setProdutos(produtos);
+					vc.insertVenda(venda);
+					
+					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+					Date data = formato.parse(lblData.getText());
+					
+					pagamento.setDataPagamento(data);				
+					pagamento.setValorPago(Double.parseDouble(txtValorPago.getText()));
+					pagamento.setVenda(venda);
+					
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}		
 			}
 		});
 		btnConcluir.setBounds(436, 414, 89, 23);
@@ -227,8 +286,12 @@ public class FormVenda {
 		btnBuscar.setBounds(272, 104, 89, 23);
 		contentPane.add(btnBuscar);
 		
-		JComboBox cboProduto = new JComboBox();
+		cboProduto = new JComboBox();
 		cboProduto.setBounds(20, 74, 236, 20);
+		
+		for(Produto p : vc.selecionarMedicamento()) {
+			cboProduto.addItem(p);
+		}
 		contentPane.add(cboProduto);
 		
 		txtQuantidade = new JTextField();
@@ -245,7 +308,7 @@ public class FormVenda {
 		frame.setBounds(500, 500, 574, 487);
 	}
 	
-	private static void criaJTable() {
+	private static void criarJTable() {
 		try {
 			tabela = new JTable(modelo);
 	        modelo.addColumn("Produto");
@@ -262,7 +325,7 @@ public class FormVenda {
 		}
 	}
 	
-	public static void carregar(DefaultTableModel modelo) {
+	private static void carregar(DefaultTableModel modelo) {
         modelo.setNumRows(0);
  
         try {
