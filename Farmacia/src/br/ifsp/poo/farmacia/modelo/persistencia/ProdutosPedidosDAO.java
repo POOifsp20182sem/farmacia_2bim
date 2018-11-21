@@ -35,9 +35,9 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao inserir o produto pedido.");
+			throw new SQLException("Erro ao inserir o produto pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao inserir o produto pedido.");
 		} 
 	}
 
@@ -59,9 +59,9 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao excluir o produto pedido.");
+			throw new SQLException("Erro ao excluir o produto pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao excluir o produto pedido.");
 		} 
 	}
 
@@ -89,9 +89,9 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao atualizar o produto pedido.");
+			throw new SQLException("Erro ao atualizar o produto pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao atualizar o produto pedido.");
 		} 
 	}
 }

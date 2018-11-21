@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
+import br.ifsp.poo.farmacia.modelo.entidade.EnumPagamento;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;

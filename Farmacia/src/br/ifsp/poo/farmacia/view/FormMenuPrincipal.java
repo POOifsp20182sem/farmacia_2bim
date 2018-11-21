@@ -8,7 +8,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+
 import java.awt.Font;
+import java.text.ParseException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -55,8 +59,28 @@ public class FormMenuPrincipal extends JFrame {
 		JMenuItem clientes = new JMenuItem("Clientes");
 		JMenuItem produtos = new JMenuItem("Produtos");
 		
-		//para abrir form use isso
-		funcionarios.addActionListener((e) -> {});
+		funcionarios.addActionListener((e) -> {
+			//TODO:ed:2018:11:16 deve ser tratado na própria classe
+			try {
+				FormFuncionario formFuncionario = new FormFuncionario();
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
+		produtos.addActionListener((e)->{
+			FormProduto formProduto = new FormProduto();
+		});
+		
+		clientes.addActionListener((e)->{
+			//TODO:ed:2018:11:16 deve ser tratado na própria classe
+			try {
+				FormCliente formCliente = new FormCliente();
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
 		
 		cadastroMenu.add(funcionarios);
 		cadastroMenu.add(clientes);
@@ -80,8 +104,5 @@ public class FormMenuPrincipal extends JFrame {
 		JLabel lblCopyright = new JLabel("© 2018 Grupo AACEJ");
 		lblCopyright.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		footer.add(lblCopyright);
-		
-		
-
 	}
 }

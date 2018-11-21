@@ -30,9 +30,9 @@ public class PagamentoDAO implements IPagamentoDAO {
 			ps.executeUpdate();
 				
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao registrar o pagamento.");
+			throw new SQLException("Erro ao registrar o pagamento no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao registrar o pagamento.");
 		} 
 	}
 	
@@ -49,9 +49,9 @@ public class PagamentoDAO implements IPagamentoDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao remover o pagamento.");
+			throw new SQLException("Erro ao remover o pagamento do banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao remover o pagamento.");
 		} 
 	}
 }

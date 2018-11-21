@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET latin1 */;
+﻿CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `farmacia`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
@@ -157,7 +157,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES ('eder','123',1),('consoli','321',2),('admin','admin',3),('aaaa','1234',4),('lalala','098700',5),('aaaa','1234',12),('aaaa','1234',12),('eder','1234',13);
+INSERT INTO `login` VALUES ('eder','123',1),('consoli','321',2),('admin','admin',3),('aaaa','1234',4),('lalala','098700',5),('aaaa','1234',12),('aaaa','1234',12),('eder','1234',13),('admin','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',13);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -394,11 +394,11 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `validar_login`(p_nome VARCHAR(40), p_senha VARCHAR(40)) RETURNS double
+CREATE DEFINER=`root`@`localhost` FUNCTION `validar_login`(p_nome VARCHAR(40), p_senha VARCHAR(64)) RETURNS double
     READS SQL DATA
     DETERMINISTIC
 BEGIN
-	IF (EXISTS(SELECT id FROM login WHERE nome = p_nome AND senha = p_senha )) THEN                                             
+	IF (EXISTS(SELECT id_funcionario FROM login WHERE nome = p_nome AND senha = p_senha )) THEN                                             
 		RETURN TRUE;                                                                                                                         
 	END IF; 
 RETURN FALSE;
@@ -1304,11 +1304,11 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_login`(
 IN p_user varchar(40),
-IN p_senha varchar(40)
+IN p_senha varchar(64)
 )
 BEGIN
 
@@ -1572,4 +1572,5 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-16 15:48:25
+-- Dump completed on 2018-11-16 19:42:40
+
