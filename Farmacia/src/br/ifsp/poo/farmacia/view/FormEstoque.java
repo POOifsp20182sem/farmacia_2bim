@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 import br.ifsp.poo.farmacia.control.ListVendasControl;
 import br.ifsp.poo.farmacia.control.ProdutoControl;
+import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
 
 public class FormEstoque extends JFrame{
@@ -73,8 +75,23 @@ public class FormEstoque extends JFrame{
 		
 		JButton btnInserir = new JButton("Inserir");
 		btnInserir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Cliente cliente = new Cliente();
+					popularCliente(cliente);
+					if(idCliente > 0) {
+						cliente.setId(idCliente);
+						if(ctCliente.AtualizarCliente(cliente)) {
+							JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
+						}
+					}else {
+						if(ctCliente.CadastrarCliente(cliente)) {
+							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+						}
+						}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnInserir.setBounds(450, 150, 89, 27);
