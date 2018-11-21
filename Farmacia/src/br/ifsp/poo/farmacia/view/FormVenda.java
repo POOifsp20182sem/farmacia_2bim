@@ -186,8 +186,8 @@ public class FormVenda {
 					venda.setProdutos(produtos);
 					vc.insertVenda(venda);
 					
-					//FormPagamento pag = new FormPagamento(venda);
-					//frame.dispose();
+					FormPagamento pag = new FormPagamento(venda);
+					frame.dispose();
 					
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());

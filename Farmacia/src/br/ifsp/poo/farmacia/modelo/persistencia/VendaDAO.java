@@ -38,9 +38,9 @@ public class VendaDAO implements IVendaDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao inserir o pedido.");
+			throw new SQLException("Erro ao inserir o pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao inserir o pedido.");
 		} 
 	}
 
@@ -69,9 +69,9 @@ public class VendaDAO implements IVendaDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao atualizar o pedido.");
+			throw new SQLException("Erro ao atualizar o pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao atualizar o pedido.");
 		} 
 	}
 
@@ -88,9 +88,9 @@ public class VendaDAO implements IVendaDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao excluir o pedido.");
+			throw new SQLException("Erro ao excluir o pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao excluir o pedido.");
 		} 
 	}
 
@@ -135,9 +135,9 @@ public class VendaDAO implements IVendaDAO {
 			return listVendas;
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao buscar o pedido.");
+			throw new SQLException("Erro ao buscar o pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao buscar o pedido.");
 		} 
 		
 	}
@@ -149,7 +149,7 @@ public class VendaDAO implements IVendaDAO {
 		ArrayList<Venda> listVendas = new ArrayList<>();
 		Venda ven = new Venda();
 
-		try (Connection conn =MySqlConnection.getConnection() ) {
+		try (Connection conn = MySqlConnection.getConnection() ) {
 			
 			String query = "{call buscar_pedidos(?)}";
 			ps = conn.prepareStatement(query);
@@ -183,9 +183,9 @@ public class VendaDAO implements IVendaDAO {
 			return listVendas;
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao buscar o pedido.");
+			throw new SQLException("Erro ao buscar o pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao buscar o pedido.");
 		} 	
 	}
 }

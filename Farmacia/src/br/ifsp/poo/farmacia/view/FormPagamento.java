@@ -163,28 +163,28 @@ public class FormPagamento {
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(txtValorPago.getText() == "" && rdbtnDinheiro.isSelected())
-					JOptionPane.showMessageDialog(null, "Insira o valor pago." );
-				else {
-					String troco = String.valueOf(pgControl.calcularTroco(Double.parseDouble(txtValorPago.getText()), Double.parseDouble(txtValorFinal.getText())));		
-					txtTroco.setText(troco);
-					
-					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-					Date data;
-					
-					try {				
+				try {
+					if(txtValorPago.getText() == "" && rdbtnDinheiro.isSelected()) {
+						JOptionPane.showMessageDialog(null, "Insira o valor pago." );
+					}
+					else {
+						String troco = String.valueOf(pgControl.calcularTroco(Double.parseDouble(txtValorPago.getText()), Double.parseDouble(txtValorFinal.getText())));		
+						txtTroco.setText(troco);
 						
+						SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+						Date data;
+										
+							
 						data = formato.parse(venda.getData());
 						pagamento.setDataPagamento(data);				
 						pagamento.setValorPago(Double.parseDouble(txtValorPago.getText()));		
 						pagamento.setVenda(venda);
 						pgControl.insertPagamento(pagamento);
 						
-						pgControl.updateVenda(venda);
-						
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Erro ao concluir pagamento." );
+						pgControl.updateVenda(venda);	
 					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao concluir pagamento." );
 				}
 			}
 		});
