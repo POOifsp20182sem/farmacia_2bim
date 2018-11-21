@@ -36,7 +36,6 @@ public class FormVenda {
 	private static JScrollPane barraRolagem;
 	private static DefaultTableModel modelo = new DefaultTableModel();
 	private static Venda venda = new Venda();
-	private static Pagamento pagamento = new Pagamento();
 	private static JTextField txtQuantidade;
 	private static JComboBox cboProduto;
 	
@@ -67,120 +66,55 @@ public class FormVenda {
 		JLabel lbl1 = new JLabel("Data:");
 		JLabel lblData = new JLabel();
 		lblData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-		lblData.setBounds(452, 42, 67, 14);
-		lbl1.setBounds(452, 25, 37, 14);
+		lblData.setBounds(452, 61, 67, 14);
+		lbl1.setBounds(452, 44, 37, 14);
 		contentPane.setLayout(null);
 		
 		contentPane.add(lbl1);
 		contentPane.add(lblData);
 		
 		barraRolagem = new JScrollPane(tabela);
-		barraRolagem.setBounds(20, 138, 405, 102);
+		barraRolagem.setBounds(20, 157, 405, 171);
 		contentPane.add(barraRolagem);
 		
 		JLabel lbl2 = new JLabel("User:");
 		JLabel lblUser = new JLabel();
 		//lblUser.setText(vc.getLogin());
-		lbl2.setBounds(26, 423, 37, 14);
-		lblUser.setBounds(73, 423, 70, 14);
+		lbl2.setBounds(20, 399, 37, 14);
+		lblUser.setBounds(78, 399, 70, 14);
 		
 		contentPane.add(lbl2);
 		contentPane.add(lblUser);
 		
 		JLabel lblCliente = new JLabel("Cliente:");
-		lblCliente.setBounds(20, 11, 37, 14);
+		lblCliente.setBounds(20, 30, 86, 14);
 		JComboBox cboCliente = new JComboBox();
-		cboCliente.setBounds(20, 25, 236, 20);
+		cboCliente.setBounds(20, 44, 236, 20);
 		
 		for(Cliente c : vc.selecionarCliente()) {
 			cboCliente.addItem(c);
 		}
 		
+		cboCliente.setSelectedIndex(-1);
 		contentPane.add(lblCliente);
 		contentPane.add(cboCliente);
 		
 		JLabel lblValorTotal = new JLabel("Valor Total:");
-		lblValorTotal.setBounds(26, 320, 68, 14);
+		lblValorTotal.setBounds(26, 339, 68, 14);
 		contentPane.add(lblValorTotal);
-
-		JLabel lblDesconto = new JLabel("Desconto:");
-		lblDesconto.setBounds(26, 345, 68, 14);
-		contentPane.add(lblDesconto);
-
-		JLabel lblValorFinal = new JLabel("Valor Final:");
-		lblValorFinal.setBounds(26, 372, 68, 14);
-		contentPane.add(lblValorFinal);
 
 		JTextField txtValorTotal = new JTextField();
 		txtValorTotal.setEditable(false);
-		txtValorTotal.setBounds(104, 320, 86, 20);
+		txtValorTotal.setBounds(104, 339, 86, 20);
 		contentPane.add(txtValorTotal);
 		txtValorTotal.setColumns(10);
-
-		JTextField txtDesconto = new JTextField();
-		txtDesconto.setEditable(false);
-		txtDesconto.setBounds(104, 345, 86, 20);
-		contentPane.add(txtDesconto);
-		txtDesconto.setColumns(10);
-
-		JTextField txtValorFinal = new JTextField();
-		txtValorFinal.setEditable(false);
-		txtValorFinal.setBounds(104, 372, 86, 20);
-		contentPane.add(txtValorFinal);
-		txtValorFinal.setColumns(10);
-
-		JLabel lblFormaPagamento = new JLabel("Forma Pagamento:");
-		lblFormaPagamento.setBounds(26, 251, 115, 14);
-		contentPane.add(lblFormaPagamento);
-
-		JLabel lblValorPago = new JLabel("Valor Pago:");
-		lblValorPago.setBounds(354, 320, 71, 14);
-		contentPane.add(lblValorPago);
-
-		JLabel lblTroco = new JLabel("Troco:");
-		lblTroco.setBounds(354, 345, 71, 14);
-		contentPane.add(lblTroco);
-
-		JTextField txtValorPago = new JTextField();
-		txtValorPago.setColumns(10);
-		txtValorPago.setBounds(429, 320, 86, 20);
-		contentPane.add(txtValorPago);
-
-		JTextField txtTroco = new JTextField();
-		txtTroco.setEditable(false);
-		txtTroco.setColumns(10);
-		txtTroco.setBounds(429, 345, 86, 20);
-		contentPane.add(txtTroco);
-
-		JRadioButton rdbtnDinheiro = new JRadioButton("Dinheiro");
-		rdbtnDinheiro.setBounds(47, 272, 109, 23);
-		rdbtnDinheiro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				pagamento.setFormaPagamento(EnumPagamento.DINHEIRO);
-			}
-		});
-		contentPane.add(rdbtnDinheiro);
-		
-		JRadioButton rdbtnCarto = new JRadioButton("Cartão");
-		rdbtnCarto.setBounds(171, 272, 109, 23);
-		rdbtnCarto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				pagamento.setFormaPagamento(EnumPagamento.CARTAO);
-			}
-		});
-		contentPane.add(rdbtnCarto);
-
-		ButtonGroup btnGroup = new ButtonGroup();
-
-		btnGroup.add(rdbtnDinheiro);
-		btnGroup.add(rdbtnCarto);
 		
 		JLabel lblProduto = new JLabel("Produto:");
-		lblProduto.setBounds(20, 60, 46, 14);
+		lblProduto.setBounds(20, 79, 86, 14);
 		contentPane.add(lblProduto);
 		
 		JTextField txtProduto = new JTextField();
-		txtProduto.setBounds(20, 105, 236, 20);
+		txtProduto.setBounds(20, 124, 236, 20);
 		contentPane.add(txtProduto);
 		txtProduto.setColumns(10);		
 		
@@ -198,17 +132,16 @@ public class FormVenda {
 					double subtotal = venda.getTotal() + vc.calcularSubtotal(pp);
 					
 					txtValorTotal.setText(String.valueOf(subtotal));
-					txtDesconto.setText(String.valueOf(vc.calcularDesconto(subtotal, (Cliente) cboCliente.getSelectedItem(),
-							pagamento.getFormaPagamento())));		
-					
 					venda.setTotal(subtotal);
 					produtos.add(pp);
+					tabela.revalidate();
+					
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 				}					
 			}
 		});
-		btnAdicionarPP.setBounds(436, 154, 89, 23);
+		btnAdicionarPP.setBounds(436, 199, 89, 23);
 		contentPane.add(btnAdicionarPP);
 		
 		JButton btnRemoverPP = new JButton("Remover");
@@ -222,9 +155,10 @@ public class FormVenda {
 		            linhaSelecionada = tabela.getSelectedRow();
 		            
 		            if (linhaSelecionada >= 0) {
-		                int Produto = (int) tabela.getValueAt(linhaSelecionada, 0);
+		                pp = (ProdutosPedidos) tabela.getValueAt(linhaSelecionada, 0);
 		                modelo.removeRow(linhaSelecionada);
 		                produtos.remove(pp);
+		                tabela.revalidate();
 		            } else {
 		                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
 		            }
@@ -236,7 +170,7 @@ public class FormVenda {
 				}
 			}
 		});
-		btnRemoverPP.setBounds(436, 195, 89, 23);
+		btnRemoverPP.setBounds(436, 240, 89, 23);
 		contentPane.add(btnRemoverPP);
 		
 		JButton btnConcluir = new JButton("Concluir");
@@ -248,24 +182,19 @@ public class FormVenda {
 					venda.setFuncionario(null);
 					venda.setCliente((Cliente)cboCliente.getSelectedItem());				
 					venda.setData(lblData.getText());
-					venda.setTotal(Double.parseDouble(txtValorFinal.getText()));
-					venda.setDesconto(Double.parseDouble(txtDesconto.getText()));
+					venda.setTotal(Double.parseDouble(txtValorTotal.getText()));
 					venda.setProdutos(produtos);
 					vc.insertVenda(venda);
 					
-					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-					Date data = formato.parse(lblData.getText());
-					
-					pagamento.setDataPagamento(data);				
-					pagamento.setValorPago(Double.parseDouble(txtValorPago.getText()));
-					pagamento.setVenda(venda);
+					//FormPagamento pag = new FormPagamento(venda);
+					//frame.dispose();
 					
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 				}		
 			}
 		});
-		btnConcluir.setBounds(436, 414, 89, 23);
+		btnConcluir.setBounds(436, 395, 89, 23);
 		contentPane.add(btnConcluir);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -274,7 +203,7 @@ public class FormVenda {
 				frame.dispose();
 			}
 		});
-		btnCancelar.setBounds(283, 414, 89, 23);
+		btnCancelar.setBounds(275, 395, 89, 23);
 		contentPane.add(btnCancelar);
 		
 		JButton btnBuscar = new JButton("Buscar");
@@ -283,29 +212,30 @@ public class FormVenda {
 				FormBuscaProd formBusca = new FormBuscaProd();
 			}
 		});
-		btnBuscar.setBounds(272, 104, 89, 23);
+		btnBuscar.setBounds(272, 123, 89, 23);
 		contentPane.add(btnBuscar);
 		
 		cboProduto = new JComboBox();
-		cboProduto.setBounds(20, 74, 236, 20);
+		cboProduto.setBounds(20, 93, 236, 20);
 		
 		for(Produto p : vc.selecionarMedicamento()) {
 			cboProduto.addItem(p);
 		}
+		
+		cboProduto.setSelectedIndex(-1);
 		contentPane.add(cboProduto);
 		
 		txtQuantidade = new JTextField();
-		txtQuantidade.setBounds(275, 74, 86, 20);
+		txtQuantidade.setBounds(275, 93, 86, 20);
 		contentPane.add(txtQuantidade);
 		txtQuantidade.setColumns(10);
 		
 		JLabel lblQuantidade = new JLabel("Quantidade:");
-		lblQuantidade.setBounds(277, 60, 60, 14);
+		lblQuantidade.setBounds(277, 79, 109, 14);
 		contentPane.add(lblQuantidade);
 		
 		frame.setVisible(true);
-		frame.setLocation(350, 200);
-		frame.setBounds(500, 500, 574, 487);
+		frame.setBounds(400, 200, 574, 487);
 	}
 	
 	private static void criarJTable() {

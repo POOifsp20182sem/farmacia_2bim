@@ -123,22 +123,4 @@ public class VendaControl {
 		pp.setValorItem(pp.getProduto().getPrecoUnitario() * pp.getQuantidade());
 		return pp.getValorItem();
 	}
-	
-	public double calcularDesconto(double total, Cliente cliente, String forma) {
-		double desconto = 0;
-		
-		if(cliente == null && forma == "dinheiro") {
-			desconto = total * 0.05;
-		} 
-		else if(cliente == null && forma == "cartao") {
-			desconto = 0;
-		}
-		else if(cliente != null && forma == "dinheiro") {
-			desconto = total * 0.20;
-		}
-		else if(cliente != null && forma == "cartao") {
-			desconto = total * 0.20;
-		}
-		return desconto;
-	}
 }

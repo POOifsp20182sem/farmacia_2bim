@@ -23,15 +23,17 @@ public class TestePagamento {
 		
 		pagamento.setVenda(venda);
 		pagamento.setDataPagamento(dataPagamento);
-		pagamento.setFormaPagamento(EnumPagamento.CARTAO);
+		pagamento.setFormaPagamento(EnumPagamento.DINHEIRO);
 		pagamento.setValorPago(venda.getTotal() - venda.getDesconto());
 		
-		PagamentoDAO pagDao = new PagamentoDAO();
+		/*PagamentoDAO pagDao = new PagamentoDAO();
 		
 		pagDao.insertPagamento(pagamento);
 		
 		pagamento.setId(2);
 	
-		pagDao.removePagamento(pagamento);
+		pagDao.removePagamento(pagamento);*/
+		
+		System.out.println(pagamento.getFormaPagamento());
 	}
 }
