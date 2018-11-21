@@ -24,10 +24,11 @@ O Sistema de Farmácia deverá ser desenvolvido em uma arquitetura de três cama
 
 ## Padrões de Projeto Escolhidos
 Nesta segunda etapa, o projeto deverá empregar dois padrões de projetos não estudados em aula, além dos já estudados. Os seguintes padrões se fazerão em uso aqui:
-- [ x ] **Data Access Object**
-- [ x ] **Factory Method**
-- [ x ] **MVC**
->> TODO: a definir
+- [x] **Data Access Object**
+- [x] **Factory Method**
+- [x] **MVC**
+- [x] **Singleton**
+- [ ] a definir
 
 ## Tratamento de Excessões
 O Sistema de Farmácia deverá utilizar as subclasses de _Exception_ e exibi-los utilizando [JOptionPane](https://docs.oracle.com/javase/7/docs/api/javax/swing/JOptionPane.html).

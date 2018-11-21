@@ -1,25 +1,15 @@
 package br.ifsp.poo.farmacia.modelo.entidade;
 
-import java.time.LocalDate;
 
 public class Funcionario extends Pessoa {
 	private int id;
 	private double salario;
 	private EnumFuncionario tipoFuncionario;
 	private String celular;
+	private Login login;
 
-	public Funcionario(String nome, LocalDate dataNascimento, String endereco, String email, String telefone,
-			String celular, double salario, EnumFuncionario tipoFuncionario, String documento) {
-		super(nome, dataNascimento, endereco, email, telefone, documento);
-
-		this.setCelular(celular);
-		this.setSalario(salario);
-		this.setTipoFuncionario(tipoFuncionario);
-	}
-
-	public Funcionario() {
-	}
-
+	public Funcionario() {}
+	
 	public double getSalario() {
 		return salario;
 	}
@@ -50,5 +40,13 @@ public class Funcionario extends Pessoa {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 }

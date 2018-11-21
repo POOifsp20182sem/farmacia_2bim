@@ -12,7 +12,7 @@ public class TesteConexaoBanco {
 			Connection conn = MySqlConnection.getConnection();
 
 			if (conn == null)
-				throw new SQLException("Conex�o n�o realizada.");
+				throw new SQLException("Conexão não realizada.");
 
 			System.out.println("Conectado.");
 		} catch (SQLException sqle) {

@@ -8,4 +8,6 @@ import br.ifsp.poo.farmacia.modelo.entidade.Login;
 public interface ILoginDAO {
 
 	public void validarLogin(Login login) throws SQLException, AccessDeniedException, Exception;
+	
+	public void insertLogin(Login login) throws SQLException,Exception; 
 }

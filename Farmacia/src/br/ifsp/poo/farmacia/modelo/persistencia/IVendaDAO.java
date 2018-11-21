@@ -6,13 +6,10 @@ import java.util.ArrayList;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
 
 public interface IVendaDAO {
-	public boolean insertVenda(Venda ven) throws SQLException;
-
-	public boolean updateVenda(Venda ven) throws SQLException;
-
-	public boolean deleteVenda(Venda ven) throws SQLException;
-
-	public ArrayList<Venda> selectVenda(String filter) throws SQLException;
-
-	public ArrayList<Venda> selectVenda() throws SQLException;
+	
+	public void insertVenda(Venda ven) throws SQLException, Exception;
+	public void updateVenda(Venda ven) throws SQLException, Exception;
+	public void deleteVenda(int id) throws SQLException, Exception;
+	public ArrayList<Venda> selectVenda(String filter) throws SQLException, Exception;
+	public ArrayList<Venda> selectVenda() throws SQLException, Exception;
 }

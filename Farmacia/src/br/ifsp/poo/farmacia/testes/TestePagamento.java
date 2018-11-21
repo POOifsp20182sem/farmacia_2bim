@@ -1,8 +1,6 @@
 package br.ifsp.poo.farmacia.testes;
 
-import java.sql.SQLException;
 import java.util.Date;
-
 import br.ifsp.poo.farmacia.modelo.entidade.EnumPagamento;
 import br.ifsp.poo.farmacia.modelo.entidade.Pagamento;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
@@ -10,7 +8,7 @@ import br.ifsp.poo.farmacia.modelo.persistencia.PagamentoDAO;
 
 public class TestePagamento {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		Venda venda = new Venda();
 	
@@ -30,19 +28,10 @@ public class TestePagamento {
 		
 		PagamentoDAO pagDao = new PagamentoDAO();
 		
-		try {
-			pagDao.insertPagamento(pagamento);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		pagDao.insertPagamento(pagamento);
 		
 		pagamento.setId(2);
-		try {
-			pagDao.removePagamento(pagamento);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+		pagDao.removePagamento(pagamento);
 	}
 }

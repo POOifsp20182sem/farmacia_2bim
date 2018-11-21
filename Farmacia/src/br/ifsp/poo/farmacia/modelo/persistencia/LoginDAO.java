@@ -1,31 +1,31 @@
 package br.ifsp.poo.farmacia.modelo.persistencia;
 
+import java.nio.file.AccessDeniedException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
-import java.nio.file.AccessDeniedException;
-import java.sql.CallableStatement;
-
-public class LoginDAO implements ILoginDAO{
+public class LoginDAO implements ILoginDAO {
 
 	@Override
-	public void validarLogin(Login login) throws SQLException, AccessDeniedException, Exception  {
+	public void validarLogin(Login login) throws SQLException, AccessDeniedException, Exception {
 
 		CallableStatement cs = null;
 
 		/***
-		 * Faz a validaÁ„o do login
-		 * recebe nome e senha e busca no banco
-		 * @param outputValue recebe o valor de validacao (TRUE or FALSE)
-		 * Caso a validaÁ„o seja v·lida ou n„o, retorna mensagem
-		 * que descreve o status atual
+		 * Faz a valida√ß√£o do login recebe nome e senha e busca no banco
+		 * 
+		 * @param outputValue recebe o valor de validacao (TRUE or FALSE) Caso a
+		 *                    valida√ß√£o seja v√°lida ou n√£o, retorna mensagem que
+		 *                    descreve o status atual
 		 */
-		try(Connection conn = MySqlConnection.getConnection();) {
+		try(Connection conn = MySqlConnection.getConnection()) {
 			boolean outputValue;
-			String query = "{? = call validar_login(?, ?)}"; 
-			
+			String query = "{? = call validar_login(?, ?)}";
+
 			cs = conn.prepareCall(query);
 
 			cs.registerOutParameter(1, java.sql.Types.BOOLEAN);
@@ -35,7 +35,7 @@ public class LoginDAO implements ILoginDAO{
 
 			outputValue = cs.getBoolean(1);
 
-			if(!outputValue) 
+			if (!outputValue)
 				throw new AccessDeniedException("Nome ou senha incorreto, tente novamente!");
 
 		} catch (SQLException e1) {
@@ -44,6 +44,27 @@ public class LoginDAO implements ILoginDAO{
 			throw e2;
 		} catch (Exception e3) {
 			throw new Exception("Erro desconhecido.");
+		}
+	}
+
+	@Override
+	public void insertLogin(Login login) throws SQLException, Exception {
+		
+		PreparedStatement ps = null;
+		try (Connection conn = MySqlConnection.getConnection()){
+			String query = "{call inserir_login(?, ?)}"; 
+
+			ps = conn.prepareStatement(query);		
+
+			ps.setString(1, login.getUserName());
+			ps.setString(2, login.getPassword());	
+			ps.execute();
+			
+		}catch (SQLException e1) {
+			throw new SQLException("Erro ao inserir login.");
+		}
+		catch (Exception e2) {
+			throw new Exception(e2.getMessage());
 		}
 	}
 }

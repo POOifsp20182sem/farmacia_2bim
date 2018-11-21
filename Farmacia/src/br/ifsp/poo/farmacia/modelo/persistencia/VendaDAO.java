@@ -8,19 +8,18 @@ import java.util.ArrayList;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
 
 public class VendaDAO implements IVendaDAO {
 
 	@Override
-	public boolean insertVenda(Venda ven) throws SQLException {
-		Connection conn = null;
+	public void insertVenda(Venda ven) throws SQLException, Exception {
 		PreparedStatement ps = null;
-		try {
-
+		
+		try (Connection conn = MySqlConnection.getConnection()) {
+			
 			String query = "{call inserir_pedido(?, ?, ?, ?, ?)}";
-			// TODO: ver com base no mysql
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, ven.getCliente().getId());
@@ -29,30 +28,28 @@ public class VendaDAO implements IVendaDAO {
 			ps.setDouble(4, ven.getTotal());
 			ps.setString(5, ven.getData());
 
-			if (ps.executeUpdate() == 0) {
-				System.out.println("Erro ao inserir!");
-			} else {
-				System.out.println("Dado inserido com sucesso!");
-				return true;
+			ps.executeUpdate();		
+			
+			ArrayList<ProdutosPedidos> produtos = ven.getProdutos();
+			ProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
+			
+			for(ProdutosPedidos pp : produtos) {
+				ppDao.insertProdutoPedido(pp);
 			}
-
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao inserir o pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
 
 	@Override
-	public boolean updateVenda(Venda ven) throws SQLException {
-
-		Connection conn = null;
+	public void updateVenda(Venda ven) throws SQLException, Exception {
 		PreparedStatement ps = null;
-		try {
+		try (Connection conn = MySqlConnection.getConnection()) {
+			
 			String query = "{call alterar_pedido(?, ?, ?, ?, ?, ?)}";
-
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, ven.getId());
@@ -62,61 +59,51 @@ public class VendaDAO implements IVendaDAO {
 			ps.setDouble(5, ven.getTotal());
 			ps.setString(6, ven.getData());
 
-			if (ps.executeUpdate() == 0) {
-				System.out.println("Erro ao alterar!");
-			} else {
-				System.out.println("Dado alterado com sucesso!");
-				return true;
+			ps.executeUpdate();
+			
+			ArrayList<ProdutosPedidos> produtos = ven.getProdutos();
+			ProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
+			
+			for(ProdutosPedidos pp : produtos) {
+				ppDao.insertProdutoPedido(pp);
 			}
-
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao atualizar o pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
 
 	@Override
-	public boolean deleteVenda(Venda ven) throws SQLException {
-		Connection conn = null;
+	public void deleteVenda(int id) throws SQLException, Exception {
 		PreparedStatement ps = null;
-		try {
+		try (Connection conn = MySqlConnection.getConnection()) {
 
 			String query = "{call excluir_pedido(?)}";
-
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);
 
-			ps.setInt(1, ven.getId());
+			ps.setInt(1, id);
 
-			if (ps.executeUpdate() == 0) {
-				System.out.println("Erro ao excluir!");
-			} else {
-				System.out.println("Dado exclu�do com sucesso!");
-				return true;
-			}
-
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao excluir o pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
 
 	@Override
-	public ArrayList<Venda> selectVenda(String filter) throws SQLException {
-		Connection conn = null;
+	public ArrayList<Venda> selectVenda(String filter) throws SQLException, Exception {	
 		PreparedStatement ps = null;
 
 		ArrayList<Venda> listVendas = new ArrayList<>();
 		Venda ven = new Venda();
 
-		try {
+		try (Connection conn = MySqlConnection.getConnection()) {
+			
 			String query = "{call buscar_pedidos(?)}";
-
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);
 
 			ps.setString(1, filter);
@@ -142,28 +129,29 @@ public class VendaDAO implements IVendaDAO {
 				ven.setDesconto(result.getDouble("desconto"));
 				ven.setData(result.getString("data_compra"));
 
-				listVendas.add(ven);
+				listVendas.add(ven);	
 			}
-
+			
+			return listVendas;
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao buscar o pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-		return listVendas;
+			throw new Exception(e.getMessage());
+		} 
+		
 	}
 
 	@Override
-	public ArrayList<Venda> selectVenda() throws SQLException {
-		Connection conn = null;
+	public ArrayList<Venda> selectVenda() throws SQLException, Exception {
 		PreparedStatement ps = null;
 
 		ArrayList<Venda> listVendas = new ArrayList<>();
 		Venda ven = new Venda();
 
-		try {
+		try (Connection conn =MySqlConnection.getConnection() ) {
+			
 			String query = "{call buscar_pedidos(?)}";
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);
 
 			ps.setString(1, "");
@@ -191,13 +179,13 @@ public class VendaDAO implements IVendaDAO {
 
 				listVendas.add(ven);
 			}
-
+			
+			return listVendas;
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao buscar o pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-		return listVendas;
+			throw new Exception(e.getMessage());
+		} 	
 	}
-
 }

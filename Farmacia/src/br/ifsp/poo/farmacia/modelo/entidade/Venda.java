@@ -1,5 +1,7 @@
 package br.ifsp.poo.farmacia.modelo.entidade;
 
+import java.util.ArrayList;
+
 public class Venda {
 
 	private int id;
@@ -7,6 +9,7 @@ public class Venda {
 	private Cliente cliente;
 	private Funcionario funcionario;
 	private double total, desconto;
+	private ArrayList<ProdutosPedidos> produtos;
 
 	public Venda() {
 	}
@@ -65,6 +68,14 @@ public class Venda {
 
 	public void setDesconto(double desconto) {
 		this.desconto = desconto;
+	}
+
+	public ArrayList<ProdutosPedidos> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(ArrayList<ProdutosPedidos> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override

@@ -9,26 +9,22 @@ import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 /**
  * @author Alice Lima
  * 
- *         Classe responsavel pelo acesso ao banco de dados, para manipula��o
- *         dos produtos de uma venda
+ * Classe responsavel pelo acesso ao banco de dados, para manipulacao
+ * dos produtos de uma venda
  */
 
 public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 
 	/*
 	 * @param produtoPedido o produto pedido para ser inserido
-	 * 
-	 * @return o sucesso ou a falha na inserção
 	 */
 	@Override
-	public boolean insertProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException {
-		Connection conn = null;
+	public void insertProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException, Exception {
 		PreparedStatement ps = null;
 
-		try {
+		try (Connection conn = MySqlConnection.getConnection()) {
+			
 			String query = "{call inserir_itens_pedido(?, ?, ?, ?)}";
-
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, produtoPedido.getProduto().getId());
@@ -36,72 +32,51 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 			ps.setInt(3, produtoPedido.getQuantidade());
 			ps.setDouble(4, produtoPedido.getValorItem());
 
-			if (ps.executeUpdate() == 0)
-				System.out.println("Erro ao inserir.");
-			else {
-				System.out.println("Dado inserido com sucesso.");
-				return true;
-			}
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao inserir o produto pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
 
 	/*
 	 * @param produtoPedido o produto pedido para ser removido
-	 * 
-	 * @return o sucesso ou a falha na remo��o
 	 */
 	@Override
-	public boolean removeProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException {
-
-		Connection conn = null;
+	public void removeProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException, Exception {
 		PreparedStatement ps = null;
 
-		try {
+		try (Connection conn = MySqlConnection.getConnection()) {
+			
 			String query = "{call excluir_itens_pedido(?, ?)}";
-
-			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, produtoPedido.getProduto().getId());
 			ps.setInt(2, produtoPedido.getVenda().getId());
 
-			if (ps.executeUpdate() == 0)
-				System.out.println("Erro ao excluir.");
-			else {
-				System.out.println("Dado exclu�do com sucesso.");
-				return true;
-			}
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao excluir o produto pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
 
 	/*
 	 * @param produtoPedido o produto pedido para ser alterado
-	 * 
-	 * @return o sucesso ou a falha na altera��o
 	 */
 	@Override
-	public boolean updateProdutoPedido(ProdutosPedidos produtoPedido, ProdutosPedidos produtoPedidoNew)
-			throws SQLException {
+	public void updateProdutoPedido(ProdutosPedidos produtoPedido, ProdutosPedidos produtoPedidoNew)
+			throws SQLException, Exception {
 
-		Connection conn = null;
 		PreparedStatement ps = null;
 
-		try {
-			String query = "{call alterar_itens_pedido(?, ?, ?, ?, ?, ?)}";
-
-			conn = MySqlConnection.getConnection();
+		try (Connection conn = MySqlConnection.getConnection()) {
+			
+			String query = "{call alterar_itens_pedido(?, ?, ?, ?, ?, ?)}";;
 			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, produtoPedido.getProduto().getId());
@@ -111,19 +86,12 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 			ps.setInt(5, produtoPedidoNew.getQuantidade());
 			ps.setDouble(6, produtoPedidoNew.getValorItem());
 
-			if (ps.executeUpdate() == 0)
-				System.out.println("Erro ao alterar.");
-			else {
-				System.out.println("Dado alterado com sucesso.");
-				return true;
-			}
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao atualizar o produto pedido.");
 		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			conn.close();
-		}
-		return false;
+			throw new Exception(e.getMessage());
+		} 
 	}
-
 }

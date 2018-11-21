@@ -1,7 +1,5 @@
 package br.ifsp.poo.farmacia.testes;
 
-import java.sql.SQLException;
-
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
@@ -9,7 +7,7 @@ import br.ifsp.poo.farmacia.modelo.persistencia.ProdutosPedidosDAO;
 
 public class TesteProdutosPedidos {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws Exception {
 
 		ProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
 		ProdutosPedidos pp = new ProdutosPedidos();
@@ -24,9 +22,9 @@ public class TesteProdutosPedidos {
 		pp.setQuantidade(4);
 		pp.setValorItem(pp.getQuantidade() * 3.8);
 
-		System.out.println(ppDao.insertProdutoPedido(pp));
+		ppDao.insertProdutoPedido(pp);
 
-		// System.out.println(ppDao.removeProdutoPedido(pp));
+		// ppDao.removeProdutoPedido(pp);
 
 		ProdutosPedidos pp2 = new ProdutosPedidos();
 
@@ -35,7 +33,7 @@ public class TesteProdutosPedidos {
 		pp2.setQuantidade(2);
 		pp2.setValorItem(pp.getQuantidade() * 3.8);
 
-		System.out.println(ppDao.updateProdutoPedido(pp, pp2));
+		ppDao.updateProdutoPedido(pp, pp2);
 	}
 
 }
