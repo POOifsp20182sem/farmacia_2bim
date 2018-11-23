@@ -1,10 +1,10 @@
-﻿CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `farmacia`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: farmacia
+-- Host: 127.0.0.1    Database: farmacia
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.5.5-10.1.29-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -380,6 +380,10 @@ LOCK TABLES `sessao` WRITE;
 INSERT INTO `sessao` VALUES (4,2,NULL,1000,NULL,'2018-09-25 21:21:21',NULL,'FECHADO',1),(5,2,NULL,1000,NULL,'2018-09-25 21:21:21',NULL,'FECHADO',1),(6,2,NULL,1000,NULL,'2018-09-25 21:21:21',NULL,'ABERTO',1),(7,2,2,100,200,'2018-11-15 02:08:38','2018-11-15 02:08:39','FECHADO',1),(8,2,2,100,200,'2018-11-15 02:13:11','2018-11-15 02:13:12','FECHADO',1),(9,2,2,100,200,'2018-11-15 02:14:59','2018-11-15 02:14:59','FECHADO',0),(10,2,2,100,200,'2018-11-15 02:15:24','2018-11-15 02:15:25','FECHADO',0),(11,2,2,100,200,'2018-11-15 02:16:58','2018-11-15 02:16:58','FECHADO',0);
 /*!40000 ALTER TABLE `sessao` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'farmacia'
+--
 
 --
 -- Dumping routines for database 'farmacia'
@@ -1573,4 +1577,3 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2018-11-16 19:42:40
-
