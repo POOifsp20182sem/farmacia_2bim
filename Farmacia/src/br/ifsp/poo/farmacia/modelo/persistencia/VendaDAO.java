@@ -88,7 +88,7 @@ public class VendaDAO implements IVendaDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao excluir o pedido no banco.");
+			throw new SQLException("Erro ao excluir o pedido do banco.");
 		} catch (Exception e) {
 			throw new Exception("Erro ao excluir o pedido.");
 		} 
