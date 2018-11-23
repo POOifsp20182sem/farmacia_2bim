@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import br.ifsp.poo.farmacia.control.ListVendasControl;
 import br.ifsp.poo.farmacia.control.ProdutoControl;
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
+import br.ifsp.poo.farmacia.modelo.entidade.Produto;
+import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
 
 public class FormEstoque extends JFrame{
@@ -27,14 +30,15 @@ public class FormEstoque extends JFrame{
 	private static JScrollPane barraRolagem;
 	private static JTable dtListaEstoque;
 	private static DefaultTableModel modelo = new DefaultTableModel();
+	static ProdutoControl pcontrol = new ProdutoControl(); 
 	
 	public FormEstoque() {
-		criaJTable();
+		criaJTable("");
 		FormEstoque();
 	}
 	
 	public static void main(String[] args) {
-		criaJTable();
+		criaJTable("");
 		FormEstoque();
 	}
 	
@@ -67,31 +71,34 @@ public class FormEstoque extends JFrame{
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				criaJTable(txtPesquisar.getText());
 			}
 		});
 		btnPesquisar.setBounds(200, 40, 89, 23);
 		pPesquisa.add(btnPesquisar);
 		
+		JLabel lblQuantidade = new JLabel("Quantidade:");
+		JTextField txtQuantidade = new JTextField(); 
+		txtQuantidade.setColumns(10);
+		lblQuantidade.setBounds(40, 40, 70, 20);
+		pBotoes.add(lblQuantidade);
+		txtQuantidade.setBounds(100, 100, 120, 100);
+		pBotoes.add(txtQuantidade);
+		
+		
 		JButton btnInserir = new JButton("Inserir");
 		btnInserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Cliente cliente = new Cliente();
-					popularCliente(cliente);
-					if(idCliente > 0) {
-						cliente.setId(idCliente);
-						if(ctCliente.AtualizarCliente(cliente)) {
-							JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
-						}
-					}else {
-						if(ctCliente.CadastrarCliente(cliente)) {
-							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-						}
-						}
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				int linhaSelecionada = -1;
+				linhaSelecionada = dtListaEstoque.getSelectedRow();
+				            
+				if (linhaSelecionada >= 0) {
+				     int idProduto = (int) dtListaEstoque.getValueAt(linhaSelecionada, 0);
+				     // AtualizarVenda ic = new AtualizarVenda(modelo, idVenda, linhaSelecionada);
+				    // ic.setVisible(true);
+				   } else {
+				        JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
+				   }
 			}
 		});
 		btnInserir.setBounds(450, 150, 89, 27);
@@ -99,14 +106,13 @@ public class FormEstoque extends JFrame{
 		
 		painel.add(pPesquisa, BorderLayout.NORTH);
 		painel.add(barraRolagem, BorderLayout.CENTER);
-		painel.add(pBotoes, BorderLayout.PAGE_END);
+		painel.add(pBotoes, BorderLayout.SOUTH);
 		
-		frame.setLocation(350, 200);
-		frame.setBounds(500, 500, 574, 463);
+		frame.setBounds(500, 500, 600, 600);
 		frame.setVisible(true);
 	}
 	
-	private static void criaJTable() {
+	private static void criaJTable(String filtro) {
 		try {
 			dtListaEstoque = new JTable(modelo);
 			modelo.addColumn("ID");
@@ -127,7 +133,7 @@ public class FormEstoque extends JFrame{
 			dtListaEstoque.getColumnModel().getColumn(6).setPreferredWidth(80);
 			dtListaEstoque.getColumnModel().getColumn(7).setPreferredWidth(80);
 			
-			pesquisar(modelo);
+			pesquisar(modelo, filtro);
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao criar a tabela.");
@@ -135,16 +141,13 @@ public class FormEstoque extends JFrame{
 		
 	}
 	
-	public static void pesquisar(DefaultTableModel modelo) {
+	public static void pesquisar(DefaultTableModel modelo, String filtro) {
 		modelo.setNumRows(0);
         
-        ListVendasControl lvControl = new ListVendasControl();
- 
-        try {
+		try {
         	
-	        for (Venda ven : lvControl.selectVenda()) {
-	            modelo.addRow(new Object[]{ven.getId(), ven.getData(), ven.getCliente().getNome(),
-	            		ven.getFuncionario().getNome(), ven.getTotal(), ven.getDesconto()});
+	        for (Produto pro : pcontrol.listarProduto(filtro)) {
+	            modelo.addRow(new Object[]{pro.getId(), pro.getNomeComercial()});
 	        }
         } catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
