@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -45,26 +46,23 @@ public class FormFuncionario extends JFrame {
 	private static JFormattedTextField mskTelefone;
 	private static JFormattedTextField mskCelular;
 	private static JFormattedTextField mskSalario;
-	private static JComboBox<EnumCliente> cboTipo = new JComboBox<>();
+	private static JFormattedTextField mskCpf;
+	private static JComboBox<EnumFuncionario> cboTipo = new JComboBox<>();
 	private static JTextField txtUser;
 	private static JPasswordField pswSenha;
 	private static JList<Funcionario> funcList;
 	private static String endereco;
 
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FormFuncionario frame = new FormFuncionario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		FormFuncionario form = new FormFuncionario();
 	}
 
-	public FormFuncionario() throws ParseException {
+	public FormFuncionario() {
+		criarJanela();
+		setVisible(true);
+	}
+
+	public void criarJanela() {
 		setTitle("Funcionário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 588, 468);
@@ -110,19 +108,19 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 
-		
-		MaskFormatter forData = new MaskFormatter("##/##/####");
-		JFormattedTextField mskDataNasc = new JFormattedTextField(forData);
+
+		MaskFormatter forData = instanciarMascara("##/##/####");
+		mskDataNasc = new JFormattedTextField(forData);
 		mskDataNasc.setBounds(117, 60, 66, 20);
 		contentPane.add(mskDataNasc);
 
-		MaskFormatter forTelefone = new MaskFormatter("(##) ####-####");
-		JFormattedTextField mskTelefone = new JFormattedTextField(forTelefone);
+		MaskFormatter forTelefone = instanciarMascara("(##) ####-####");
+		mskTelefone = new JFormattedTextField(forTelefone);
 		mskTelefone.setBounds(73, 101, 110, 20);
 		contentPane.add(mskTelefone);
 
-		MaskFormatter forCelular = new MaskFormatter("(##) #####-####");
-		JFormattedTextField mskCelular = new JFormattedTextField(forCelular);
+		MaskFormatter forCelular = instanciarMascara("(##) #####-####");
+		mskCelular = new JFormattedTextField(forCelular);
 		mskCelular.setBounds(284, 101, 97, 20);
 		contentPane.add(mskCelular);
 
@@ -141,21 +139,17 @@ public class FormFuncionario extends JFrame {
 		cboTipo.setBounds(53, 225, 120, 20);
 		contentPane.add(cboTipo);
 
-		MaskFormatter forCpf = new MaskFormatter("###.###.###-##");
-		JFormattedTextField mskCpf = new JFormattedTextField(forCpf);
+		MaskFormatter forCpf = instanciarMascara("###.###.###-##");
+		mskCpf = new JFormattedTextField(forCpf);
 		mskCpf.setBounds(269, 225, 112, 20);
-
-		MaskFormatter forCnpj = new MaskFormatter("##.###.###/####-##");
-
-
 		contentPane.add(mskCpf);
 
 		JLabel lblSalario = new JLabel("Sal\u00E1rio:");
 		lblSalario.setBounds(215, 63, 46, 14);
 		contentPane.add(lblSalario);
 
-		MaskFormatter forSalario = new MaskFormatter("R$ ####,##");
-		JFormattedTextField mskSalario = new JFormattedTextField(forSalario);
+		MaskFormatter forSalario = instanciarMascara("####,##");
+		mskSalario = new JFormattedTextField(forSalario);
 		mskSalario.setBounds(271, 60, 110, 20);
 		contentPane.add(mskSalario);
 
@@ -248,7 +242,7 @@ public class FormFuncionario extends JFrame {
 
 		funcList = new JList<Funcionario>();
 		funcList.setBounds(425, 284, 109, -263);
-		
+
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener((e) -> {
 
@@ -278,6 +272,17 @@ public class FormFuncionario extends JFrame {
 		func.setDataNascimento((String)mskDataNasc.getText());
 		func.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
 		func.setTipoFuncionario((EnumFuncionario)cboTipo.getSelectedItem());
-		func.setSalario(Double.parseDouble(mskSalario.getText()));
+		func.setSalario(Double.parseDouble(mskSalario.getText().replace(",", ".")));
+
+	}
+
+	public MaskFormatter instanciarMascara(String formatacao) {
+		try {
+			MaskFormatter mask = new MaskFormatter(formatacao);
+			return mask;
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null,"Erro ao carregar os campos formatados");
+		}
+		return null;
 	}
 }

@@ -35,12 +35,10 @@ public class FuncionarioDAO implements IFuncionarioDAO {
 			ps.setString(9, Double.toString(func.getSalario()));
 
 			ps.execute();
-
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SQLException("Erro ao inserir funcion√°rio.");
+			throw new SQLException("Erro ao inserir funcion·rio.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw e;
 		}
 
 		ILoginDAO loginDao = new LoginDAO();

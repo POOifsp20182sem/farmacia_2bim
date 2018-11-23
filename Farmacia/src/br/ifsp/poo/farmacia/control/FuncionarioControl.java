@@ -18,8 +18,12 @@ public class FuncionarioControl {
 			fd.insertFuncionario(func);
 		}catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 		catch (Exception e) {
+			System.out.println(func.getTipoFuncionario());
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Hey");
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
