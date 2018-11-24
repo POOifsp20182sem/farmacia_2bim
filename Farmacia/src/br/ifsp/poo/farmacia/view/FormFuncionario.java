@@ -31,7 +31,8 @@ import br.ifsp.poo.farmacia.control.FuncionarioControl;
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumCliente;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
-import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;;
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Login;;
 
 public class FormFuncionario extends JFrame {
 
@@ -271,9 +272,17 @@ public class FormFuncionario extends JFrame {
 		func.setCelular(mskCelular.getText().replaceAll("\\D",""));
 		func.setDataNascimento((String)mskDataNasc.getText());
 		func.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
-		func.setTipoFuncionario((EnumFuncionario)cboTipo.getSelectedItem());
+		if(cboTipo.getSelectedIndex()==0) {
+			func.setTipoFuncionario(EnumFuncionario.GERENTE);
+		}
+		else {
+			func.setTipoFuncionario(EnumFuncionario.ATENDENTE);
+		}
 		func.setSalario(Double.parseDouble(mskSalario.getText().replace(",", ".")));
-
+		String senha = new String(pswSenha.getPassword());
+		Login login = new Login(txtUser.getText(), senha);
+		System.out.println(login.getUserName() + login.getPassword());
+		func.setLogin(login);
 	}
 
 	public MaskFormatter instanciarMascara(String formatacao) {

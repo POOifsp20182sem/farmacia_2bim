@@ -23,7 +23,6 @@ public class FuncionarioControl {
 		catch (Exception e) {
 			System.out.println(func.getTipoFuncionario());
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Hey");
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}

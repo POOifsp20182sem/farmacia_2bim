@@ -6,6 +6,7 @@ import java.time.Month;
 
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Login;
 import br.ifsp.poo.farmacia.modelo.persistencia.FuncionarioDAO;
 
 public class TesteFuncionario {
@@ -15,8 +16,7 @@ public class TesteFuncionario {
 		Funcionario fun = new Funcionario();
 		FuncionarioDAO fDao = new FuncionarioDAO();
 
-		fun.setId(1);
-		fun.setNome("Teste");
+		/*fun.setNome("Teste");
 		fun.setEmail("email@mail.com");
 		fun.setEndereco("rua das garcas, 65, jd mario, atibaia");
 		fun.setTelefone("1109876543");
@@ -25,18 +25,18 @@ public class TesteFuncionario {
 		fun.setDataNascimento(LocalDate.of(2014, Month.JANUARY, 1));
 		fun.setTipoFuncionario(EnumFuncionario.ATENDENTE);
 		fun.setSalario(1234.44);
-		// fun.setUser("lalala");
-		// fun.setSenha("098700");
-
+		Login login  = new Login("alissa", "1234");
+		fun.setLogin(login);*/
+		
 		// deu certo
-		try {
+		/*try {
 			fDao.insertFuncionario(fun);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 		// deu certo
 		try {
-			fun.setId(10);
+			fun.setId(34);
 			fDao.deleteFuncionario(fun);
 		} catch (SQLException e) {
 			e.printStackTrace();

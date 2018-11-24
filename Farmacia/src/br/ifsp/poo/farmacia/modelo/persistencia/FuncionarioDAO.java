@@ -31,19 +31,19 @@ public class FuncionarioDAO implements IFuncionarioDAO {
 			ps.setString(5, func.getCelular());
 			ps.setString(6, func.getDocumento());
 			ps.setString(7, func.getStrDataNascimento());
-			ps.setString(8, func.getTipoFuncionario().toString());
+			ps.setString(8, func.getTipoFuncionario().name());
 			ps.setString(9, Double.toString(func.getSalario()));
 
 			ps.execute();
+			
+			ILoginDAO loginDao = new LoginDAO();
+			loginDao.insertLogin(func.getLogin());
+			
 		} catch (SQLException e) {
 			throw new SQLException("Erro ao inserir funcionário.");
 		} catch (Exception e) {
 			throw e;
 		}
-
-		ILoginDAO loginDao = new LoginDAO();
-		loginDao.insertLogin(func.getLogin());
-
 	}
 
 	@Override
