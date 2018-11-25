@@ -8,7 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
@@ -22,6 +24,9 @@ import br.ifsp.poo.farmacia.control.FuncionarioControl;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
+import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class FormFuncionario extends JFrame {
 
@@ -40,7 +45,8 @@ public class FormFuncionario extends JFrame {
 	private static JComboBox<EnumFuncionario> cboTipo = new JComboBox<>();
 	private static JTextField txtUser;
 	private static JPasswordField pswSenha;
-	private static JList<Funcionario> funcList;
+	private JTable table;
+	private JTable table_1;
 
 	public static void main(String[] args) {
 		FormFuncionario form = new FormFuncionario();
@@ -54,7 +60,7 @@ public class FormFuncionario extends JFrame {
 	public void criarJanela() {
 		setTitle("Funcionário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 633, 468);
+		setBounds(100, 100, 660, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -203,7 +209,7 @@ public class FormFuncionario extends JFrame {
 					ctFunc.cadastrarFuncionario(func);
 				}
 				);
-		btnSalvar.setBounds(468, 384, 89, 23);
+		btnSalvar.setBounds(391, 297, 89, 23);
 		contentPane.add(btnSalvar);
 
 		JButton btnAlterar = new JButton("Alterar");
@@ -214,7 +220,7 @@ public class FormFuncionario extends JFrame {
 			ctFunc.atualizarFuncionario(func);
 
 		});
-		btnAlterar.setBounds(468, 321, 89, 23);
+		btnAlterar.setBounds(391, 340, 89, 23);
 		contentPane.add(btnAlterar);
 
 		JButton btnExcluir = new JButton("Excluir");
@@ -224,18 +230,33 @@ public class FormFuncionario extends JFrame {
 			popularFuncionarios(func);
 			ctFunc.excluirFuncionario(func);
 		});
-		btnExcluir.setBounds(468, 271, 89, 23);
+		btnExcluir.setBounds(391, 364, 89, 23);
 		contentPane.add(btnExcluir);
-
+		
+		String [] cabecalho = new String[] {"ID", "nome", "Endereço", "Email", "Telefone","Celular", "Data Nacimento","Tipo","Salário"};
+		
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener((e) -> {
-		ArrayList func = ctFunc.listarFuncionarios(txtPesquisar.getText());
-
-		funcList.setListData((Funcionario[]) func.toArray());
+		ArrayList<Funcionario> fun = ctFunc.listarFuncionarios(txtPesquisar.getText());
+		DefaultTableModel model = new DefaultTableModel(cabecalho,0);
+		for(Funcionario f:fun) {
+			String[] dados = new String[10];
+			dados[0] = String.valueOf(f.getId());
+			dados[1] = f.getNome();
+			dados[2] = f.getEndereco();
+			dados[3] = f.getEmail();
+			dados[4] = f.getTelefone();
+			dados[5] = f.getCelular();
+			dados[6] = f.getDataNascFormatado();
+			dados[7] = String.valueOf(f.getTipoFuncionario());
+			dados[8] = String.valueOf(f.getSalario());
+			
+			model.addRow(dados);
+		}
+		table.setModel(model);
 		});
-		contentPane.add(funcList);
 
-		btnPesquisar.setBounds(292, 389, 89, 23);
+		btnPesquisar.setBounds(275, 389, 89, 23);
 		contentPane.add(btnPesquisar);
 
 		JLabel lblLogradouro = new JLabel("Logradouro:");
@@ -251,7 +272,17 @@ public class FormFuncionario extends JFrame {
 		lblResultado.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblResultado.setBounds(416, 32, 80, 14);
 		contentPane.add(lblResultado);
-
+		
+		JButton btnSelecionar = new JButton("Selecionar");
+		btnSelecionar.setBounds(545, 242, 89, 23);
+		contentPane.add(btnSelecionar);
+		
+		table = new JTable();
+		table.setToolTipText("");
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		table.setBounds(416, 228, 218, -182);
+		contentPane.add(table);
 		}
 
 		public static void popularFuncionarios(Funcionario func){
