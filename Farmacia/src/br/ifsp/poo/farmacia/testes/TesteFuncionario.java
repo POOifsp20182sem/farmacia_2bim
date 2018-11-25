@@ -36,7 +36,7 @@ public class TesteFuncionario {
 		}*/
 		// deu certo
 		try {
-			fun.setId(34);
+			fun.setId(35);
 			fDao.deleteFuncionario(fun);
 		} catch (SQLException e) {
 			e.printStackTrace();

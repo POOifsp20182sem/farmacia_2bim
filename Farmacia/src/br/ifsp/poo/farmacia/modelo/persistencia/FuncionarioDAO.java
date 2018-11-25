@@ -30,7 +30,7 @@ public class FuncionarioDAO implements IFuncionarioDAO {
 			ps.setString(4, func.getTelefone());
 			ps.setString(5, func.getCelular());
 			ps.setString(6, func.getDocumento());
-			ps.setString(7, func.getStrDataNascimento());
+			ps.setString(7, (func.getDataNascimento().toString()));
 			ps.setString(8, func.getTipoFuncionario().name());
 			ps.setString(9, Double.toString(func.getSalario()));
 
@@ -40,7 +40,7 @@ public class FuncionarioDAO implements IFuncionarioDAO {
 			loginDao.insertLogin(func.getLogin());
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao inserir funcionário.");
+			throw new SQLException("Erro ao inserir funcionário." + e);
 		} catch (Exception e) {
 			throw e;
 		}

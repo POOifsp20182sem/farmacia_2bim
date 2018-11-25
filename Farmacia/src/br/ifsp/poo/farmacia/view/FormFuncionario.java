@@ -1,24 +1,15 @@
 package br.ifsp.poo.farmacia.view;
 
-import java.awt.BorderLayout;
-
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ActionEvent;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -28,11 +19,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 import br.ifsp.poo.farmacia.control.FuncionarioControl;
-import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
-import br.ifsp.poo.farmacia.modelo.entidade.EnumCliente;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
-import br.ifsp.poo.farmacia.modelo.entidade.Login;;
+import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
 public class FormFuncionario extends JFrame {
 
@@ -52,7 +41,6 @@ public class FormFuncionario extends JFrame {
 	private static JTextField txtUser;
 	private static JPasswordField pswSenha;
 	private static JList<Funcionario> funcList;
-	private static String endereco;
 
 	public static void main(String[] args) {
 		FormFuncionario form = new FormFuncionario();
@@ -66,7 +54,7 @@ public class FormFuncionario extends JFrame {
 	public void criarJanela() {
 		setTitle("Funcionário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 588, 468);
+		setBounds(100, 100, 633, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -85,6 +73,7 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(lblTelefone);
 
 		JLabel lblEndereco = new JLabel("Endere\u00E7o:");
+		lblEndereco.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblEndereco.setBounds(10, 280, 63, 14);
 		contentPane.add(lblEndereco);
 
@@ -104,7 +93,6 @@ public class FormFuncionario extends JFrame {
 		lblCpf.setBounds(215, 228, 34, 14);
 		contentPane.add(lblCpf);
 
-		JTextField txtNome = new JTextField();
 		txtNome.setBounds(59, 19, 322, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
@@ -130,12 +118,10 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(txtLogradouro);
 		txtLogradouro.setColumns(10);
 
-		JTextField txtEmail = new JTextField();
 		txtEmail.setBounds(53, 144, 328, 20);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 
-		JComboBox cboTipo = new JComboBox();
 		cboTipo.setModel(new DefaultComboBoxModel(EnumFuncionario.values()));
 		cboTipo.setBounds(53, 225, 120, 20);
 		contentPane.add(cboTipo);
@@ -241,15 +227,14 @@ public class FormFuncionario extends JFrame {
 		btnExcluir.setBounds(468, 271, 89, 23);
 		contentPane.add(btnExcluir);
 
-		funcList = new JList<Funcionario>();
-		funcList.setBounds(425, 284, 109, -263);
-
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener((e) -> {
+		ArrayList func = ctFunc.listarFuncionarios(txtPesquisar.getText());
 
-			ArrayList func = ctFunc.listarFuncionarios(txtPesquisar.getText());
-			contentPane.add(funcList);
+		funcList.setListData((Funcionario[]) func.toArray());
 		});
+		contentPane.add(funcList);
+
 		btnPesquisar.setBounds(292, 389, 89, 23);
 		contentPane.add(btnPesquisar);
 
@@ -261,37 +246,38 @@ public class FormFuncionario extends JFrame {
 		lblNmero.setBounds(262, 313, 46, 14);
 		contentPane.add(lblNmero);
 
-		endereco = txtLogradouro.getText() + ", " + txtNumero.getText() + ", " + txtBairro.getText() + ", " + txtCidade.getText() + ".";
 
-	}
+		JLabel lblResultado = new JLabel("Resultado:");
+		lblResultado.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblResultado.setBounds(416, 32, 80, 14);
+		contentPane.add(lblResultado);
 
-	public static void popularFuncionarios(Funcionario func) {
-		func.setNome(txtNome.getText()); 
-		func.setEmail(txtEmail.getText());
-		func.setEndereco(endereco);
-		func.setCelular(mskCelular.getText().replaceAll("\\D",""));
-		func.setDataNascimento((String)mskDataNasc.getText());
-		func.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
-		if(cboTipo.getSelectedIndex()==0) {
-			func.setTipoFuncionario(EnumFuncionario.GERENTE);
 		}
-		else {
-			func.setTipoFuncionario(EnumFuncionario.ATENDENTE);
-		}
-		func.setSalario(Double.parseDouble(mskSalario.getText().replace(",", ".")));
-		String senha = new String(pswSenha.getPassword());
-		Login login = new Login(txtUser.getText(), senha);
-		System.out.println(login.getUserName() + login.getPassword());
-		func.setLogin(login);
-	}
 
-	public MaskFormatter instanciarMascara(String formatacao) {
-		try {
-			MaskFormatter mask = new MaskFormatter(formatacao);
-			return mask;
-		} catch (ParseException e) {
-			JOptionPane.showMessageDialog(null,"Erro ao carregar os campos formatados");
+		public static void popularFuncionarios(Funcionario func){
+			func.setNome(txtNome.getText()); 
+			func.setEmail(txtEmail.getText());
+			String endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
+					+ txtBairro.getText() + ". Cidade: " + txtCidade.getText() + ".");
+			func.setEndereco(endereco);
+			func.setCelular(mskCelular.getText().replaceAll("\\D",""));
+			func.setDocumento(mskCpf.getText().replaceAll("\\D", ""));
+			func.setDataNascimento((String)mskDataNasc.getText());
+			func.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
+			func.setTipoFuncionario((EnumFuncionario) cboTipo.getSelectedItem());
+			func.setSalario(Double.parseDouble(mskSalario.getText().replace(",", ".")));
+			String senha = new String(pswSenha.getPassword());
+			Login login = new Login(txtUser.getText(), senha);
+			func.setLogin(login);
 		}
-		return null;
+
+		public MaskFormatter instanciarMascara(String formatacao) {
+			try {
+				MaskFormatter mask = new MaskFormatter(formatacao);
+				return mask;
+			} catch (ParseException e) {
+				JOptionPane.showMessageDialog(null,"Erro ao carregar os campos formatados");
+			}
+			return null;
+		}
 	}
-}
