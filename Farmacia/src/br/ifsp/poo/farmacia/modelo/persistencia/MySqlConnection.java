@@ -11,7 +11,7 @@ public class MySqlConnection {
 		Connection connection = null;
 
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/farmacia", "root", "");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/farmacia", "root", "alissa");
 		} catch (SQLException e) {
 			throw new SQLException("Erro ao carregar o driver de conexão com o banco.");
 		}
