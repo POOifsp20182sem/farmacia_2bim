@@ -145,7 +145,7 @@ public class FormListVendas extends JFrame {
 	            		ven.getFuncionario().getNome(), ven.getTotal(), ven.getDesconto()});
 	        }
         } catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao preencher a tabela.");
 		}
     }
 }

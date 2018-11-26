@@ -24,20 +24,19 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 
 		try (Connection conn = MySqlConnection.getConnection()) {
 			
-			String query = "{call inserir_itens_pedido(?, ?, ?, ?)}";
+			String query = "{call inserir_itens_pedido(?, ?, ?)}";
 			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, produtoPedido.getProduto().getId());
-			ps.setInt(2, produtoPedido.getVenda().getId());
-			ps.setInt(3, produtoPedido.getQuantidade());
-			ps.setDouble(4, produtoPedido.getValorItem());
+			ps.setInt(2, produtoPedido.getQuantidade());
+			ps.setDouble(3, produtoPedido.getValorItem());
 
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException(e.getMessage());
+			throw new SQLException("Erro ao inserir o produto pedido no banco.");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new Exception("Erro ao inserir o produto pedido.");
 		} 
 	}
 

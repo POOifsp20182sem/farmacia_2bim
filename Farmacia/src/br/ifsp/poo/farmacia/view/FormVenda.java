@@ -42,22 +42,21 @@ public class FormVenda {
 	private static ArrayList<ProdutosPedidos> produtos = new ArrayList<ProdutosPedidos>();
 	
 	public FormVenda() {
-		criarJanela();
 		criarJTable();
+		criarJanela();
 	}
 	
 	// TODO: Verificar como preencher a Janela com os dados
 	public FormVenda(Produto prod) {
-		criarJanela();
 		criarJTable();
+		criarJanela();	
 		cboProduto.addItem(prod);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws ParseException {
-		
-		criarJanela();
 		criarJTable();
+		criarJanela();	
 	}
 		
 	private static void criarJanela() {
@@ -81,7 +80,8 @@ public class FormVenda {
 		contentPane.add(lbl1);
 		contentPane.add(lblData);
 		
-		barraRolagem = new JScrollPane(tabela);
+		barraRolagem = new JScrollPane();
+		barraRolagem.add(tabela);
 		barraRolagem.setBounds(20, 157, 405, 171);
 		contentPane.add(barraRolagem);
 		
@@ -138,8 +138,7 @@ public class FormVenda {
 					produtos.add(pp);
 					venda.setProdutos(produtos);					
 					
-					modelo.addRow(new Object[]{pp.getProduto().getNomeComercial(), pp.getQuantidade(), pp.getValorItem()});
-					tabela.repaint();	
+					criarJTable();
 				}
 				catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela.");
@@ -201,6 +200,10 @@ public class FormVenda {
 					venda.setTotal(Double.parseDouble(txtValorTotal.getText()));
 					venda.setProdutos(produtos);
 					vc.insertVenda(venda);
+					
+					for(ProdutosPedidos prod : venda.getProdutos()) {
+						vc.insertProdutoPedido(prod);
+					}
 					
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Erro ao finalizar a venda.");

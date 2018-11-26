@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
@@ -31,14 +30,7 @@ public class VendaDAO implements IVendaDAO {
 			ps.setDate(5, ven.getData());
 
 			ps.executeUpdate();		
-			
-			/*ArrayList<ProdutosPedidos> produtos = ven.getProdutos();
-			ProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
-			
-			for(ProdutosPedidos pp : produtos) {
-				ppDao.insertProdutoPedido(pp);
-			}*/
-			
+	
 		} catch (SQLException e) {
 			throw new SQLException("Erro ao inserir o pedido no banco.");
 		} catch (Exception e) {
@@ -62,13 +54,6 @@ public class VendaDAO implements IVendaDAO {
 			ps.setDate(6, ven.getData());
 
 			ps.executeUpdate();
-			
-			ArrayList<ProdutosPedidos> produtos = ven.getProdutos();
-			ProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
-			
-			for(ProdutosPedidos pp : produtos) {
-				ppDao.insertProdutoPedido(pp);
-			}
 			
 		} catch (SQLException e) {
 			throw new SQLException("Erro ao atualizar o pedido no banco.");
