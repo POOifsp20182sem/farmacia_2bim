@@ -46,13 +46,6 @@ public class FormVenda {
 		criarJanela();
 	}
 	
-	// TODO: Verificar como preencher a Janela com os dados
-	public FormVenda(Produto prod) {
-		criarJTable();
-		criarJanela();	
-		cboProduto.addItem(prod);
-	}
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws ParseException {
 		criarJTable();
@@ -87,7 +80,7 @@ public class FormVenda {
 		
 		JLabel lbl2 = new JLabel("User:");
 		JLabel lblUser = new JLabel();
-		//lblUser.setText(vc.getLogin());
+		lblUser.setText(vc.getLogin().getNome());
 		lbl2.setBounds(20, 399, 37, 14);
 		lblUser.setBounds(78, 399, 70, 14);
 		
@@ -181,16 +174,9 @@ public class FormVenda {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {									
-					// TODO: BUSCAR UMA FORMA DE PEGAR O FUNCIONARIO LOGADO
 					
-					//Teste
-						Funcionario fun = new Funcionario();
-						fun.setId(2);
-						
-						venda.setDesconto(0);
-					
-					//
-					venda.setFuncionario(fun);
+					venda.setDesconto(0);
+					venda.setFuncionario(vc.getLogin());
 					venda.setCliente((Cliente)cboCliente.getSelectedItem());	
 					
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

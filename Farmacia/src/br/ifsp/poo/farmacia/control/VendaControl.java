@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Global;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
@@ -113,10 +114,8 @@ public class VendaControl {
 		return null;
 	}
 	
-	// TODO: VERIFICAR A FORMA DE FAZER O GET DO FUNCIONARIO LOGADO
-	public String getLogin() {
-		Funcionario f = new Funcionario();
-		return f.getLogin().getUserName();
+	public Funcionario getLogin() {
+		return Global.getFuncionarioLogado();
 	}
 	
 	public double calcularSubtotal(ProdutosPedidos pp) {
