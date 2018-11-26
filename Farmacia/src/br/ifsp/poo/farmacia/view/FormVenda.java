@@ -28,6 +28,7 @@ import br.ifsp.poo.farmacia.modelo.entidade.Venda;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class FormVenda {
@@ -38,11 +39,18 @@ public class FormVenda {
 	private static Venda venda = new Venda();
 	private static JTextField txtQuantidade;
 	private static JComboBox cboProduto;
-	
+	private static ArrayList<ProdutosPedidos> produtos = new ArrayList<ProdutosPedidos>();
 	
 	public FormVenda() {
 		criarJanela();
 		criarJTable();
+	}
+	
+	// TODO: Verificar como preencher a Janela com os dados
+	public FormVenda(Produto prod) {
+		criarJanela();
+		criarJTable();
+		cboProduto.addItem(prod);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -113,13 +121,6 @@ public class FormVenda {
 		lblProduto.setBounds(20, 79, 86, 14);
 		contentPane.add(lblProduto);
 		
-		JTextField txtProduto = new JTextField();
-		txtProduto.setBounds(20, 124, 236, 20);
-		contentPane.add(txtProduto);
-		txtProduto.setColumns(10);		
-		
-		ArrayList<ProdutosPedidos> produtos = new ArrayList<ProdutosPedidos>();
-		
 		JButton btnAdicionarPP = new JButton("Adicionar");
 		btnAdicionarPP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -128,17 +129,21 @@ public class FormVenda {
 					ProdutosPedidos pp = new ProdutosPedidos();
 					pp.setProduto((Produto)cboProduto.getSelectedItem());
 					pp.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+					pp.setVenda(venda);
 					
 					double subtotal = venda.getTotal() + vc.calcularSubtotal(pp);
-					
+									
 					txtValorTotal.setText(String.valueOf(subtotal));
 					venda.setTotal(subtotal);
 					produtos.add(pp);
-					tabela.revalidate();
+					venda.setProdutos(produtos);					
 					
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
-				}					
+					modelo.addRow(new Object[]{pp.getProduto().getNomeComercial(), pp.getQuantidade(), pp.getValorItem()});
+					tabela.repaint();	
+				}
+				catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela.");
+				}
 			}
 		});
 		btnAdicionarPP.setBounds(436, 199, 89, 23);
@@ -156,9 +161,8 @@ public class FormVenda {
 		            
 		            if (linhaSelecionada >= 0) {
 		                pp = (ProdutosPedidos) tabela.getValueAt(linhaSelecionada, 0);
-		                modelo.removeRow(linhaSelecionada);
 		                produtos.remove(pp);
-		                tabela.revalidate();
+		                modelo.removeRow(linhaSelecionada);
 		            } else {
 		                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
 		            }
@@ -166,7 +170,7 @@ public class FormVenda {
 					double subtotal = venda.getTotal() - vc.calcularSubtotal(pp);
 					venda.setTotal(subtotal);	
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
+					JOptionPane.showMessageDialog(null, "Erro ao remover o produto.");
 				}
 			}
 		});
@@ -179,19 +183,31 @@ public class FormVenda {
 				
 				try {									
 					// TODO: BUSCAR UMA FORMA DE PEGAR O FUNCIONARIO LOGADO
-					venda.setFuncionario(null);
-					venda.setCliente((Cliente)cboCliente.getSelectedItem());				
-					venda.setData(lblData.getText());
+					
+					//Teste
+						Funcionario fun = new Funcionario();
+						fun.setId(2);
+						
+						venda.setDesconto(0);
+					
+					//
+					venda.setFuncionario(fun);
+					venda.setCliente((Cliente)cboCliente.getSelectedItem());	
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					java.sql.Date data = new java.sql.Date(sdf.parse(lblData.getText()).getTime());  
+					
+					venda.setData(data);
 					venda.setTotal(Double.parseDouble(txtValorTotal.getText()));
 					venda.setProdutos(produtos);
 					vc.insertVenda(venda);
 					
-					FormPagamento pag = new FormPagamento(venda);
-					frame.dispose();
-					
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
-				}		
+					JOptionPane.showMessageDialog(null, "Erro ao finalizar a venda.");
+				}	
+				
+				FormPagamento pag = new FormPagamento(venda);
+				frame.dispose();
 			}
 		});
 		btnConcluir.setBounds(436, 395, 89, 23);
@@ -212,7 +228,7 @@ public class FormVenda {
 				FormBuscaProd formBusca = new FormBuscaProd();
 			}
 		});
-		btnBuscar.setBounds(272, 123, 89, 23);
+		btnBuscar.setBounds(167, 124, 89, 23);
 		contentPane.add(btnBuscar);
 		
 		cboProduto = new JComboBox();
@@ -258,14 +274,12 @@ public class FormVenda {
 	private static void carregar(DefaultTableModel modelo) {
         modelo.setNumRows(0);
  
-        try {
-        	ArrayList<ProdutosPedidos> produtos = venda.getProdutos();
-        	
+        try {  	
 	        for (ProdutosPedidos pro : produtos) {
 	            modelo.addRow(new Object[]{pro.getProduto().getNomeComercial(), pro.getQuantidade(), pro.getValorItem()});
 	        }
         } catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao carregar a tabela.");
 		}
     }
 }

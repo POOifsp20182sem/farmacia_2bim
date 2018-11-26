@@ -1,9 +1,11 @@
 package br.ifsp.poo.farmacia.modelo.persistencia;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
@@ -26,16 +28,16 @@ public class VendaDAO implements IVendaDAO {
 			ps.setInt(2, ven.getFuncionario().getId());
 			ps.setDouble(3, ven.getDesconto());
 			ps.setDouble(4, ven.getTotal());
-			ps.setString(5, ven.getData());
+			ps.setDate(5, ven.getData());
 
 			ps.executeUpdate();		
 			
-			ArrayList<ProdutosPedidos> produtos = ven.getProdutos();
+			/*ArrayList<ProdutosPedidos> produtos = ven.getProdutos();
 			ProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
 			
 			for(ProdutosPedidos pp : produtos) {
 				ppDao.insertProdutoPedido(pp);
-			}
+			}*/
 			
 		} catch (SQLException e) {
 			throw new SQLException("Erro ao inserir o pedido no banco.");
@@ -57,7 +59,7 @@ public class VendaDAO implements IVendaDAO {
 			ps.setInt(3, ven.getFuncionario().getId());
 			ps.setDouble(4, ven.getDesconto());
 			ps.setDouble(5, ven.getTotal());
-			ps.setString(6, ven.getData());
+			ps.setDate(6, ven.getData());
 
 			ps.executeUpdate();
 			
@@ -127,7 +129,7 @@ public class VendaDAO implements IVendaDAO {
 				ven.setFuncionario(fun);
 				ven.setTotal(result.getDouble("total"));
 				ven.setDesconto(result.getDouble("desconto"));
-				ven.setData(result.getString("data_compra"));
+				ven.setData(result.getDate("data_compra"));
 
 				listVendas.add(ven);	
 			}
@@ -175,7 +177,7 @@ public class VendaDAO implements IVendaDAO {
 				ven.setFuncionario(fun);
 				ven.setTotal(result.getDouble("total"));
 				ven.setDesconto(result.getDouble("desconto"));
-				ven.setData(result.getString("data_compra"));
+				ven.setData(result.getDate("data_compra"));
 
 				listVendas.add(ven);
 			}
