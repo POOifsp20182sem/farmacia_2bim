@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
-import br.ifsp.poo.farmacia.modelo.entidade.EnumPagamento;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 import br.ifsp.poo.farmacia.modelo.entidade.ProdutosPedidos;
 import br.ifsp.poo.farmacia.modelo.entidade.Venda;
 import br.ifsp.poo.farmacia.modelo.persistencia.ClienteDAO;
 import br.ifsp.poo.farmacia.modelo.persistencia.FuncionarioDAO;
+import br.ifsp.poo.farmacia.modelo.persistencia.IProdutosPedidosDAO;
 import br.ifsp.poo.farmacia.modelo.persistencia.IVendaDAO;
 import br.ifsp.poo.farmacia.modelo.persistencia.ProdutoDAO;
 import br.ifsp.poo.farmacia.modelo.persistencia.ProdutosPedidosDAO;
@@ -26,7 +26,7 @@ import br.ifsp.poo.farmacia.modelo.persistencia.VendaDAO;
 public class VendaControl {
 	
 	IVendaDAO vendaDao = new VendaDAO();
-	ProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
+	IProdutosPedidosDAO ppDao = new ProdutosPedidosDAO();
 	
 	public void insertVenda(Venda ven) {
 		try {

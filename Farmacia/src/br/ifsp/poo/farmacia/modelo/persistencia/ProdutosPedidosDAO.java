@@ -19,7 +19,7 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 	 * @param produtoPedido o produto pedido para ser inserido
 	 */
 	@Override
-	public void insertProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException, Exception {
+	public void insertProdutoPedido(ProdutosPedidos produtoPedido) throws Exception {
 		PreparedStatement ps = null;
 
 		try (Connection conn = MySqlConnection.getConnection()) {
@@ -35,9 +35,9 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SQLException("Erro ao inserir o produto pedido no banco.");
+			throw new SQLException(e.getMessage());
 		} catch (Exception e) {
-			throw new Exception("Erro ao inserir o produto pedido.");
+			throw new Exception(e.getMessage());
 		} 
 	}
 
