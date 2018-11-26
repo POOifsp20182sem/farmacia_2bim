@@ -8,13 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-<<<<<<< HEAD
-import javax.swing.border.EmptyBorder;
-=======
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
->>>>>>> parent of 812d302... Update FormFuncionario.java
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
@@ -49,23 +45,14 @@ public class FormFuncionario extends JFrame {
 	private static JComboBox<EnumFuncionario> cboTipo = new JComboBox<>();
 	private static JTextField txtUser;
 	private static JPasswordField pswSenha;
-<<<<<<< HEAD
-	private static JTable table;
-	private static JScrollPane barraRolagemT, barraRolagemJ;
-	private static String filtro;
-	private static DefaultTableModel modelo = new DefaultTableModel();
-	static FuncionarioControl ctFunc = new FuncionarioControl();
-=======
 	private JTable table;
 	private JTable table_1;
->>>>>>> parent of 812d302... Update FormFuncionario.java
 
 	public static void main(String[] args) {
 		FormFuncionario form = new FormFuncionario();
 	}
 
 	public FormFuncionario() {
-		criarTabela();
 		criarJanela();
 		setVisible(true);
 	}
@@ -73,18 +60,11 @@ public class FormFuncionario extends JFrame {
 	public void criarJanela() {
 		setTitle("Funcionário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-<<<<<<< HEAD
-		setBounds(100, 100, 633, 468);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-=======
 		setBounds(100, 100, 660, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
->>>>>>> parent of 812d302... Update FormFuncionario.java
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 22, 39, 14);
@@ -229,7 +209,7 @@ public class FormFuncionario extends JFrame {
 					ctFunc.cadastrarFuncionario(func);
 				}
 				);
-		btnSalvar.setBounds(468, 384, 89, 23);
+		btnSalvar.setBounds(391, 297, 89, 23);
 		contentPane.add(btnSalvar);
 
 		JButton btnAlterar = new JButton("Alterar");
@@ -240,7 +220,7 @@ public class FormFuncionario extends JFrame {
 			ctFunc.atualizarFuncionario(func);
 
 		});
-		btnAlterar.setBounds(468, 321, 89, 23);
+		btnAlterar.setBounds(391, 340, 89, 23);
 		contentPane.add(btnAlterar);
 
 		JButton btnExcluir = new JButton("Excluir");
@@ -276,7 +256,7 @@ public class FormFuncionario extends JFrame {
 		table.setModel(model);
 		});
 
-		btnPesquisar.setBounds(292, 389, 89, 23);
+		btnPesquisar.setBounds(275, 389, 89, 23);
 		contentPane.add(btnPesquisar);
 
 		JLabel lblLogradouro = new JLabel("Logradouro:");
@@ -293,24 +273,16 @@ public class FormFuncionario extends JFrame {
 		lblResultado.setBounds(416, 32, 80, 14);
 		contentPane.add(lblResultado);
 		
-		/*barraRolagemT = new JScrollPane(table);
-		barraRolagemT.setBounds(452, 61, 67, 14);
-		contentPane.add(barraRolagemT);*/
-		
 		JButton btnSelecionar = new JButton("Selecionar");
 		btnSelecionar.setBounds(545, 242, 89, 23);
 		contentPane.add(btnSelecionar);
 		
-<<<<<<< HEAD
-		setVisible(true);
-=======
 		table = new JTable();
 		table.setToolTipText("");
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		table.setBounds(416, 228, 218, -182);
 		contentPane.add(table);
->>>>>>> parent of 812d302... Update FormFuncionario.java
 		}
 
 		public static void popularFuncionarios(Funcionario func){
@@ -340,35 +312,3 @@ public class FormFuncionario extends JFrame {
 			return null;
 		}
 	}
-<<<<<<< HEAD
-			public static void criarTabela() {
-				try {
-					table = new JTable(modelo);
-			        modelo.addColumn("ID");
-			        modelo.addColumn("Nome");
-			        modelo.addColumn("Endereço");
-			        modelo.addColumn("Email");
-			        modelo.addColumn("Telefone");
-			        modelo.addColumn("Celular");
-			        modelo.addColumn("Data Nacimento");
-			        modelo.addColumn("Tipo");
-			        modelo.addColumn("Salário");
-			        		        
-			        table.getColumnModel().getColumn(0).setPreferredWidth(5);
-			        table.getColumnModel().getColumn(1).setPreferredWidth(100);
-			        table.getColumnModel().getColumn(2).setPreferredWidth(150);
-			        table.getColumnModel().getColumn(3).setPreferredWidth(30);
-			        table.getColumnModel().getColumn(4).setPreferredWidth(20);
-			        table.getColumnModel().getColumn(5).setPreferredWidth(20);
-			        table.getColumnModel().getColumn(6).setPreferredWidth(20);
-			        table.getColumnModel().getColumn(7).setPreferredWidth(15);
-			        table.getColumnModel().getColumn(8).setPreferredWidth(10);
-			        
-			        pesquisar(modelo, filtro);
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Erro ao criar tabela.");
-				}
-			}
-		}
-=======
->>>>>>> parent of 812d302... Update FormFuncionario.java
