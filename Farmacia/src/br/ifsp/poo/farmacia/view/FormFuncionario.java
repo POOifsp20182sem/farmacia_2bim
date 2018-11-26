@@ -60,7 +60,7 @@ public class FormFuncionario extends JFrame {
 	public void criarJanela() {
 		setTitle("Funcionário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 660, 468);
+		setBounds(100, 100, 1200, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -219,6 +219,7 @@ public class FormFuncionario extends JFrame {
 			Funcionario func = new Funcionario();
 			popularFuncionarios(func);
 			ctFunc.atualizarFuncionario(func);
+			//System.out.println(func.getNome());
 
 		});
 		btnAlterar.setBounds(391, 340, 89, 23);
@@ -229,19 +230,8 @@ public class FormFuncionario extends JFrame {
 
 			Funcionario func = new Funcionario();
 			popularFuncionarios(func);
+			System.out.println(func.getId());
 			ctFunc.excluirFuncionario(func);
-
-			int linhaSelecionada = -1;
-			linhaSelecionada = table.getSelectedRow();
-
-			if (linhaSelecionada >= 0) {
-				int idFun = (int) table.getValueAt(linhaSelecionada, 0);
-
-				ctFunc.excluirFuncionario(func);
-				modelo.removeRow(linhaSelecionada);
-			} else {
-				JOptionPane.showMessageDialog(null, "Selecione uma linha");
-			}
 		});
 		btnExcluir.setBounds(391, 364, 89, 23);
 		contentPane.add(btnExcluir);
@@ -275,15 +265,42 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(lblResultado);
 
 		JButton btnSelecionar = new JButton("Selecionar");
-		btnSelecionar.setBounds(545, 242, 89, 23);
+		btnSelecionar.addActionListener((a) -> {
+			int linhaSelecionada = -1;
+			linhaSelecionada = table.getSelectedRow();
+			String idS = String.valueOf(table.getModel().getValueAt(linhaSelecionada, 0));
+			int id = Integer.parseInt(idS);
+			Funcionario f = ctFunc.buscarFuncionario(id);
+			
+				txtNome.setText(f.getNome());
+				mskCpf.setText(f.getDocumento());
+				txtLogradouro.setText(f.getEndereco());
+				txtEmail.setText(f.getEmail());
+				mskTelefone.setText(f.getTelefone());
+				mskCelular.setText(f.getCelular());
+				//não carrega quando é dia/mes de um caracter só
+				mskDataNasc.setText(f.getStrDataNascimento().replace(".", "/"));
+				cboTipo.setSelectedItem(f.getTipoFuncionario());
+				System.out.println(f.getStrDataNascimento().replace(".", "/"));
+				mskSalario.setText(String.valueOf(f.getSalario()).replace(".", ","));
+				txtUser.setText(f.getLogin().getUserName());
+				pswSenha.setText(f.getLogin().getPassword());
+			
+		});
+		btnSelecionar.setBounds(800, 300, 89, 23);
 		contentPane.add(btnSelecionar);
 		
 		barra = new JScrollPane(table);
-		barra.setBounds(416, 223, 218, -175);
+		barra.setBounds(416, 45, 750, 250);
 		contentPane.add(barra);
 	}
 
 	public static void popularFuncionarios(Funcionario func){
+		int linhaSelecionada = -1;
+		linhaSelecionada = table.getSelectedRow();
+		String idS = String.valueOf(table.getModel().getValueAt(linhaSelecionada, 0));
+		int id = Integer.parseInt(idS);
+		func.setId(id);
 		func.setNome(txtNome.getText()); 
 		func.setEmail(txtEmail.getText());
 		String endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
@@ -315,6 +332,7 @@ public class FormFuncionario extends JFrame {
 			table = new JTable(modelo);
 			modelo.addColumn("ID");
 			modelo.addColumn("Nome");
+			modelo.addColumn("CPF");
 			modelo.addColumn("Endere�o");
 			modelo.addColumn("Email");
 			modelo.addColumn("Telefone");
@@ -325,13 +343,14 @@ public class FormFuncionario extends JFrame {
 
 			table.getColumnModel().getColumn(0).setPreferredWidth(5);
 			table.getColumnModel().getColumn(1).setPreferredWidth(100);
-			table.getColumnModel().getColumn(2).setPreferredWidth(150);
-			table.getColumnModel().getColumn(3).setPreferredWidth(30);
-			table.getColumnModel().getColumn(4).setPreferredWidth(20);
+			table.getColumnModel().getColumn(2).setPreferredWidth(50);
+			table.getColumnModel().getColumn(3).setPreferredWidth(150);
+			table.getColumnModel().getColumn(4).setPreferredWidth(30);
 			table.getColumnModel().getColumn(5).setPreferredWidth(20);
 			table.getColumnModel().getColumn(6).setPreferredWidth(20);
-			table.getColumnModel().getColumn(7).setPreferredWidth(15);
-			table.getColumnModel().getColumn(8).setPreferredWidth(10);
+			table.getColumnModel().getColumn(7).setPreferredWidth(20);
+			table.getColumnModel().getColumn(8).setPreferredWidth(15);
+			table.getColumnModel().getColumn(9).setPreferredWidth(10);
 
 			pesquisar(modelo, "");
 		} catch (Exception e) {
@@ -348,13 +367,14 @@ public class FormFuncionario extends JFrame {
 				String[] dados = new String[10];
 				dados[0] = String.valueOf(f.getId());
 				dados[1] = f.getNome();
-				dados[2] = f.getEndereco();
-				dados[3] = f.getEmail();
-				dados[4] = f.getTelefone();
-				dados[5] = f.getCelular();
-				dados[6] = f.getDataNascFormatado();
-				dados[7] = String.valueOf(f.getTipoFuncionario());
-				dados[8] = String.valueOf(f.getSalario());
+				dados[2] = f.getDocumento();
+				dados[3] = f.getEndereco();
+				dados[4] = f.getEmail();
+				dados[5] = f.getTelefone();
+				dados[6] = f.getCelular();
+				dados[7] = f.getDataNascFormatado();
+				dados[8] = String.valueOf(f.getTipoFuncionario());
+				dados[9] = String.valueOf(f.getSalario());
 
 				modelo.addRow(dados);
 			}
