@@ -60,16 +60,11 @@ public class FormMenuPrincipal extends JFrame {
 		JMenuItem produtos = new JMenuItem("Produtos");
 		
 		funcionarios.addActionListener((e) -> {
-			//TODO:ed:2018:11:16 deve ser tratado na própria classe
-			try {
 				FormFuncionario formFuncionario = new FormFuncionario();
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
 		});
 		
 		produtos.addActionListener((e)->{
-			FormProduto formProduto = new FormProduto();
+			//FormProduto formProduto = new FormProduto();
 		});
 		
 		clientes.addActionListener((e)->{

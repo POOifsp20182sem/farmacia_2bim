@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
 public class LoginDAO implements ILoginDAO {
@@ -57,7 +58,7 @@ public class LoginDAO implements ILoginDAO {
 			ps = conn.prepareStatement(query);		
 
 			ps.setString(1, login.getUserName());
-			ps.setString(2, login.getPassword());	
+			ps.setString(2, login.getPassword());
 			ps.execute();
 			
 		}catch (SQLException e1) {

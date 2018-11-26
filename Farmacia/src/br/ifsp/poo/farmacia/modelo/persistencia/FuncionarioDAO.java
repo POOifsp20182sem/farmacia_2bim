@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
@@ -30,22 +31,20 @@ public class FuncionarioDAO implements IFuncionarioDAO {
 			ps.setString(4, func.getTelefone());
 			ps.setString(5, func.getCelular());
 			ps.setString(6, func.getDocumento());
-			ps.setString(7, func.getStrDataNascimento());
-			ps.setString(8, func.getTipoFuncionario().toString());
+			ps.setString(7, (func.getDataNascimento().toString()));
+			ps.setString(8, func.getTipoFuncionario().name());
 			ps.setString(9, Double.toString(func.getSalario()));
 
 			ps.execute();
-
+			
+			ILoginDAO loginDao = new LoginDAO();
+			loginDao.insertLogin(func.getLogin());
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SQLException("Erro ao inserir funcion√°rio.");
+			throw new SQLException("Erro ao inserir funcion·rio." + e);
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw e;
 		}
-
-		ILoginDAO loginDao = new LoginDAO();
-		loginDao.insertLogin(func.getLogin());
-
 	}
 
 	@Override
