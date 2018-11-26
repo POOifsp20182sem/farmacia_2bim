@@ -16,6 +16,7 @@ public class FuncionarioControl {
 
 		try {
 			fd.insertFuncionario(func);
+			JOptionPane.showMessageDialog(null, "Funcionário salvo com sucesso.", "Informação", 2);
 		}catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -30,6 +31,7 @@ public class FuncionarioControl {
 	public void atualizarFuncionario(Funcionario func) {
 		try {
 			fd.updateFuncionario(func);
+			JOptionPane.showMessageDialog(null, "Funcionário alterado com sucesso.", "Informação", 2);
 		}catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -41,6 +43,7 @@ public class FuncionarioControl {
 	public void excluirFuncionario(Funcionario func) {
 		try {
 			fd.deleteFuncionario(func);
+			JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.", "Informação", 2);
 		}catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}

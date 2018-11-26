@@ -147,11 +147,11 @@ public class FormFuncionario extends JFrame {
 		mskSalario.setBounds(271, 60, 110, 20);
 		contentPane.add(mskSalario);
 
-		JLabel lblUsurio = new JLabel("Usu\u00E1rio:");
-		lblUsurio.setLabelFor(this);
-		lblUsurio.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblUsurio.setBounds(10, 185, 40, 14);
-		contentPane.add(lblUsurio);
+		JLabel lblUsuario = new JLabel("Usu\u00E1rio:");
+		lblUsuario.setLabelFor(this);
+		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblUsuario.setBounds(10, 185, 40, 14);
+		contentPane.add(lblUsuario);
 
 		txtUser = new JTextField();
 		txtUser.setBounds(63, 182, 110, 20);
@@ -191,15 +191,6 @@ public class FormFuncionario extends JFrame {
 		lblCidade.setBounds(237, 344, 46, 14);
 		contentPane.add(lblCidade);
 
-		JLabel lblPesquisar = new JLabel("Pesquisar:");
-		lblPesquisar.setBounds(10, 393, 66, 14);
-		contentPane.add(lblPesquisar);
-
-		JTextField txtPesquisar = new JTextField();
-		txtPesquisar.setBounds(78, 390, 193, 20);
-		contentPane.add(txtPesquisar);
-		txtPesquisar.setColumns(10);
-
 		FuncionarioControl ctFunc = new FuncionarioControl();
 
 		JButton btnSalvar = new JButton("Salvar");
@@ -219,8 +210,6 @@ public class FormFuncionario extends JFrame {
 			Funcionario func = new Funcionario();
 			popularFuncionarios(func);
 			ctFunc.atualizarFuncionario(func);
-			//System.out.println(func.getNome());
-
 		});
 		btnAlterar.setBounds(391, 340, 89, 23);
 		contentPane.add(btnAlterar);
@@ -232,23 +221,11 @@ public class FormFuncionario extends JFrame {
 			popularFuncionarios(func);
 			System.out.println(func.getId());
 			ctFunc.excluirFuncionario(func);
+			
+			table.clearSelection();
 		});
 		btnExcluir.setBounds(391, 364, 89, 23);
 		contentPane.add(btnExcluir);
-
-
-		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.addActionListener((a) -> {
-			try {
-				pesquisar(modelo, txtPesquisar.getText());
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null, "Erro ao buscar funcionário");
-			}
-			table.repaint();
-		});
-
-		btnPesquisar.setBounds(275, 389, 89, 23);
-		contentPane.add(btnPesquisar);
 
 		JLabel lblLogradouro = new JLabel("Logradouro:");
 		lblLogradouro.setBounds(10, 313, 63, 14);
@@ -333,7 +310,7 @@ public class FormFuncionario extends JFrame {
 			modelo.addColumn("ID");
 			modelo.addColumn("Nome");
 			modelo.addColumn("CPF");
-			modelo.addColumn("Endere�o");
+			modelo.addColumn("Endereço");
 			modelo.addColumn("Email");
 			modelo.addColumn("Telefone");
 			modelo.addColumn("Celular");
