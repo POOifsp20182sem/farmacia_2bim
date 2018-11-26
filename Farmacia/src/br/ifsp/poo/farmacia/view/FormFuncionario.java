@@ -1,6 +1,7 @@
 package br.ifsp.poo.farmacia.view;
 
 import java.awt.Font;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JFormattedTextField;
@@ -8,25 +9,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-
 import br.ifsp.poo.farmacia.control.FuncionarioControl;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
 import javax.swing.JTable;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
+import javax.swing.JScrollPane;
+
 
 public class FormFuncionario extends JFrame {
 
@@ -45,26 +42,30 @@ public class FormFuncionario extends JFrame {
 	private static JComboBox<EnumFuncionario> cboTipo = new JComboBox<>();
 	private static JTextField txtUser;
 	private static JPasswordField pswSenha;
-	private JTable table;
-	private JTable table_1;
+	private static JTable table;
+	private static JScrollPane barra;
+	private DefaultTableModel modelo = new DefaultTableModel();
+	static FuncionarioControl ctFunc = new FuncionarioControl();
 
 	public static void main(String[] args) {
 		FormFuncionario form = new FormFuncionario();
 	}
 
 	public FormFuncionario() {
+		criarTabela();
 		criarJanela();
 		setVisible(true);
 	}
 
 	public void criarJanela() {
-		setTitle("Funcionário");
+		setTitle("FuncionÃ¡rio");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 660, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 22, 39, 14);
@@ -229,31 +230,31 @@ public class FormFuncionario extends JFrame {
 			Funcionario func = new Funcionario();
 			popularFuncionarios(func);
 			ctFunc.excluirFuncionario(func);
+
+			int linhaSelecionada = -1;
+			linhaSelecionada = table.getSelectedRow();
+
+			if (linhaSelecionada >= 0) {
+				int idFun = (int) table.getValueAt(linhaSelecionada, 0);
+
+				ctFunc.excluirFuncionario(func);
+				modelo.removeRow(linhaSelecionada);
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione uma linha");
+			}
 		});
 		btnExcluir.setBounds(391, 364, 89, 23);
 		contentPane.add(btnExcluir);
-		
-		String [] cabecalho = new String[] {"ID", "nome", "Endereço", "Email", "Telefone","Celular", "Data Nacimento","Tipo","Salário"};
-		
+
+
 		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.addActionListener((e) -> {
-		ArrayList<Funcionario> fun = ctFunc.listarFuncionarios(txtPesquisar.getText());
-		DefaultTableModel model = new DefaultTableModel(cabecalho,0);
-		for(Funcionario f:fun) {
-			String[] dados = new String[10];
-			dados[0] = String.valueOf(f.getId());
-			dados[1] = f.getNome();
-			dados[2] = f.getEndereco();
-			dados[3] = f.getEmail();
-			dados[4] = f.getTelefone();
-			dados[5] = f.getCelular();
-			dados[6] = f.getDataNascFormatado();
-			dados[7] = String.valueOf(f.getTipoFuncionario());
-			dados[8] = String.valueOf(f.getSalario());
-			
-			model.addRow(dados);
-		}
-		table.setModel(model);
+		btnPesquisar.addActionListener((a) -> {
+			try {
+				pesquisar(modelo, txtPesquisar.getText());
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao buscar funcionÃ¡rio");
+			}
+			table.repaint();
 		});
 
 		btnPesquisar.setBounds(275, 389, 89, 23);
@@ -272,43 +273,93 @@ public class FormFuncionario extends JFrame {
 		lblResultado.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblResultado.setBounds(416, 32, 80, 14);
 		contentPane.add(lblResultado);
-		
+
 		JButton btnSelecionar = new JButton("Selecionar");
 		btnSelecionar.setBounds(545, 242, 89, 23);
 		contentPane.add(btnSelecionar);
 		
-		table = new JTable();
-		table.setToolTipText("");
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		table.setBounds(416, 228, 218, -182);
-		contentPane.add(table);
-		}
+		barra = new JScrollPane(table);
+		barra.setBounds(416, 223, 218, -175);
+		contentPane.add(barra);
+	}
 
-		public static void popularFuncionarios(Funcionario func){
-			func.setNome(txtNome.getText()); 
-			func.setEmail(txtEmail.getText());
-			String endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
-					+ txtBairro.getText() + ". Cidade: " + txtCidade.getText() + ".");
-			func.setEndereco(endereco);
-			func.setCelular(mskCelular.getText().replaceAll("\\D",""));
-			func.setDocumento(mskCpf.getText().replaceAll("\\D", ""));
-			func.setDataNascimento((String)mskDataNasc.getText());
-			func.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
-			func.setTipoFuncionario((EnumFuncionario) cboTipo.getSelectedItem());
-			func.setSalario(Double.parseDouble(mskSalario.getText().replace(",", ".")));
-			String senha = new String(pswSenha.getPassword());
-			Login login = new Login(txtUser.getText(), senha);
-			func.setLogin(login);
-		}
+	public static void popularFuncionarios(Funcionario func){
+		func.setNome(txtNome.getText()); 
+		func.setEmail(txtEmail.getText());
+		String endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
+				+ txtBairro.getText() + ". Cidade: " + txtCidade.getText() + ".");
+		func.setEndereco(endereco);
+		func.setCelular(mskCelular.getText().replaceAll("\\D",""));
+		func.setDocumento(mskCpf.getText().replaceAll("\\D", ""));
+		func.setDataNascimento((String)mskDataNasc.getText());
+		func.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
+		func.setTipoFuncionario((EnumFuncionario) cboTipo.getSelectedItem());
+		func.setSalario(Double.parseDouble(mskSalario.getText().replace(",", ".")));
+		String senha = new String(pswSenha.getPassword());
+		Login login = new Login(txtUser.getText(), senha);
+		func.setLogin(login);
+	}
 
-		public MaskFormatter instanciarMascara(String formatacao) {
-			try {
-				MaskFormatter mask = new MaskFormatter(formatacao);
-				return mask;
-			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(null,"Erro ao carregar os campos formatados");
-			}
-			return null;
+	public MaskFormatter instanciarMascara(String formatacao) {
+		try {
+			MaskFormatter mask = new MaskFormatter(formatacao);
+			return mask;
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null,"Erro ao carregar os campos formatados");
+		}
+		return null;
+	}
+
+	public void criarTabela() {
+		try {
+			table = new JTable(modelo);
+			modelo.addColumn("ID");
+			modelo.addColumn("Nome");
+			modelo.addColumn("Endereï¿½o");
+			modelo.addColumn("Email");
+			modelo.addColumn("Telefone");
+			modelo.addColumn("Celular");
+			modelo.addColumn("Data Nacimento");
+			modelo.addColumn("Tipo");
+			modelo.addColumn("Salï¿½rio");
+
+			table.getColumnModel().getColumn(0).setPreferredWidth(5);
+			table.getColumnModel().getColumn(1).setPreferredWidth(100);
+			table.getColumnModel().getColumn(2).setPreferredWidth(150);
+			table.getColumnModel().getColumn(3).setPreferredWidth(30);
+			table.getColumnModel().getColumn(4).setPreferredWidth(20);
+			table.getColumnModel().getColumn(5).setPreferredWidth(20);
+			table.getColumnModel().getColumn(6).setPreferredWidth(20);
+			table.getColumnModel().getColumn(7).setPreferredWidth(15);
+			table.getColumnModel().getColumn(8).setPreferredWidth(10);
+
+			pesquisar(modelo, "");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao criar tabela.");
 		}
 	}
+
+	public static void pesquisar(DefaultTableModel modelo, String filtro) throws SQLException {
+		modelo.setNumRows(0);
+
+		try {
+			ArrayList<Funcionario> fun = ctFunc.listarFuncionarios(filtro);
+			for(Funcionario f:fun) {
+				String[] dados = new String[10];
+				dados[0] = String.valueOf(f.getId());
+				dados[1] = f.getNome();
+				dados[2] = f.getEndereco();
+				dados[3] = f.getEmail();
+				dados[4] = f.getTelefone();
+				dados[5] = f.getCelular();
+				dados[6] = f.getDataNascFormatado();
+				dados[7] = String.valueOf(f.getTipoFuncionario());
+				dados[8] = String.valueOf(f.getSalario());
+
+				modelo.addRow(dados);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+}
