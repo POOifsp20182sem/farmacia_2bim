@@ -24,7 +24,7 @@ public class TesteVenda {
 
 		venda.setCliente(cliente);
 		venda.setFuncionario(funcionario);
-		venda.setData("2018-10-23");
+		//venda.setData("2018-10-23");
 		venda.setTotal(40);
 		venda.setDesconto(1);
 		

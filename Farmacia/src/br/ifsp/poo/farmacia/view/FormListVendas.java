@@ -26,14 +26,17 @@ public class FormListVendas extends JFrame {
 	private static JTable tabela;
 	private static JScrollPane barraRolagem;
 	private static DefaultTableModel modelo = new DefaultTableModel();
+	private static JTextField txtPesquisar; 
+	
+	static ListVendasControl lvControl = new ListVendasControl();
 
 	public FormListVendas() {
-		criaJTable();
+		criaJTable("");
 		criaJanela();
 	}
 	
 	public static void main(String[] args) {
-		criaJTable();
+		criaJTable("");
 		criaJanela();
 	}
 	
@@ -56,7 +59,7 @@ public class FormListVendas extends JFrame {
 		pPesquisa.setLayout(new FlowLayout());
 		
 		JLabel lbl = new JLabel("Pesquisar:");
-		JTextField txtPesquisar = new JTextField();
+		txtPesquisar = new JTextField();
 		txtPesquisar.setColumns(25);
 		lbl.setBounds(40, 40, 70, 20);
 		pPesquisa.add(lbl);
@@ -68,30 +71,17 @@ public class FormListVendas extends JFrame {
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				try {
+					pesquisar(modelo, txtPesquisar.getText());
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, "Erro ao buscar a venda. (GUI)");
+				}
+				tabela.repaint();
 			}
 		});
 		btnPesquisar.setBounds(200, 40, 89, 23);
 		pPesquisa.add(btnPesquisar);
 		
-		// Botao Alterar
-		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int linhaSelecionada = -1;
-	            linhaSelecionada = tabela.getSelectedRow();
-	            
-	            if (linhaSelecionada >= 0) {
-	                int idVenda = (int) tabela.getValueAt(linhaSelecionada, 0);
-	               // AtualizarVenda ic = new AtualizarVenda(modelo, idVenda, linhaSelecionada);
-	               // ic.setVisible(true);
-	            } else {
-	                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
-	            }
-			}
-		});
-		btnAlterar.setBounds(430, 100, 89, 23);
-		pBotoes.add(btnAlterar);
 		
 		// Botao Excluir
 		JButton btnExcluir = new JButton("Excluir");
@@ -102,8 +92,8 @@ public class FormListVendas extends JFrame {
 	            
 	            if (linhaSelecionada >= 0) {
 	                int idVenda = (int) tabela.getValueAt(linhaSelecionada, 0);
-	                ListVendasControl vc = new ListVendasControl();
-	                vc.deleteVenda(idVenda);
+	                
+	                lvControl.deleteVenda(idVenda);
 	                modelo.removeRow(linhaSelecionada);
 	            } else {
 	                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
@@ -121,7 +111,7 @@ public class FormListVendas extends JFrame {
 		frame.setVisible(true);
 	}
 	
-	private static void criaJTable() {
+	private static void criaJTable(String filtro) {
 		
 		try {
 			tabela = new JTable(modelo);
@@ -139,26 +129,23 @@ public class FormListVendas extends JFrame {
 	        tabela.getColumnModel().getColumn(4).setPreferredWidth(80);
 	        tabela.getColumnModel().getColumn(5).setPreferredWidth(50);
 	        
-	        pesquisar(modelo);
+	        pesquisar(modelo, filtro);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao criar tabela.");
 		}
 		
 	}
 	
-	public static void pesquisar(DefaultTableModel modelo) throws SQLException {
+	public static void pesquisar(DefaultTableModel modelo, String filtro) throws SQLException {
         modelo.setNumRows(0);
         
-        ListVendasControl lvControl = new ListVendasControl();
- 
         try {
-        	
-	        for (Venda ven : lvControl.selectVenda()) {
+	        for (Venda ven : lvControl.selectVenda(filtro)) {
 	            modelo.addRow(new Object[]{ven.getId(), ven.getData(), ven.getCliente().getNome(),
 	            		ven.getFuncionario().getNome(), ven.getTotal(), ven.getDesconto()});
 	        }
         } catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao preencher a tabela.");
 		}
     }
 }

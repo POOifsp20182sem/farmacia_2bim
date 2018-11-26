@@ -1,25 +1,18 @@
 package br.ifsp.poo.farmacia.modelo.entidade;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Venda {
 
 	private int id;
-	private String data;
+	private Date data;
 	private Cliente cliente;
 	private Funcionario funcionario;
 	private double total, desconto;
 	private ArrayList<ProdutosPedidos> produtos;
 
 	public Venda() {
-	}
-
-	public Venda(String data, Cliente cliente, Funcionario funcionario, double total, double desconto) {
-		this.data = data;
-		this.cliente = cliente;
-		this.funcionario = funcionario;
-		this.total = total;
-		this.desconto = desconto;
 	}
 
 	public int getId() {
@@ -30,11 +23,11 @@ public class Venda {
 		this.id = id;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 

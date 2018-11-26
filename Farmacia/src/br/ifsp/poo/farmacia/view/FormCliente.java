@@ -6,25 +6,24 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
 import br.ifsp.poo.farmacia.control.ClienteControl;
+import br.ifsp.poo.farmacia.control.FuncionarioControl;
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
-import br.ifsp.poo.farmacia.modelo.entidade.EnumCliente;
+import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
@@ -43,37 +42,27 @@ public class FormCliente extends JFrame {
 	private static JFormattedTextField mskTelefone;
 	private static JFormattedTextField mskCelular;
 	private static JFormattedTextField mskCpf;
-	private static JFormattedTextField mskCnpj;
-	private static JComboBox<EnumCliente> cboTipoCliente = new JComboBox<>();
 	private static String endereco;
+	private static JTable table;
+	private static JScrollPane barra;
+	private DefaultTableModel modelo = new DefaultTableModel();
+	static ClienteControl ctCli = new ClienteControl();
 
 
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FormCliente frame = new FormCliente();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public FormCliente() throws ParseException {
-		criaJanela();
-	}
-	
-	public FormCliente(int id) throws ParseException, SQLException {
-		criaJanela();
-		Cliente cli = buscarCliente(id);
-		popularForm(cli);
+		FormCliente form = new FormCliente();
 	}
 
-	public void criaJanela() throws ParseException {
+	public FormCliente() {
+		criaTabela();
+		criaJanela();
+		setVisible(true);
+	}
+
+
+	public void criaJanela() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 622, 439);
+		setBounds(100, 100, 1000, 439);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -103,12 +92,8 @@ public class FormCliente extends JFrame {
 		lblEmail.setBounds(10, 146, 46, 14);
 		contentPane.add(lblEmail);
 
-		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setBounds(10, 273, 46, 14);
-		contentPane.add(lblTipo);
-
 		JLabel lblDocumento = new JLabel("Documento:");
-		lblDocumento.setBounds(240, 273, 77, 14);
+		lblDocumento.setBounds(15, 273, 77, 14);
 		contentPane.add(lblDocumento);
 
 		txtNome = new JTextField();
@@ -116,20 +101,21 @@ public class FormCliente extends JFrame {
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 
-		MaskFormatter forData = new MaskFormatter("##/##/####");
+		MaskFormatter forData = instanciarMascara("##/##/####");
 		mskDataNasc = new JFormattedTextField(forData);
-		mskDataNasc.setBounds(117, 60, 77, 20);
+		mskDataNasc.setBounds(117, 60, 66, 20);
 		contentPane.add(mskDataNasc);
 
-		MaskFormatter forTelefone = new MaskFormatter("(##) ####-####");
+		MaskFormatter forTelefone = instanciarMascara("(##) ####-####");
 		mskTelefone = new JFormattedTextField(forTelefone);
-		mskTelefone.setBounds(67, 101, 110, 20);
+		mskTelefone.setBounds(73, 101, 110, 20);
 		contentPane.add(mskTelefone);
 
-		MaskFormatter forCelular = new MaskFormatter("(##) #####-####");
+		MaskFormatter forCelular = instanciarMascara("(##) #####-####");
 		mskCelular = new JFormattedTextField(forCelular);
-		mskCelular.setBounds(249, 101, 97, 20);
+		mskCelular.setBounds(284, 101, 97, 20);
 		contentPane.add(mskCelular);
+
 
 		txtLogradouro = new JTextField();
 		txtLogradouro.setBounds(83, 204, 136, 20);
@@ -146,73 +132,47 @@ public class FormCliente extends JFrame {
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 
-		MaskFormatter forCpf = new MaskFormatter("###.###.###-##");
+		MaskFormatter forCpf = instanciarMascara("###.###.###-##");
 		mskCpf = new JFormattedTextField(forCpf);
-		MaskFormatter forCnpj = new MaskFormatter("##.###.###/####-##");
-		mskCnpj = new JFormattedTextField(forCnpj);
-
-
-		mskCpf.setBounds(327, 270, 116, 20);
+		mskCpf.setBounds(269, 225, 112, 20);
 		contentPane.add(mskCpf);
-		mskCnpj.setBounds(327, 298, 116, 20);
-		contentPane.add(mskCnpj);
-
-		cboTipoCliente.setModel(new DefaultComboBoxModel<>(EnumCliente.values()));
-		cboTipoCliente.setBounds(53, 270, 124, 20);
-		contentPane.add(cboTipoCliente);
 
 		ClienteControl ctCliente = new ClienteControl();
 
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					Cliente cliente = new Cliente();
-					popularCliente(cliente);
-					if(idCliente > 0) {
-						cliente.setId(idCliente);
-						if(ctCliente.AtualizarCliente(cliente)) {
-							JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
-						}
-					}else {
-						if(ctCliente.CadastrarCliente(cliente)) {
-							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-						}
-						}
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+		btnSalvar.addActionListener(
+				(e) -> {
+					Cliente cli = new Cliente();
+					popularCliente(cli);
+					ctCli.CadastrarCliente(cli);
 				}
-			}
-		});
-		btnSalvar.setBounds(507, 348, 89, 23);
+				);
+		btnSalvar.setBounds(507, 200, 89, 23);
 		contentPane.add(btnSalvar);
 		
-		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener((e) -> {
 
-				try {
-					ArrayList clientes = ctCliente.listarCliente(txtPesquisar.toString());
-					JList list = new JList((ListModel) clientes);
-					list.setBounds(425, 284, 109, -263);
-					contentPane.add(list);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
+			Cliente cli = new Cliente();
+			popularCliente(cli);
+			ctCli.AtualizarCliente(cli);
 		});
-		btnPesquisar.setBounds(249, 348, 89, 23);
-		contentPane.add(btnPesquisar);
+		btnAlterar.setBounds(507, 250, 89, 23);
+		contentPane.add(btnAlterar);
 		
-		JLabel lblPesquisar = new JLabel("Pesquisar:");
-		lblPesquisar.setBounds(10, 331, 63, 14);
-		contentPane.add(lblPesquisar);
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener((e) -> {
 
-		txtPesquisar = new JTextField();
-		txtPesquisar.setBounds(10, 349, 209, 20);
-		contentPane.add(txtPesquisar);
-		txtPesquisar.setColumns(10);
-
+			Cliente cli = new Cliente();
+			popularCliente(cli);
+			System.out.println(cli.getId());
+			ctCli.DeletarCliente(cli);
+			
+			table.clearSelection();
+		});
+		btnExcluir.setBounds(507, 300, 89, 23);
+		contentPane.add(btnExcluir);
+		
 		JLabel lblLogradouro = new JLabel("Logradouro:");
 		lblLogradouro.setBounds(10, 207, 63, 14);
 		contentPane.add(lblLogradouro);
@@ -238,67 +198,83 @@ public class FormCliente extends JFrame {
 		JLabel lblCidade = new JLabel("Cidade:");
 		lblCidade.setBounds(237, 238, 46, 14);
 		contentPane.add(lblCidade);
-		
-		endereco = txtLogradouro.getText() + ", " + txtNumero.getText() + ", " + txtBairro.getText() + ", " + txtCidade.getText() + ".";
+
 	}
 
-	public static void popularCliente(Cliente cliente) {
-		
-		cliente.setNome(txtNome.getText()); 
-		cliente.setEmail(txtEmail.getText());
-		cliente.setEndereco(endereco);
-		cliente.setTipoCliente((EnumCliente)cboTipoCliente.getSelectedItem());
-		cliente.setCelular(mskCelular.getText().replaceAll("\\D",""));
-		cliente.setDataNascimento((String)mskDataNasc.getText());
-		cliente.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
-		
-		if(cliente.getTipoCliente().equals(EnumCliente.FISICA))
-			cliente.setDocumento(mskCpf.getText().replaceAll("\\D", ""));
-		else
-			cliente.setDocumento(mskCnpj.getText().replaceAll("\\D", ""));
-	}
-
-	public static void popularForm(Cliente cli) {
-		String [] strs = cli.getEndereco().toString().split(",");
-		idCliente = cli.getId();
-		txtNome.setText(cli.getNome());
-		txtCidade.setText(strs[0]);
-		txtLogradouro.setText(strs[1]);
-		txtNumero.setText(strs[2]);
-		txtBairro.setText(strs[3]);
-		txtEmail.setText(cli.getEmail());;
-		cboTipoCliente.setSelectedItem(cli.getTipoCliente());
-		
-		if(cli.getTipoCliente().equals(EnumCliente.FISICA))
-			mskCpf.setText(cli.getDocumento());
-		else
-				mskCpf.setText(cli.getDocumento());
-				mskTelefone.setText(cli.getTelefone());
-				mskCelular.setText(cli.getCelular());
-		
-		
+	public static void popularCliente(Cliente cli){
+		int linhaSelecionada = -1;
+		linhaSelecionada = table.getSelectedRow();
+		String idS = String.valueOf(table.getModel().getValueAt(linhaSelecionada, 0));
+		int id = Integer.parseInt(idS);
+		cli.setId(id);
+		cli.setNome(txtNome.getText()); 
+		cli.setEmail(txtEmail.getText());
+		String endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
+				+ txtBairro.getText() + ". Cidade: " + txtCidade.getText() + ".");
+		cli.setEndereco(endereco);
+		cli.setCelular(mskCelular.getText().replaceAll("\\D",""));
+		cli.setDocumento(mskCpf.getText().replaceAll("\\D", ""));
+		cli.setDataNascimento((String)mskDataNasc.getText());
+		cli.setTelefone(mskTelefone.getText().replaceAll("\\D",""));
 	}
 	
-	public static Cliente buscarCliente(int id) throws SQLException {
-		ClienteControl ctCliente = new ClienteControl();
-		Cliente cli = ctCliente.buscarCliente(id);
-		return cli;
-	}
-	
-	public static boolean excluirCliente(int id) {
-		ClienteControl ctCliente = new ClienteControl();
+	public MaskFormatter instanciarMascara(String formatacao) {
 		try {
-			Cliente cliente = new Cliente();
-			cliente.setId(id);
-			if(ctCliente.DeletarCliente(cliente)) {
-				JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
-			}else {
-				JOptionPane.showMessageDialog(null, "Erro ao excluir");
-			}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+			MaskFormatter mask = new MaskFormatter(formatacao);
+			return mask;
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null,"Erro ao carregar os campos formatados");
 		}
-		return false;
+		return null;
 	}
 	
+	public void criaTabela() {
+		try {
+			table = new JTable(modelo);
+			modelo.addColumn("ID");
+			modelo.addColumn("Nome");
+			modelo.addColumn("CPF");
+			modelo.addColumn("Endereço");
+			modelo.addColumn("Email");
+			modelo.addColumn("Telefone");
+			modelo.addColumn("Celular");
+			modelo.addColumn("Data Nacimento");
+
+			table.getColumnModel().getColumn(0).setPreferredWidth(5);
+			table.getColumnModel().getColumn(1).setPreferredWidth(100);
+			table.getColumnModel().getColumn(2).setPreferredWidth(50);
+			table.getColumnModel().getColumn(3).setPreferredWidth(150);
+			table.getColumnModel().getColumn(4).setPreferredWidth(30);
+			table.getColumnModel().getColumn(5).setPreferredWidth(20);
+			table.getColumnModel().getColumn(6).setPreferredWidth(20);
+			table.getColumnModel().getColumn(7).setPreferredWidth(20);
+
+			pesquisar(modelo, "");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao criar tabela.");
+		}
+	}
+
+	public static void pesquisar(DefaultTableModel modelo, String filtro) throws SQLException {
+		modelo.setNumRows(0);
+
+		try {
+			ArrayList<Cliente> cli = ctCli.listarCliente(filtro);
+			for(Cliente c:cli) {
+				String[] dados = new String[8];
+				dados[0] = String.valueOf(c.getId());
+				dados[1] = c.getNome();
+				dados[2] = c.getDocumento();
+				dados[3] = c.getEndereco();
+				dados[4] = c.getEmail();
+				dados[5] = c.getTelefone();
+				dados[6] = c.getCelular();
+				dados[7] = c.getDataNascFormatado();
+
+				modelo.addRow(dados);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
 }

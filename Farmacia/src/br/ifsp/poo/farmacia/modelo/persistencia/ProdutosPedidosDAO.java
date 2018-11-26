@@ -19,18 +19,17 @@ public class ProdutosPedidosDAO implements IProdutosPedidosDAO {
 	 * @param produtoPedido o produto pedido para ser inserido
 	 */
 	@Override
-	public void insertProdutoPedido(ProdutosPedidos produtoPedido) throws SQLException, Exception {
+	public void insertProdutoPedido(ProdutosPedidos produtoPedido) throws Exception {
 		PreparedStatement ps = null;
 
 		try (Connection conn = MySqlConnection.getConnection()) {
 			
-			String query = "{call inserir_itens_pedido(?, ?, ?, ?)}";
+			String query = "{call inserir_itens_pedido(?, ?, ?)}";
 			ps = conn.prepareStatement(query);
 
 			ps.setInt(1, produtoPedido.getProduto().getId());
-			ps.setInt(2, produtoPedido.getVenda().getId());
-			ps.setInt(3, produtoPedido.getQuantidade());
-			ps.setDouble(4, produtoPedido.getValorItem());
+			ps.setInt(2, produtoPedido.getQuantidade());
+			ps.setDouble(3, produtoPedido.getValorItem());
 
 			ps.executeUpdate();
 			

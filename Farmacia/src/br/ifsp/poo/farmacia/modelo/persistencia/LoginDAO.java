@@ -4,8 +4,12 @@ import java.nio.file.AccessDeniedException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
+import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
 
 public class LoginDAO implements ILoginDAO {
@@ -57,7 +61,7 @@ public class LoginDAO implements ILoginDAO {
 			ps = conn.prepareStatement(query);		
 
 			ps.setString(1, login.getUserName());
-			ps.setString(2, login.getPassword());	
+			ps.setString(2, login.getPassword());
 			ps.execute();
 			
 		}catch (SQLException e1) {
@@ -66,5 +70,31 @@ public class LoginDAO implements ILoginDAO {
 		catch (Exception e2) {
 			throw new Exception(e2.getMessage());
 		}
+	}
+
+	@Override
+	public Login buscarLogin(int id) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			String query = "SELECT * FROM login WHERE id_funcionario = ?";
+
+			conn = MySqlConnection.getConnection();
+			ps = conn.prepareStatement(query);
+
+			ps.setInt(1, id);
+
+			Login login = new Login(null, null);
+			ResultSet resultado = ps.executeQuery();
+			while (resultado.next()) {
+				login = new Login(resultado.getString("nome"), resultado.getString("senha"));
+			}
+			return login;
+		} catch (SQLException e) {
+			throw new SQLException("Erro no banco de dados." + e);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
 	}
 }

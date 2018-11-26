@@ -1,4 +1,4 @@
-﻿CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `farmacia` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `farmacia`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
@@ -103,7 +103,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','atendente',1200,1),(3,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','atendente',123,1),(7,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(8,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(9,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(11,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(12,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(13,'xsdfs','asadsad','adasdas','1234567897','123456787','123567','1209-11-09','atendente',1234.09,1);
+INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','atendente',1200,1),(3,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,0),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','atendente',123,1),(7,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(8,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(9,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(11,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(12,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(13,'xsdfs','asadsad','adasdas','1234567897','123456787','123567','1209-11-09','atendente',1234.09,1);
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,6 +132,7 @@ CREATE TABLE `itens_pedido` (
 
 LOCK TABLES `itens_pedido` WRITE;
 /*!40000 ALTER TABLE `itens_pedido` DISABLE KEYS */;
+INSERT INTO `itens_pedido` VALUES (6,16,1,2132),(13,9,1,2132);
 /*!40000 ALTER TABLE `itens_pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +243,7 @@ CREATE TABLE `pagamento` (
   PRIMARY KEY (`id`),
   KEY `id_pedido` (`id_pedido`),
   CONSTRAINT `pagamento_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +252,7 @@ CREATE TABLE `pagamento` (
 
 LOCK TABLES `pagamento` WRITE;
 /*!40000 ALTER TABLE `pagamento` DISABLE KEYS */;
-INSERT INTO `pagamento` VALUES (1,3,'cartao','2018-11-01',90),(3,2,'cartao','2018-11-01',90),(4,2,'cartao','2018-11-01',90);
+INSERT INTO `pagamento` VALUES (1,3,'cartao','2018-11-01',90);
 /*!40000 ALTER TABLE `pagamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +275,7 @@ CREATE TABLE `pedido` (
   KEY `funcionario_id` (`funcionario_id`),
   CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +284,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-INSERT INTO `pedido` VALUES (2,'2005-10-29',7,2,100,0.1),(3,'2018-10-23',8,5,40,1);
+INSERT INTO `pedido` VALUES (3,'2018-10-23',8,5,40,1),(6,'2018-11-26',28,2,2132,0),(7,'2018-11-26',28,2,4264,0),(9,'2018-11-26',16,13,100,0),(10,'2018-11-26',28,2,4264,0),(11,'2018-11-26',28,2,4264,0),(12,'2018-11-26',28,2,2132,0),(13,'2018-11-26',28,2,4264,0),(14,'2018-11-26',28,2,2132,0),(15,'2018-11-26',28,2,2132,0),(16,'2018-11-26',28,2,2132,0);
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1068,14 +1069,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `excluir_pedido`(
 IN p_id int(11)
 )
 BEGIN
-	DELETE FROM pedido where id = p_id;
-	#posso colocar um variavel para o status e também uma para ocultar
+	DELETE FROM pagamento where id_pedido = p_id;
+    DELETE FROM pedido where id = p_id;	
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1273,20 +1274,21 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_itens_pedido`(
 IN p_produto_id	int(11),
-IN p_pedido_id	int(11),
 IN p_quantidade	int(11),
 IN p_preco_unitario	double
 )
 BEGIN
+set @ultimo_id = (select max(id) from pedido);
+
 	INSERT INTO itens_pedido 
     VALUES
     (
     p_produto_id,
-    p_pedido_id,
+    @ultimo_id,
     p_quantidade,
     p_preco_unitario
     );
@@ -1431,7 +1433,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_pedido`(
 IN p_cliente_id int(11),
@@ -1515,6 +1517,29 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `retornar_funcionario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `retornar_funcionario`(user varchar(45))
+BEGIN
+select id, f.nome as 'nome_fun', tipo_funcionario from funcionario f
+inner join login l
+on f.id = l.id_funcionario
+where l.nome = user and f.ativo like 1;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `salvar_sessao` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1572,5 +1597,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-16 19:42:40
-
+-- Dump completed on 2018-11-26 13:42:26

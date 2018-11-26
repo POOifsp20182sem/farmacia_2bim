@@ -8,19 +8,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
-import br.ifsp.poo.farmacia.modelo.entidade.EnumCliente;
 
 
 public class ClienteDAO implements IClienteDAO {
 
 	@Override
-	public boolean insertCliente(Cliente cli) throws SQLException {
+	public void insertCliente(Cliente cli) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
 			conn = MySqlConnection.getConnection();
 
-			String query = "{call inserir_cliente(?, ?, ?, ?, ?, ?, ?, ?)}"; 
+			String query = "{call inserir_cliente(?, ?, ?, ?, ?, ?, ?)}"; 
 
 			ps = conn.prepareStatement(query);
 
@@ -29,29 +28,24 @@ public class ClienteDAO implements IClienteDAO {
 			ps.setString(3, cli.getEndereco().toString());
 			ps.setString(4, cli.getTelefone());
 			ps.setString(5, cli.getCelular());
-			ps.setString(6, cli.getTipoCliente().toString());
-			ps.setString(7, cli.getDocumento());
-			ps.setString(8, cli.getDataNascFormatado());
-
-			if(ps.executeUpdate() != 0) 
-				return true;
+			ps.setString(6, cli.getDocumento());
+			ps.setString(7, cli.getDataNascFormatado());
 
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			conn.close();
 		}
-		return false;
 	}
 
 	@Override
-	public boolean updateCliente(Cliente cli) throws SQLException {
+	public void updateCliente(Cliente cli) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 
 		try {
 
-			String query = "{call alterar_cliente(?, ?, ?, ?, ?, ?, ?, ?, ?)}"; 
+			String query = "{call alterar_cliente(?, ?, ?, ?, ?, ?, ?, ?)}"; 
 
 			conn = MySqlConnection.getConnection();
 			ps = conn.prepareStatement(query);		
@@ -62,23 +56,19 @@ public class ClienteDAO implements IClienteDAO {
 			ps.setString(4, cli.getEndereco().toString());
 			ps.setString(5, cli.getTelefone());
 			ps.setString(6, cli.getCelular());
-			ps.setString(7, cli.getTipoCliente().toString());
-			ps.setString(8, cli.getDocumento());
-			ps.setString(9, cli.getDataNascFormatado());
+			ps.setString(7, cli.getDocumento());
+			ps.setString(8, cli.getDataNascFormatado());
 
-			if(ps.executeUpdate() != 0)
-				return true;
 
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			conn.close();
 		}
-		return false;
 	}
 
 	@Override
-	public boolean deleteCliente(Cliente cli) throws SQLException {
+	public void deleteCliente(Cliente cli) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -89,15 +79,11 @@ public class ClienteDAO implements IClienteDAO {
 
 			ps.setInt(1, cli.getId());
 
-			if(ps.executeUpdate() != 0)
-				return true;
-
 			}catch (Exception e) {
 				e.printStackTrace();
 			}finally {
 				conn.close();
 			}
-			return false;
 		}
 
 		@Override
@@ -128,11 +114,6 @@ public class ClienteDAO implements IClienteDAO {
 					cli.setEmail(result.getString("email"));
 					cli.setTelefone(result.getString("telefone"));
 					cli.setCelular(result.getString("celular"));
-					cli.setTipoCliente(
-							(result.getString("tipo_cliente").
-									equalsIgnoreCase(EnumCliente.FISICA.toString()))? 
-											EnumCliente.FISICA:EnumCliente.JURIDICA);
-					cli.setDocumento(result.getString("cpf")!= null? result.getString("cpf"):result.getString("cnpj"));
 					cli.setDataNascimento(LocalDate.parse(result.getString("data_nascimento"), dtf));
 
 					listClientes.add(cli);
@@ -180,15 +161,6 @@ public class ClienteDAO implements IClienteDAO {
 					cli.setEmail(result.getString("email"));
 					cli.setTelefone(result.getString("telefone"));
 					cli.setCelular(result.getString("celular"));
-					cli.setTipoCliente(
-							(result.getString("tipo_cliente").
-									equalsIgnoreCase(EnumCliente.FISICA.toString()))? 
-											EnumCliente.FISICA:EnumCliente.JURIDICA);
-					if(cli.getTipoCliente().equals(EnumCliente.FISICA))
-						cli.setDocumento(result.getString("cpf"));
-					else 
-						cli.setDocumento(result.getString("cnpj"));
-
 					cli.setEndereco(result.getString("endereco"));
 					cli.setDataNascimento(LocalDate.parse(result.getString("data_nascimento"), dtf));
 
