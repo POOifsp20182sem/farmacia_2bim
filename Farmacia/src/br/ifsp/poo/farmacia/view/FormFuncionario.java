@@ -1,19 +1,24 @@
 package br.ifsp.poo.farmacia.view;
 
 import java.awt.Font;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+<<<<<<< HEAD
 import javax.swing.border.EmptyBorder;
+=======
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+>>>>>>> parent of 812d302... Update FormFuncionario.java
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -23,8 +28,9 @@ import br.ifsp.poo.farmacia.control.FuncionarioControl;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Login;
-
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class FormFuncionario extends JFrame {
 
@@ -35,7 +41,6 @@ public class FormFuncionario extends JFrame {
 	private static JTextField txtCidade =  new JTextField();
 	private static JTextField txtBairro =  new JTextField();
 	private static JTextField txtEmail =  new JTextField();
-	private static JTextField txtPesquisar = new JTextField();
 	private static JFormattedTextField mskDataNasc;
 	private static JFormattedTextField mskTelefone;
 	private static JFormattedTextField mskCelular;
@@ -44,11 +49,16 @@ public class FormFuncionario extends JFrame {
 	private static JComboBox<EnumFuncionario> cboTipo = new JComboBox<>();
 	private static JTextField txtUser;
 	private static JPasswordField pswSenha;
+<<<<<<< HEAD
 	private static JTable table;
 	private static JScrollPane barraRolagemT, barraRolagemJ;
 	private static String filtro;
 	private static DefaultTableModel modelo = new DefaultTableModel();
 	static FuncionarioControl ctFunc = new FuncionarioControl();
+=======
+	private JTable table;
+	private JTable table_1;
+>>>>>>> parent of 812d302... Update FormFuncionario.java
 
 	public static void main(String[] args) {
 		FormFuncionario form = new FormFuncionario();
@@ -63,10 +73,18 @@ public class FormFuncionario extends JFrame {
 	public void criarJanela() {
 		setTitle("Funcionário");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+<<<<<<< HEAD
 		setBounds(100, 100, 633, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+=======
+		setBounds(100, 100, 660, 468);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+>>>>>>> parent of 812d302... Update FormFuncionario.java
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 22, 39, 14);
@@ -196,10 +214,12 @@ public class FormFuncionario extends JFrame {
 		lblPesquisar.setBounds(10, 393, 66, 14);
 		contentPane.add(lblPesquisar);
 
+		JTextField txtPesquisar = new JTextField();
 		txtPesquisar.setBounds(78, 390, 193, 20);
 		contentPane.add(txtPesquisar);
 		txtPesquisar.setColumns(10);
-	
+
+		FuncionarioControl ctFunc = new FuncionarioControl();
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(
@@ -228,30 +248,32 @@ public class FormFuncionario extends JFrame {
 
 			Funcionario func = new Funcionario();
 			popularFuncionarios(func);
-			
-			int linhaSelecionada = -1;
-            linhaSelecionada = table.getSelectedRow();
-            
-            if (linhaSelecionada >= 0) {
-                int idFun = (int) table.getValueAt(linhaSelecionada, 0);
-                
-                ctFunc.excluirFuncionario(func);
-                modelo.removeRow(linhaSelecionada);
-            } else {
-                JOptionPane.showMessageDialog(null, "É necesário selecionar uma linha.");
-            }
+			ctFunc.excluirFuncionario(func);
 		});
 		btnExcluir.setBounds(391, 364, 89, 23);
 		contentPane.add(btnExcluir);
 		
+		String [] cabecalho = new String[] {"ID", "nome", "Endereço", "Email", "Telefone","Celular", "Data Nacimento","Tipo","Salário"};
+		
 		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.addActionListener((a) -> {
-			try {
-				pesquisar(modelo, txtPesquisar.getText());
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null, "Erro ao buscar funcionário");
-			}
-			table.repaint();
+		btnPesquisar.addActionListener((e) -> {
+		ArrayList<Funcionario> fun = ctFunc.listarFuncionarios(txtPesquisar.getText());
+		DefaultTableModel model = new DefaultTableModel(cabecalho,0);
+		for(Funcionario f:fun) {
+			String[] dados = new String[10];
+			dados[0] = String.valueOf(f.getId());
+			dados[1] = f.getNome();
+			dados[2] = f.getEndereco();
+			dados[3] = f.getEmail();
+			dados[4] = f.getTelefone();
+			dados[5] = f.getCelular();
+			dados[6] = f.getDataNascFormatado();
+			dados[7] = String.valueOf(f.getTipoFuncionario());
+			dados[8] = String.valueOf(f.getSalario());
+			
+			model.addRow(dados);
+		}
+		table.setModel(model);
 		});
 
 		btnPesquisar.setBounds(292, 389, 89, 23);
@@ -279,7 +301,16 @@ public class FormFuncionario extends JFrame {
 		btnSelecionar.setBounds(545, 242, 89, 23);
 		contentPane.add(btnSelecionar);
 		
+<<<<<<< HEAD
 		setVisible(true);
+=======
+		table = new JTable();
+		table.setToolTipText("");
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		table.setBounds(416, 228, 218, -182);
+		contentPane.add(table);
+>>>>>>> parent of 812d302... Update FormFuncionario.java
 		}
 
 		public static void popularFuncionarios(Funcionario func){
@@ -308,30 +339,8 @@ public class FormFuncionario extends JFrame {
 			}
 			return null;
 		}
-			
-			public static void pesquisar(DefaultTableModel modelo, String filtro) throws SQLException {
-		        modelo.setNumRows(0);
-		        
-		        try {
-		        	ArrayList<Funcionario> fun = ctFunc.listarFuncionarios(filtro);
-		    		for(Funcionario f:fun) {
-		    			String[] dados = new String[10];
-		    			dados[0] = String.valueOf(f.getId());
-		    			dados[1] = f.getNome();
-		    			dados[2] = f.getEndereco();
-		    			dados[3] = f.getEmail();
-		    			dados[4] = f.getTelefone();
-		    			dados[5] = f.getCelular();
-		    			dados[6] = f.getDataNascFormatado();
-		    			dados[7] = String.valueOf(f.getTipoFuncionario());
-		    			dados[8] = String.valueOf(f.getSalario());
-		    			
-		    			modelo.addRow(dados);
-		    		}
-		        } catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
-				}
 	}
+<<<<<<< HEAD
 			public static void criarTabela() {
 				try {
 					table = new JTable(modelo);
@@ -361,3 +370,5 @@ public class FormFuncionario extends JFrame {
 				}
 			}
 		}
+=======
+>>>>>>> parent of 812d302... Update FormFuncionario.java
