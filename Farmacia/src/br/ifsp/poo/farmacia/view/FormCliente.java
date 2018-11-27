@@ -62,7 +62,7 @@ public class FormCliente extends JFrame {
 
 	public void criaJanela() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1000, 439);
+		setBounds(100, 100, 1200, 439);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -134,7 +134,7 @@ public class FormCliente extends JFrame {
 
 		MaskFormatter forCpf = instanciarMascara("###.###.###-##");
 		mskCpf = new JFormattedTextField(forCpf);
-		mskCpf.setBounds(269, 225, 112, 20);
+		mskCpf.setBounds(100, 273, 112, 20);
 		contentPane.add(mskCpf);
 
 		ClienteControl ctCliente = new ClienteControl();
@@ -147,7 +147,7 @@ public class FormCliente extends JFrame {
 					ctCli.CadastrarCliente(cli);
 				}
 				);
-		btnSalvar.setBounds(507, 200, 89, 23);
+		btnSalvar.setBounds(325, 275, 89, 23);
 		contentPane.add(btnSalvar);
 		
 		JButton btnAlterar = new JButton("Alterar");
@@ -157,7 +157,7 @@ public class FormCliente extends JFrame {
 			popularCliente(cli);
 			ctCli.AtualizarCliente(cli);
 		});
-		btnAlterar.setBounds(507, 250, 89, 23);
+		btnAlterar.setBounds(325, 315, 89, 23);
 		contentPane.add(btnAlterar);
 		
 		JButton btnExcluir = new JButton("Excluir");
@@ -170,7 +170,7 @@ public class FormCliente extends JFrame {
 			
 			table.clearSelection();
 		});
-		btnExcluir.setBounds(507, 300, 89, 23);
+		btnExcluir.setBounds(325, 350, 89, 23);
 		contentPane.add(btnExcluir);
 		
 		JLabel lblLogradouro = new JLabel("Logradouro:");
@@ -198,6 +198,32 @@ public class FormCliente extends JFrame {
 		JLabel lblCidade = new JLabel("Cidade:");
 		lblCidade.setBounds(237, 238, 46, 14);
 		contentPane.add(lblCidade);
+		
+		JButton btnSelecionar = new JButton("Selecionar");
+		btnSelecionar.addActionListener((a) -> {
+			int linhaSelecionada = -1;
+			linhaSelecionada = table.getSelectedRow();
+			String idS = String.valueOf(table.getModel().getValueAt(linhaSelecionada, 0));
+			int id = Integer.parseInt(idS);
+			Cliente f = ctCli.buscarCliente(id);
+			
+				txtNome.setText(f.getNome());
+				mskCpf.setText(f.getDocumento());
+				txtLogradouro.setText(f.getEndereco());
+				System.out.println(f.getEndereco());
+				txtEmail.setText(f.getEmail());
+				mskTelefone.setText(f.getTelefone());
+				mskCelular.setText(f.getCelular());
+				//não carrega quando é dia/mes de um caracter só
+				mskDataNasc.setText(f.getStrDataNascimento().replace(".", "/"));
+				System.out.println(f.getStrDataNascimento().replace(".", "/"));			
+		});
+		btnSelecionar.setBounds(800, 300, 89, 23);
+		contentPane.add(btnSelecionar);
+		
+		barra = new JScrollPane(table);
+		barra.setBounds(416, 45, 750, 250);
+		contentPane.add(barra);
 
 	}
 
@@ -209,7 +235,7 @@ public class FormCliente extends JFrame {
 		cli.setId(id);
 		cli.setNome(txtNome.getText()); 
 		cli.setEmail(txtEmail.getText());
-		String endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
+		endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
 				+ txtBairro.getText() + ". Cidade: " + txtCidade.getText() + ".");
 		cli.setEndereco(endereco);
 		cli.setCelular(mskCelular.getText().replaceAll("\\D",""));
@@ -238,7 +264,7 @@ public class FormCliente extends JFrame {
 			modelo.addColumn("Email");
 			modelo.addColumn("Telefone");
 			modelo.addColumn("Celular");
-			modelo.addColumn("Data Nacimento");
+			modelo.addColumn("Data Nascimento");
 
 			table.getColumnModel().getColumn(0).setPreferredWidth(5);
 			table.getColumnModel().getColumn(1).setPreferredWidth(100);

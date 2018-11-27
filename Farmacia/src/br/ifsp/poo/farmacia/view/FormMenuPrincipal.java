@@ -68,12 +68,7 @@ public class FormMenuPrincipal extends JFrame {
 		});
 		
 		clientes.addActionListener((e)->{
-			//TODO:ed:2018:11:16 deve ser tratado na própria classe
-			try {
-				FormCliente formCliente = new FormCliente();
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
+			FormCliente formCliente = new FormCliente();
 		});
 		
 		

@@ -314,7 +314,7 @@ public class FormFuncionario extends JFrame {
 			modelo.addColumn("Email");
 			modelo.addColumn("Telefone");
 			modelo.addColumn("Celular");
-			modelo.addColumn("Data Nacimento");
+			modelo.addColumn("Data Nascimento");
 			modelo.addColumn("Tipo");
 			modelo.addColumn("Sal�rio");
 

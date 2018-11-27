@@ -144,7 +144,7 @@ public class ClienteDAO implements IClienteDAO {
 			final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 			try {
-				String query = "SELECT id, nome, email, endereco, telefone, celular, tipo_cliente, cpf, cnpj, data_nascimento FROM cliente WHERE id = ?;";
+				String query = "SELECT id, nome, email, endereco, telefone, celular, cpf, data_nascimento FROM cliente WHERE id = ?;";
 
 				conn = MySqlConnection.getConnection();
 				ps = conn.prepareStatement(query);		
