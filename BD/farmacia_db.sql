@@ -58,8 +58,9 @@ CREATE TABLE `cliente` (
   `cpf` varchar(11) DEFAULT NULL,
   `data_nascimento` date NOT NULL,
   `ativo` tinyint(1) DEFAULT '1',
+  `especial` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +69,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (7,'zé mane','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0),(8,'zé mane','ze@gmail.com','Rua 7','123213213','5454848444',NULL,'2000-10-15',0),(10,'Batman','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0),(11,'Éder','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0),(14,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','12409534612','1995-00-04',0),(16,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','','1995-00-04',0),(17,'aaa','asdasd','rua x','145454','45454','cpf','1992-12-12',0),(20,'eder','adsad','asdasd','1213','12423',NULL,'1992-12-12',0),(21,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(22,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(23,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(24,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(25,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(26,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(27,'eder','der','c, a, b, d','2222222222','33333333333',NULL,'1111-11-11',0),(28,'joao','joao@lala.com','alameda, flor, caixa,34','1187654321','1109876543','12345678901','2000-09-16',1),(29,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(30,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(31,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(32,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(34,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2014-01-01',1),(35,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2014-01-01',1);
+INSERT INTO `cliente` VALUES (7,'zé mane','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0,0),(8,'zé mane','ze@gmail.com','Rua 7','123213213','5454848444',NULL,'2000-10-15',0,0),(10,'Batman','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0,0),(11,'Éder','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0,0),(14,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','12409534612','1995-00-04',0,0),(16,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','','1995-00-04',0,0),(17,'aaa','asdasd','rua x','145454','45454','cpf','1992-12-12',0,0),(20,'eder','adsad','asdasd','1213','12423',NULL,'1992-12-12',0,0),(21,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0,0),(22,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0,0),(23,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0,0),(24,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0,0),(25,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0,0),(26,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0,0),(27,'eder','der','c, a, b, d','2222222222','33333333333',NULL,'1111-11-11',0,0),(28,'joao','joao@lala.com','alameda, flor, caixa,34','1187654321','1109876543','12345678901','2000-09-16',1,0),(29,'Ã‰der','eder@gmail','Logradouro: Monte Siï¿½o, Irineu Bernardi, 97, , 99. Bairro: luz. Cidade: atibaia.','1988845','154544','','1997-12-31',1,1),(30,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1,0),(32,'Ã‰der','eder@gmail','Logradouro: Monte Siï¿½o, Irineu Bernardi, 97, , . Bairro: . Cidade: .','1988845','154544','11111111111','1997-12-31',1,0),(34,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2014-01-01',1,0),(35,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2014-01-01',1,0),(36,'Teste','teste@teste.com','Rua lala','1122334455','11922334455','12345678910','2005-11-11',1,1),(37,'Alissa','alissa@alissa.com','Logradouro: longe, 99. Bairro: luz. Cidade: atibaia.','1111223344','11988776655','11233455677','2009-10-12',1,1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +102,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','ATENDENTE',1200,1),(3,'aaa','aaa','Logradouro: aaa, 4. Bairro: a. Cidade: f.','2222222222','33333333333','55555555555','1987-12-12','GERENTE',1111.44,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','Logradouro: aaa, . Bairro: . Cidade: .','','','','1987-12-12','ATENDENTE',90,0),(31,'teste2','b','Logradouro: c, . Bairro: . Cidade: .','12','345','123456','2000-09-09','ATENDENTE',1234.67,1),(36,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','ATENDENTE',1234.44,1),(37,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','ATENDENTE',1234.44,1),(38,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','GERENTE',1234.44,1),(39,'lala','la@la.com',', , .','1111111111','11111111111','11111111111','2009-11-20','ATENDENTE',1111.11,1),(40,'oi','ola@oi.com','Logradouro: , , , ., . Bairro: . Cidade: .','3333333333','44444444444','44444444444','2009-11-20','ATENDENTE',2222.22,1),(41,'asjdoi','ajiosj','asjai, 88, isjdioj, uhsudf.','2222222222','33333333333','24444444444','2009-11-20','ATENDENTE',1111.11,1),(42,'asijai','ijdaiojd','ashdiadh, 66, aduh, uhsdiud.','2222222222','33333333333','77777777777','2005-11-09','GERENTE',1111.11,1),(43,'asijai','ijdaiojd','Logradouro: ashdiadh, 66, aduh, uhsdiud., . Bairro: . Cidade: .','2222222222','33333333333','77777777777','2005-12-22','GERENTE',1111.11,1),(45,'teste3','ijd','Logradouro: ruaaa, . Bairro: . Cidade: .','1111111111','11111111111','22222222222','2008-12-22','GERENTE',1111.11,1),(48,'Alice Brenda','alice@email.com','Logradouro: rua, 98. Bairro: bairro. Cidade: Munhoz.','1140028922','35912345678','12344321566','1998-01-02','GERENTE',3000,1),(49,'julianne','ju@ju.com','Logradouro: la, 12. Bairro: le. Cidade: li.','1144120908','11980789678','09876543212','1998-05-04','ATENDENTE',1212.12,1);
+INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','ATENDENTE',1200,1),(3,'aaa','aaa','Logradouro: aaa, 4. Bairro: a. Cidade: f.','2222222222','33333333333','55555555555','1987-12-12','GERENTE',1111.44,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','Logradouro: aaa, . Bairro: . Cidade: .','','','','1987-12-12','ATENDENTE',90,0),(31,'teste2','b','Logradouro: c, . Bairro: . Cidade: .','12','345','123456','2000-09-09','ATENDENTE',1234.67,1),(36,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','ATENDENTE',1234.44,1),(37,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','ATENDENTE',1234.44,1),(38,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','GERENTE',1234.44,1),(39,'lala','la@la.com',', , .','1111111111','11111111111','11111111111','2009-11-20','ATENDENTE',1111.11,1),(40,'oi','ola@oi.com','Logradouro: , , , ., . Bairro: . Cidade: .','3333333333','44444444444','44444444444','2009-11-20','ATENDENTE',2222.22,1),(41,'asjdoi','ajiosj','asjai, 88, isjdioj, uhsudf.','2222222222','33333333333','24444444444','2009-11-20','ATENDENTE',1111.11,1),(42,'asijai','ijdaiojd','Logradouro: ashdiadh, 66, aduh, uhsdiud., . Bairro: . Cidade: .','2222222222','33333333333','77777777777','2005-11-11','GERENTE',1111.11,1),(43,'asijai','ijdaiojd','Logradouro: Logradouro: ashdiadh, 66, aduh, uhsdiud., . Bairro: . Cidade: ., . Bairro: . Cidade: .','2222222222','33333333333','77777777777','2005-12-22','ATENDENTE',1111.11,1),(45,'teste3','ijd','Logradouro: ruaaa, . Bairro: . Cidade: .','1111111111','11111111111','22222222222','2008-12-22','GERENTE',1111.11,1),(48,'Alice Brenda','alice@email.com','Logradouro: rua, 98. Bairro: bairro. Cidade: Munhoz.','1140028922','35912345678','12344321566','1998-01-02','GERENTE',3000,1),(49,'julianne','ju@ju.com','Logradouro: la, 12. Bairro: le. Cidade: li.','1144120908','11980789678','09876543212','1998-05-04','ATENDENTE',1212.12,1);
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,7 +465,8 @@ IN p_endereco varchar(100),
 IN p_telefone varchar(10),
 IN p_celular varchar(11),
 IN p_documento varchar(14) ,
-IN p_data_nascimento date
+IN p_data_nascimento date,
+IN p_especial boolean
 )
 BEGIN
 	UPDATE cliente
@@ -475,7 +477,8 @@ BEGIN
 		telefone = p_telefone, 
 		celular = p_celular, 
 		cpf = p_documento, 
-		data_nascimento = p_data_nascimento
+		data_nascimento = p_data_nascimento,
+        especial = p_especial
 	WHERE id = p_id;
 
 END ;;
@@ -708,11 +711,11 @@ BEGIN
 # converter todos os dados para upper ou converter apenas na busca?
 
 	IF filter LIKE '' THEN
-		SELECT id, nome, email, endereco,telefone, celular, cpf, data_nascimento 
+		SELECT id, nome, email, endereco,telefone, celular, cpf, data_nascimento, especial 
 			FROM cliente 
 				WHERE ativo IS TRUE;
 	ELSE
-		SELECT id, nome, email, endereco,telefone, celular, cpf, data_nascimento
+		SELECT id, nome, email, endereco,telefone, celular, cpf, data_nascimento, especial
 			FROM cliente
 				WHERE 
 					(nome LIKE CONCAT('%', filter,'%') OR
@@ -1156,12 +1159,13 @@ IN p_endereco varchar(100),
 IN p_telefone varchar(10),
 IN p_celular varchar(11),
 IN p_documento varchar(14) ,
-IN p_data_nascimento date
+IN p_data_nascimento date,
+IN p_especial boolean
 )
 BEGIN
 
 	INSERT INTO cliente
-		(nome, email, endereco, telefone, celular,cpf, data_nascimento) 
+		(nome, email, endereco, telefone, celular,cpf, data_nascimento, especial) 
 	VALUES
 		(
 		p_nome,
@@ -1170,7 +1174,8 @@ BEGIN
 		p_telefone,
 		p_celular,
 		p_documento,
-		p_data_nascimento
+		p_data_nascimento,
+        p_especial
 		);
 
 END ;;
@@ -1529,4 +1534,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-26 23:30:33
+-- Dump completed on 2018-11-27  1:03:20

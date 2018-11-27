@@ -310,13 +310,13 @@ public class FormFuncionario extends JFrame {
 			modelo.addColumn("ID");
 			modelo.addColumn("Nome");
 			modelo.addColumn("CPF");
-			modelo.addColumn("EndereÃ§o");
+			modelo.addColumn("Endereço");
 			modelo.addColumn("Email");
 			modelo.addColumn("Telefone");
 			modelo.addColumn("Celular");
 			modelo.addColumn("Data Nascimento");
 			modelo.addColumn("Tipo");
-			modelo.addColumn("Salï¿½rio");
+			modelo.addColumn("Salário");
 
 			table.getColumnModel().getColumn(0).setPreferredWidth(5);
 			table.getColumnModel().getColumn(1).setPreferredWidth(100);

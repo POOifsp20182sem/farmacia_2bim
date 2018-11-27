@@ -6,10 +6,10 @@ import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
 
 public interface IClienteDAO {
 	
-	public void insertCliente(Cliente cli) throws SQLException;
-	public void updateCliente(Cliente cli) throws SQLException;
-	public void deleteCliente(Cliente cli) throws SQLException;
-	public ArrayList<Cliente> selectCliente(String filter) throws SQLException;
-	public ArrayList<Cliente> selectCliente() throws SQLException;
-	public Cliente buscarCliente(int id) throws SQLException;
+	public void insertCliente(Cliente cli) throws SQLException, Exception;
+	public void updateCliente(Cliente cli) throws SQLException, Exception;
+	public void deleteCliente(Cliente cli) throws SQLException, Exception;
+	public ArrayList<Cliente> selectCliente(String filter) throws SQLException, Exception;
+	public ArrayList<Cliente> selectCliente() throws SQLException, Exception;
+	public Cliente buscarCliente(int id) throws SQLException, Exception;
 }

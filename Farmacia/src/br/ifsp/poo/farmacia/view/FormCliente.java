@@ -1,9 +1,7 @@
 package br.ifsp.poo.farmacia.view;
 
-import java.awt.EventQueue;
 import java.text.ParseException;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,28 +14,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import br.ifsp.poo.farmacia.control.ClienteControl;
-import br.ifsp.poo.farmacia.control.FuncionarioControl;
 import br.ifsp.poo.farmacia.modelo.entidade.Cliente;
-import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
-import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
-import br.ifsp.poo.farmacia.modelo.entidade.Login;
-
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import javax.swing.JCheckBox;
+
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
 
 public class FormCliente extends JFrame {
 
 	private JPanel contentPane;
-	private static int idCliente = -1;
 	private static JTextField txtNome;
 	private static JTextField txtLogradouro;
 	private static JTextField txtNumero;
 	private static JTextField txtCidade;
 	private static JTextField txtBairro;
 	private static JTextField txtEmail;
-	private static JTextField txtPesquisar;
 	private static JFormattedTextField mskDataNasc;
 	private static JFormattedTextField mskTelefone;
 	private static JFormattedTextField mskCelular;
@@ -45,6 +36,7 @@ public class FormCliente extends JFrame {
 	private static String endereco;
 	private static JTable table;
 	private static JScrollPane barra;
+	private static JCheckBox especial;
 	private DefaultTableModel modelo = new DefaultTableModel();
 	static ClienteControl ctCli = new ClienteControl();
 
@@ -62,7 +54,7 @@ public class FormCliente extends JFrame {
 
 	public void criaJanela() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1200, 439);
+		setBounds(100, 100, 1250, 439);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -136,8 +128,10 @@ public class FormCliente extends JFrame {
 		mskCpf = new JFormattedTextField(forCpf);
 		mskCpf.setBounds(100, 273, 112, 20);
 		contentPane.add(mskCpf);
-
-		ClienteControl ctCliente = new ClienteControl();
+		
+		especial = new JCheckBox("Aposentado");
+		especial.setBounds(50, 300, 100, 20);
+		contentPane.add(especial);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(
@@ -210,19 +204,20 @@ public class FormCliente extends JFrame {
 				txtNome.setText(f.getNome());
 				mskCpf.setText(f.getDocumento());
 				txtLogradouro.setText(f.getEndereco());
-				System.out.println(f.getEndereco());
 				txtEmail.setText(f.getEmail());
 				mskTelefone.setText(f.getTelefone());
 				mskCelular.setText(f.getCelular());
 				//não carrega quando é dia/mes de um caracter só
 				mskDataNasc.setText(f.getStrDataNascimento().replace(".", "/"));
-				System.out.println(f.getStrDataNascimento().replace(".", "/"));			
+				System.out.println(f.getStrDataNascimento().replace(".", "/"));		
+				
+				especial.setSelected(false);
 		});
 		btnSelecionar.setBounds(800, 300, 89, 23);
 		contentPane.add(btnSelecionar);
 		
 		barra = new JScrollPane(table);
-		barra.setBounds(416, 45, 750, 250);
+		barra.setBounds(416, 45, 800, 250);
 		contentPane.add(barra);
 
 	}
@@ -234,6 +229,12 @@ public class FormCliente extends JFrame {
 		int id = Integer.parseInt(idS);
 		cli.setId(id);
 		cli.setNome(txtNome.getText()); 
+		if(especial.isSelected()) {
+			cli.setEspecial(true);
+		}
+		else {
+			cli.setEspecial(false);
+		}
 		cli.setEmail(txtEmail.getText());
 		endereco = new String("Logradouro: " + txtLogradouro.getText() + ", " + txtNumero.getText() + ". Bairro: " 
 				+ txtBairro.getText() + ". Cidade: " + txtCidade.getText() + ".");
@@ -259,6 +260,7 @@ public class FormCliente extends JFrame {
 			table = new JTable(modelo);
 			modelo.addColumn("ID");
 			modelo.addColumn("Nome");
+			modelo.addColumn("Especial");
 			modelo.addColumn("CPF");
 			modelo.addColumn("Endere�o");
 			modelo.addColumn("Email");
@@ -268,12 +270,13 @@ public class FormCliente extends JFrame {
 
 			table.getColumnModel().getColumn(0).setPreferredWidth(5);
 			table.getColumnModel().getColumn(1).setPreferredWidth(100);
-			table.getColumnModel().getColumn(2).setPreferredWidth(50);
-			table.getColumnModel().getColumn(3).setPreferredWidth(150);
-			table.getColumnModel().getColumn(4).setPreferredWidth(30);
-			table.getColumnModel().getColumn(5).setPreferredWidth(20);
+			table.getColumnModel().getColumn(2).setPreferredWidth(5);
+			table.getColumnModel().getColumn(3).setPreferredWidth(50);
+			table.getColumnModel().getColumn(4).setPreferredWidth(150);
+			table.getColumnModel().getColumn(5).setPreferredWidth(30);
 			table.getColumnModel().getColumn(6).setPreferredWidth(20);
 			table.getColumnModel().getColumn(7).setPreferredWidth(20);
+			table.getColumnModel().getColumn(8).setPreferredWidth(20);
 
 			pesquisar(modelo, "");
 		} catch (Exception e) {
@@ -287,15 +290,16 @@ public class FormCliente extends JFrame {
 		try {
 			ArrayList<Cliente> cli = ctCli.listarCliente(filtro);
 			for(Cliente c:cli) {
-				String[] dados = new String[8];
+				String[] dados = new String[10];
 				dados[0] = String.valueOf(c.getId());
 				dados[1] = c.getNome();
-				dados[2] = c.getDocumento();
-				dados[3] = c.getEndereco();
-				dados[4] = c.getEmail();
-				dados[5] = c.getTelefone();
-				dados[6] = c.getCelular();
-				dados[7] = c.getDataNascFormatado();
+				dados[2] = String.valueOf(c.isEspecial());
+				dados[3] = c.getDocumento();
+				dados[4] = c.getEndereco();
+				dados[5] = c.getEmail();
+				dados[6] = c.getTelefone();
+				dados[7] = c.getCelular();
+				dados[8] = c.getDataNascFormatado();
 
 				modelo.addRow(dados);
 			}
