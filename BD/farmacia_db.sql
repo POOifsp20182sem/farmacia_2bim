@@ -4,7 +4,7 @@ USE `farmacia`;
 --
 -- Host: localhost    Database: farmacia
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.7.19-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -52,12 +52,10 @@ CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `endereco` varchar(50) NOT NULL,
+  `endereco` varchar(100) NOT NULL,
   `telefone` varchar(10) NOT NULL,
   `celular` varchar(11) DEFAULT NULL,
-  `tipo_cliente` enum('juridica','fisica') NOT NULL,
   `cpf` varchar(11) DEFAULT NULL,
-  `cnpj` varchar(14) DEFAULT NULL,
   `data_nascimento` date NOT NULL,
   `ativo` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
@@ -70,7 +68,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (7,'zé mane','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(8,'zé mane','ze@gmail.com','Rua 7','123213213','5454848444','juridica',NULL,'12409536619123','2000-10-15',0),(10,'Batman','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(11,'Éder','eder@gmail.com','Rua x','3534652870','99999999999','fisica','12409536619',NULL,'2000-12-12',0),(14,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','fisica','12409534612','','1995-00-04',0),(16,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','juridica','','12409534612','1995-00-04',0),(17,'aaa','asdasd','rua x','145454','45454','fisica','cpf',NULL,'1992-12-12',0),(20,'eder','adsad','asdasd','1213','12423','juridica',NULL,'1asdasd','1992-12-12',0),(21,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(22,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(23,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(24,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(25,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(26,'eder','eder','c, a, b, d','(11) 11111','(11) 111111','fisica',NULL,NULL,'1111-11-11',0),(27,'eder','der','c, a, b, d','2222222222','33333333333','fisica',NULL,NULL,'1111-11-11',0),(28,'joao','joao@lala.com','alameda, flor, caixa,34','1187654321','1109876543','fisica','12345678901',NULL,'2000-09-16',1),(29,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(30,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(31,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(32,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544','juridica',NULL,'12409534612','1997-12-31',1),(34,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','fisica','12345678901',NULL,'2014-01-01',1),(35,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','fisica','12345678901',NULL,'2014-01-01',1);
+INSERT INTO `cliente` VALUES (7,'zé mane','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0),(8,'zé mane','ze@gmail.com','Rua 7','123213213','5454848444',NULL,'2000-10-15',0),(10,'Batman','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0),(11,'Éder','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12',0),(14,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','12409534612','1995-00-04',0),(16,'Éder','eder@gmail','Monte Sião, Irineu Bernardi, 97, ','1988845','154544','','1995-00-04',0),(17,'aaa','asdasd','rua x','145454','45454','cpf','1992-12-12',0),(20,'eder','adsad','asdasd','1213','12423',NULL,'1992-12-12',0),(21,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(22,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(23,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(24,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(25,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(26,'eder','eder','c, a, b, d','(11) 11111','(11) 111111',NULL,'1111-11-11',0),(27,'eder','der','c, a, b, d','2222222222','33333333333',NULL,'1111-11-11',0),(28,'joao','joao@lala.com','alameda, flor, caixa,34','1187654321','1109876543','12345678901','2000-09-16',1),(29,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(30,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(31,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(32,'Ã‰der','eder@gmail','Monte Siï¿½o, Irineu Bernardi, 97, ','1988845','154544',NULL,'1997-12-31',1),(34,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2014-01-01',1),(35,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2014-01-01',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,16 +83,16 @@ CREATE TABLE `funcionario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `endereco` varchar(50) NOT NULL,
+  `endereco` varchar(100) NOT NULL,
   `telefone` varchar(10) NOT NULL,
   `celular` varchar(11) DEFAULT NULL,
   `cpf` varchar(11) NOT NULL,
   `data_nascimento` date NOT NULL,
-  `tipo_funcionario` enum('gerente','atendente') NOT NULL,
+  `tipo_funcionario` enum('GERENTE','ATENDENTE') NOT NULL,
   `salario` double NOT NULL,
   `ativo` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +101,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','atendente',1200,1),(3,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,0),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','atendente',123,1),(7,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(8,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(9,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','atendente',1234.44,1),(11,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(12,'a','b','c','12','345','123456','2000-09-09','atendente',1234.67,1),(13,'xsdfs','asadsad','adasdas','1234567897','123456787','123567','1209-11-09','atendente',1234.09,1);
+INSERT INTO `funcionario` VALUES (2,'batatao','eder@gmail.com','Rua x','3534652870','99999999999','12409536619','2000-12-12','ATENDENTE',1200,1),(3,'aaa','aaa','Logradouro: aaa, 4. Bairro: a. Cidade: f.','2222222222','33333333333','55555555555','1987-12-12','GERENTE',1111.44,1),(4,'aaa','aaa','aaa','aaa','aa','aaa','1987-12-12','',123,1),(5,'aaa','aaa','Logradouro: aaa, . Bairro: . Cidade: .','','','','1987-12-12','ATENDENTE',90,0),(31,'teste2','b','Logradouro: c, . Bairro: . Cidade: .','12','345','123456','2000-09-09','ATENDENTE',1234.67,1),(36,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','ATENDENTE',1234.44,1),(37,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','ATENDENTE',1234.44,1),(38,'Teste','email@mail.com','rua das garcas, 65, jd mario, atibaia','1109876543','1112345678','12345678901','2001-01-20','GERENTE',1234.44,1),(39,'lala','la@la.com',', , .','1111111111','11111111111','11111111111','2009-11-20','ATENDENTE',1111.11,1),(40,'oi','ola@oi.com','Logradouro: , , , ., . Bairro: . Cidade: .','3333333333','44444444444','44444444444','2009-11-20','ATENDENTE',2222.22,1),(41,'asjdoi','ajiosj','asjai, 88, isjdioj, uhsudf.','2222222222','33333333333','24444444444','2009-11-20','ATENDENTE',1111.11,1),(42,'asijai','ijdaiojd','ashdiadh, 66, aduh, uhsdiud.','2222222222','33333333333','77777777777','2005-11-09','GERENTE',1111.11,1),(43,'asijai','ijdaiojd','Logradouro: ashdiadh, 66, aduh, uhsdiud., . Bairro: . Cidade: .','2222222222','33333333333','77777777777','2005-12-22','GERENTE',1111.11,1),(45,'teste3','ijd','Logradouro: ruaaa, . Bairro: . Cidade: .','1111111111','11111111111','22222222222','2008-12-22','GERENTE',1111.11,1),(48,'Alice Brenda','alice@email.com','Logradouro: rua, 98. Bairro: bairro. Cidade: Munhoz.','1140028922','35912345678','12344321566','1998-01-02','GERENTE',3000,1),(49,'julianne','ju@ju.com','Logradouro: la, 12. Bairro: le. Cidade: li.','1144120908','11980789678','09876543212','1998-05-04','ATENDENTE',1212.12,1);
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +130,6 @@ CREATE TABLE `itens_pedido` (
 
 LOCK TABLES `itens_pedido` WRITE;
 /*!40000 ALTER TABLE `itens_pedido` DISABLE KEYS */;
-INSERT INTO `itens_pedido` VALUES (6,16,1,2132),(13,9,1,2132);
 /*!40000 ALTER TABLE `itens_pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +155,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES ('eder','123',1),('consoli','321',2),('admin','admin',3),('aaaa','1234',4),('lalala','098700',5),('aaaa','1234',12),('aaaa','1234',12),('eder','1234',13),('admin','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',13);
+INSERT INTO `login` VALUES ('eder','123',1),('consoli','321',2),('admin','admin',3),('aaaa','1234',4),('alice','1234',48),('ju','1243',49);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,7 +240,7 @@ CREATE TABLE `pagamento` (
   PRIMARY KEY (`id`),
   KEY `id_pedido` (`id_pedido`),
   CONSTRAINT `pagamento_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +249,7 @@ CREATE TABLE `pagamento` (
 
 LOCK TABLES `pagamento` WRITE;
 /*!40000 ALTER TABLE `pagamento` DISABLE KEYS */;
-INSERT INTO `pagamento` VALUES (1,3,'cartao','2018-11-01',90);
+INSERT INTO `pagamento` VALUES (1,3,'cartao','2018-11-01',90),(3,2,'cartao','2018-11-01',90),(4,2,'cartao','2018-11-01',90);
 /*!40000 ALTER TABLE `pagamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +272,7 @@ CREATE TABLE `pedido` (
   KEY `funcionario_id` (`funcionario_id`),
   CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +281,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-INSERT INTO `pedido` VALUES (3,'2018-10-23',8,5,40,1),(6,'2018-11-26',28,2,2132,0),(7,'2018-11-26',28,2,4264,0),(9,'2018-11-26',16,13,100,0),(10,'2018-11-26',28,2,4264,0),(11,'2018-11-26',28,2,4264,0),(12,'2018-11-26',28,2,2132,0),(13,'2018-11-26',28,2,4264,0),(14,'2018-11-26',28,2,2132,0),(15,'2018-11-26',28,2,2132,0),(16,'2018-11-26',28,2,2132,0);
+INSERT INTO `pedido` VALUES (2,'2005-10-29',7,2,100,0.1),(3,'2018-10-23',8,5,40,1);
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,6 +380,10 @@ INSERT INTO `sessao` VALUES (4,2,NULL,1000,NULL,'2018-09-25 21:21:21',NULL,'FECH
 UNLOCK TABLES;
 
 --
+-- Dumping events for database 'farmacia'
+--
+
+--
 -- Dumping routines for database 'farmacia'
 --
 /*!50003 DROP FUNCTION IF EXISTS `validar_login` */;
@@ -453,23 +454,19 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_cliente`(
 IN p_id int,
 IN p_nome varchar(50),
 IN p_email varchar(50),
-IN p_endereco varchar(50),
+IN p_endereco varchar(100),
 IN p_telefone varchar(10),
 IN p_celular varchar(11),
-IN p_tipo_cliente enum('juridica','fisica'),
 IN p_documento varchar(14) ,
 IN p_data_nascimento date
 )
 BEGIN
-
-IF p_tipo_cliente = 'fisica' THEN
-
 	UPDATE cliente
 	SET
 		nome = p_nome, 
@@ -477,27 +474,10 @@ IF p_tipo_cliente = 'fisica' THEN
 		endereco = p_endereco, 
 		telefone = p_telefone, 
 		celular = p_celular, 
-		tipo_cliente = p_tipo_cliente,
-		cnpj = NULL,
 		cpf = p_documento, 
 		data_nascimento = p_data_nascimento
 	WHERE id = p_id;
 
-ELSE 
-	UPDATE cliente
-	SET
-		nome = p_nome, 
-		email = p_email, 
-		endereco = p_endereco, 
-		telefone = p_telefone, 
-		celular = p_celular, 
-		tipo_cliente = p_tipo_cliente,
-		cnpj = p_documento,
-		cpf = NULL, 
-		data_nascimento = p_data_nascimento
-	WHERE id = p_id;
-
-END IF;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -518,12 +498,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `alterar_funcionario`(
 IN p_id int,
 IN p_nome varchar(50),
 IN p_email varchar(50) ,
-IN p_endereco varchar(50) ,
+IN p_endereco varchar(100) ,
 IN p_telefone varchar(10),
 IN p_celular varchar(11),
 IN p_cpf varchar(11),
 IN p_data_nascimento date,
-IN p_tipo_funcionario enum('gerente','atendente'),
+IN p_tipo_funcionario enum('GERENTE','ATENDENTE'),
 IN p_salario double,
 IN p_user varchar(40),
 IN p_senha varchar(40)
@@ -548,7 +528,7 @@ BEGIN
     nome = p_user,
     senha = p_senha
     WHERE
-    funcionario.id = p_id;
+    id_funcionario = p_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -719,7 +699,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_clientes`(IN filter varchar(50))
 BEGIN
@@ -728,11 +708,11 @@ BEGIN
 # converter todos os dados para upper ou converter apenas na busca?
 
 	IF filter LIKE '' THEN
-		SELECT id, nome, email, endereco,telefone, celular, tipo_cliente, cpf, cnpj, data_nascimento 
+		SELECT id, nome, email, endereco,telefone, celular, cpf, data_nascimento 
 			FROM cliente 
 				WHERE ativo IS TRUE;
 	ELSE
-		SELECT id, nome, email, endereco,telefone, celular, tipo_cliente, cpf, cnpj, data_nascimento
+		SELECT id, nome, email, endereco,telefone, celular, cpf, data_nascimento
 			FROM cliente
 				WHERE 
 					(nome LIKE CONCAT('%', filter,'%') OR
@@ -740,9 +720,7 @@ BEGIN
 					endereco LIKE CONCAT('%', filter,'%') OR
 					telefone LIKE CONCAT('%', filter,'%') OR
 					celular LIKE CONCAT('%', filter,'%') OR
-					tipo_cliente LIKE CONCAT('%', filter,'%') OR
-					cpf LIKE CONCAT('%', filter,'%') OR
-					cnpj LIKE CONCAT('%', filter,'%')) AND ativo IS TRUE;
+					cpf LIKE CONCAT('%', filter,'%')) AND ativo IS TRUE;
 	END IF;
    
 END ;;
@@ -759,7 +737,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_funcionarios`(IN filter varchar(50))
 BEGIN
@@ -782,7 +760,6 @@ BEGIN
 					tipo_funcionario LIKE CONCAT('%', filter,'%') OR
 					cpf LIKE CONCAT('%', filter,'%')) AND ativo IS TRUE;
 	END IF;
-
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1069,14 +1046,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `excluir_pedido`(
 IN p_id int(11)
 )
 BEGIN
-	DELETE FROM pagamento where id_pedido = p_id;
-    DELETE FROM pedido where id = p_id;	
+	DELETE FROM pedido where id = p_id;
+	#posso colocar um variavel para o status e também uma para ocultar
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1170,26 +1147,21 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_cliente`(
 IN p_nome varchar(50),
 IN p_email varchar(50),
-IN p_endereco varchar(50),
+IN p_endereco varchar(100),
 IN p_telefone varchar(10),
 IN p_celular varchar(11),
-IN p_tipo_cliente enum('juridica','fisica'),
 IN p_documento varchar(14) ,
 IN p_data_nascimento date
 )
 BEGIN
 
-# criar um campo para documento (generico) ou fazer este processo sempre?
-
-IF p_tipo_cliente = 'fisica' THEN
-
 	INSERT INTO cliente
-		(nome, email, endereco, telefone, celular, tipo_cliente, cpf, cnpj, data_nascimento) 
+		(nome, email, endereco, telefone, celular,cpf, data_nascimento) 
 	VALUES
 		(
 		p_nome,
@@ -1197,26 +1169,9 @@ IF p_tipo_cliente = 'fisica' THEN
 		p_endereco,
 		p_telefone,
 		p_celular,
-		p_tipo_cliente,
-		p_documento, null,
+		p_documento,
 		p_data_nascimento
 		);
-ELSE
-	INSERT INTO cliente
-		(nome, email, endereco, telefone, celular, tipo_cliente, cpf, cnpj, data_nascimento) 
-	VALUES
-		(
-		p_nome,
-		p_email,
-		p_endereco,
-		p_telefone,
-		p_celular,
-		p_tipo_cliente,
-		null, p_documento,
-		p_data_nascimento
-		);
-
-END IF;
 
 END ;;
 DELIMITER ;
@@ -1232,17 +1187,17 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_funcionario`(
 IN p_nome varchar(50),
 IN p_email varchar(50) ,
-IN p_endereco varchar(50) ,
+IN p_endereco varchar(100) ,
 IN p_telefone varchar(10),
 IN p_celular varchar(11),
 IN p_cpf varchar(11),
 IN p_data_nascimento date,
-IN p_tipo_funcionario enum('gerente','atendente'),
+IN p_tipo_funcionario enum('GERENTE','ATENDENTE'),
 IN p_salario double
 
 )
@@ -1260,6 +1215,7 @@ BEGIN
     p_tipo_funcionario,
     p_salario
     );
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1274,21 +1230,20 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_itens_pedido`(
 IN p_produto_id	int(11),
+IN p_pedido_id	int(11),
 IN p_quantidade	int(11),
 IN p_preco_unitario	double
 )
 BEGIN
-set @ultimo_id = (select max(id) from pedido);
-
 	INSERT INTO itens_pedido 
     VALUES
     (
     p_produto_id,
-    @ultimo_id,
+    p_pedido_id,
     p_quantidade,
     p_preco_unitario
     );
@@ -1433,7 +1388,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserir_pedido`(
 IN p_cliente_id int(11),
@@ -1517,29 +1472,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `retornar_funcionario` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `retornar_funcionario`(user varchar(45))
-BEGIN
-select id, f.nome as 'nome_fun', tipo_funcionario from funcionario f
-inner join login l
-on f.id = l.id_funcionario
-where l.nome = user and f.ativo like 1;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `salvar_sessao` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1597,4 +1529,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-26 13:42:26
+-- Dump completed on 2018-11-26 23:30:33
