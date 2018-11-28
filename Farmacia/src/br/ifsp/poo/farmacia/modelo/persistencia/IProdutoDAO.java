@@ -3,6 +3,7 @@ package br.ifsp.poo.farmacia.modelo.persistencia;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 
 public interface IProdutoDAO {
@@ -12,4 +13,5 @@ public interface IProdutoDAO {
 	public boolean deleteProduto(Produto prod) throws SQLException;
 	public ArrayList<Produto> selectProduto(String filter) throws SQLException;
 	public ArrayList<Produto> selectProduto() throws SQLException;
+	public Produto buscarProduto(int id) throws SQLException, Exception;
 }

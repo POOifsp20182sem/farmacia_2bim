@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.ifsp.poo.farmacia.modelo.entidade.ClasseTerapeutica;
+import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
 import br.ifsp.poo.farmacia.modelo.entidade.PrincipioAtivo;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 
@@ -238,5 +240,35 @@ public class ProdutoDAO implements IProdutoDAO {
 			conn.close();
 		}
 		return classesTerapeuticas;
+	}
+	
+	public Produto buscarProduto(int id) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		
+		try {
+			String query = "SELECT * FROM produto WHERE id = ?";
+
+			conn = MySqlConnection.getConnection();
+			ps = conn.prepareStatement(query);
+
+			ps.setInt(1, id);
+
+			ResultSet resultado = ps.executeQuery();
+			Produto p = new Produto();
+			while (resultado.next()) {
+
+				p.setId(resultado.getInt("id"));
+				p.setNomeComercial(resultado.getString("nome_comercial"));
+				p.setApresentacao(resultado.getString("apresentacao"));
+				p.setFormaFarmaco(resultado.getString("forma_farmaco"));
+				p.setCodigoBarras(resultado.getString("codigo_barras"));
+			}
+			return p;
+		} catch (SQLException e) {
+			throw new SQLException("Erro no banco de dados." + e);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 }

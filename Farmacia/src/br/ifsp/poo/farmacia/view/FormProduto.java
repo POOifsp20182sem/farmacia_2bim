@@ -1,20 +1,27 @@
 package br.ifsp.poo.farmacia.view;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import br.ifsp.poo.farmacia.control.ProdutoControl;
 import br.ifsp.poo.farmacia.modelo.entidade.ClasseTerapeutica;
 import br.ifsp.poo.farmacia.modelo.entidade.EnumFormaFarmaco;
+import br.ifsp.poo.farmacia.modelo.entidade.EnumFuncionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Funcionario;
+import br.ifsp.poo.farmacia.modelo.entidade.Login;
 import br.ifsp.poo.farmacia.modelo.entidade.PrincipioAtivo;
 import br.ifsp.poo.farmacia.modelo.entidade.Produto;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SpinnerModel;
@@ -26,6 +33,7 @@ import javax.swing.DefaultComboBoxModel;
 
 
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -35,7 +43,8 @@ import java.awt.event.ActionEvent;
 
 public class FormProduto extends JFrame {
 
-	private JPanel contentPane;
+	
+	private static JPanel contentPane;
 	private static int idProduto;
 	private static JTextField txtNomeComercial;
 	private static JTextField txtApresentacao;
@@ -45,29 +54,30 @@ public class FormProduto extends JFrame {
 	private static JComboBox<ClasseTerapeutica> cboClasseTerapeutica = new JComboBox<>();
 	private static JComboBox<PrincipioAtivo> cboPrincipioAtivo = new JComboBox<>();
 	private static JFormattedTextField txtPrecoUnitario;
+	private static JTable tabela;
+	private static JScrollPane barra;
+	private static DefaultTableModel modelo = new DefaultTableModel();
+	ProdutoControl ctProduto = new ProdutoControl(); 
 	
 
 	/**
 	 * Launch the application.
 	 */
+	
+	public FormProduto() {
+		criaJTable("");
+		criaJanela();
+		setVisible(true);
+	}
+	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FormProduto frame = new FormProduto();
-					frame.setVisible(true);
-					//carregarComboBox();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		FormProduto form = new FormProduto();
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public FormProduto() {
+	public void criaJanela() {
 		
 		setTitle("Produto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -143,20 +153,19 @@ public class FormProduto extends JFrame {
 
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1);
 
-		JLabel lblPesquisar = new JLabel("Pesquisar:");
+		/*JLabel lblPesquisar = new JLabel("Pesquisar:");
 		lblPesquisar.setBounds(10, 391, 66, 14);
 		contentPane.add(lblPesquisar);
 
 		txtPesquisar = new JTextField();
 		txtPesquisar.setBounds(86, 388, 136, 20);
 		contentPane.add(txtPesquisar);
-		txtPesquisar.setColumns(10);
+		txtPesquisar.setColumns(10);*/
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ProdutoControl ctProduto = new ProdutoControl();
 					Produto produto = new Produto();
 					popularMedicamento(produto);
 					ctProduto.cadastrarProduto(produto);
@@ -165,24 +174,25 @@ public class FormProduto extends JFrame {
 				}
 			}
 		});
-		btnSalvar.setBounds(464, 387, 89, 23);
+		btnSalvar.setBounds(511, 365, 89, 23);
 		contentPane.add(btnSalvar);
 
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					ProdutoControl ctProduto = new ProdutoControl();
 					Produto produto = new Produto();
 					popularMedicamento(produto);
 					ctProduto.deletarProduto(produto);
+					
+					tabela.clearSelection();
 
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-		btnExcluir.setBounds(464, 297, 89, 23);
+		btnExcluir.setBounds(511, 265, 89, 23);
 		contentPane.add(btnExcluir);
 
 
@@ -200,17 +210,14 @@ public class FormProduto extends JFrame {
 				}
 			}
 		});
-		btnAlterar.setBounds(464, 342, 89, 23);
+		btnAlterar.setBounds(511, 313, 89, 23);
 		contentPane.add(btnAlterar);		
 
-		JButton btnPesquisar = new JButton("Pesquisar");
+		/*JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ProdutoControl ctProduto = new ProdutoControl();
-					ArrayList produtos = ctProduto.listarProduto(txtPesquisar.toString());
-					JList jlist = new JList((ListModel) produtos);
-					contentPane.add(jlist);
+					pesquisa(modelo, "");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -218,6 +225,32 @@ public class FormProduto extends JFrame {
 		});
 		btnPesquisar.setBounds(245, 387, 97, 23);
 		contentPane.add(btnPesquisar);
+		*/
+		
+		JLabel lblCadastrados = new JLabel("Cadastrados:");
+		lblCadastrados.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCadastrados.setBounds(30, 220, 80, 14);
+		contentPane.add(lblCadastrados);
+		
+		JButton btnSelecionar = new JButton("Selecionar");
+		btnSelecionar.addActionListener((a) -> {
+			int linhaSelecionada = -1;
+			linhaSelecionada = tabela.getSelectedRow();
+			String idS = String.valueOf(tabela.getModel().getValueAt(linhaSelecionada, 0));
+			int id = Integer.parseInt(idS);
+			Produto p = ctProduto.buscarProduto(id);
+			
+				txtCodigoBarras.setText(p.getCodigoBarras());
+				txtNomeComercial.setText(p.getNomeComercial());
+				txtApresentacao.setText(p.getApresentacao());
+				cboClasseTerapeutica.setSelectedItem(p.getClasseTerapeutica());
+				cboForma.setSelectedItem(p.getFormaFarmaco());
+				txtPrecoUnitario.setText(String.valueOf(p.getPrecoUnitario()));
+				cboPrincipioAtivo.setSelectedItem(p.getPrincipioAtivo());			
+		});
+		btnSelecionar.setBounds(200, 405, 107, 23);
+		contentPane.add(btnSelecionar);
+		
 		
 		try {
 			MaskFormatter jF = new MaskFormatter("##.##");
@@ -229,6 +262,10 @@ public class FormProduto extends JFrame {
 		txtPrecoUnitario.setBounds(466, 117, 107, 20);
 		contentPane.add(txtPrecoUnitario);
 		txtPrecoUnitario.setColumns(10);
+		
+		barra = new JScrollPane(tabela);
+		barra.setBounds(20, 250, 450, 150);
+		contentPane.add(barra);
 	}
 	
 	public static void carregarComboBox() 
@@ -245,13 +282,65 @@ public class FormProduto extends JFrame {
 	}
 
 	public static void popularMedicamento(Produto prod) {
-		prod.setId(idProduto);
-		prod.setApresentacao(txtApresentacao.getText());
+		
+		int linhaSelecionada = 0;
+		linhaSelecionada = tabela.getSelectedRow();
+		String idS = String.valueOf(tabela.getModel().getValueAt(linhaSelecionada, 0));
+		int id = Integer.parseInt(idS);
+		prod.setId(id);
+		prod.setApresentacao(txtApresentacao.getText()); 
 		prod.setClasseTerapeutica((ClasseTerapeutica)cboClasseTerapeutica.getSelectedItem());
 		prod.setCodigoBarras(txtCodigoBarras.getText());
 		prod.setNomeComercial(txtNomeComercial.getText());
 		prod.setPrincipioAtivo((PrincipioAtivo)cboPrincipioAtivo.getSelectedItem());
 		prod.setFormaFarmaco((EnumFormaFarmaco) cboForma.getSelectedItem());
 		prod.setPrecoUnitario(Double.parseDouble(txtPrecoUnitario.getText()));
+	}
+	
+	private static void criaJTable(String filtro) {
+		try {
+			tabela  = new JTable(modelo);
+			modelo.addColumn("ID");
+			modelo.addColumn("Nome Comercial");
+			modelo.addColumn("Forma Farmaco");
+			modelo.addColumn("Codigo de Barras");
+			modelo.addColumn("Principio Ativo");
+			modelo.addColumn("Classe Terapeutica");
+			modelo.addColumn("Preço Unitario");
+			
+			tabela.getColumnModel().getColumn(0).setPreferredWidth(80);
+			tabela.getColumnModel().getColumn(1).setPreferredWidth(80);
+			tabela.getColumnModel().getColumn(2).setPreferredWidth(80);
+			tabela.getColumnModel().getColumn(3).setPreferredWidth(80);
+			tabela.getColumnModel().getColumn(4).setPreferredWidth(80);
+			tabela.getColumnModel().getColumn(5).setPreferredWidth(80);
+			tabela.getColumnModel().getColumn(6).setPreferredWidth(80);
+			
+			pesquisar(modelo, "");
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao criar tabela.");
+		}
+		}
+	
+	public static void pesquisar(DefaultTableModel modelo, String filtro) throws SQLException {
+		modelo.setNumRows(0);
+		ProdutoControl ctProduto = new ProdutoControl();
+		
+		try {
+			ArrayList<Produto> prod = ctProduto.listarProduto(filtro);
+			for(Produto p:prod) {
+				String[] dados = new String[10];
+				dados[0] = String.valueOf(p.getId());
+				dados[1] = p.getNomeComercial();
+				dados[2] = p.getApresentacao();
+				dados[3] = p.getFormaFarmaco();
+				dados[4] = p.getCodigoBarras();
+
+				modelo.addRow(dados);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 }

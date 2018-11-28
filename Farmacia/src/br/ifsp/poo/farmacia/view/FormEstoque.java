@@ -122,7 +122,7 @@ public class FormEstoque extends JFrame{
 			modelo.addColumn("Principio Ativo");
 			modelo.addColumn("Classe Terapeutica");
 			modelo.addColumn("Preço Unitario");
-			modelo.addColumn("Quantidade");
+			modelo.addColumn("Quan	tidade");
 			
 			dtListaEstoque.getColumnModel().getColumn(0).setPreferredWidth(80);
 			dtListaEstoque.getColumnModel().getColumn(1).setPreferredWidth(80);
