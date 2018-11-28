@@ -10,10 +10,11 @@ public class Produto {
 	private PrincipioAtivo principioAtivo;
 	private ClasseTerapeutica classeTerapeutica;
 	private double precoUnitario;
+	private int quantidade;
 
 	public Produto(String nomeComercial, String apresentacao, EnumFormaFarmaco formaFarmaco,
 			PrincipioAtivo principioAtivo, String codigoBarras,
-			ClasseTerapeutica classeTerapeutica, double precoUnitario) {
+			ClasseTerapeutica classeTerapeutica, double precoUnitario, int quantidade) {
 		super();
 		this.nomeComercial = nomeComercial;
 		this.apresentacao = apresentacao;
@@ -22,6 +23,15 @@ public class Produto {
 		this.codigoBarras = codigoBarras;
 		this.classeTerapeutica = classeTerapeutica;
 		this.precoUnitario = precoUnitario;
+		this.quantidade = quantidade;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public Produto() {

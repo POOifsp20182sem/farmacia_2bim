@@ -59,6 +59,10 @@ public class FormProduto extends JFrame {
 	private static DefaultTableModel modelo = new DefaultTableModel();
 	ProdutoControl ctProduto = new ProdutoControl(); 
 	
+	
+	public static void main(String[] args) {
+		FormProduto form = new FormProduto();
+	}
 
 	/**
 	 * Launch the application.
@@ -70,15 +74,10 @@ public class FormProduto extends JFrame {
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		FormProduto form = new FormProduto();
-	}
-
 	/**
 	 * Create the frame.
 	 */
 	public void criaJanela() {
-		
 		setTitle("Produto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 639, 473);
@@ -150,8 +149,12 @@ public class FormProduto extends JFrame {
 		JLabel lblPrecoUnitario = new JLabel("Pre\u00E7o Unit\u00E1rio:");
 		lblPrecoUnitario.setBounds(335, 120, 119, 14);
 		contentPane.add(lblPrecoUnitario);
-
-		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1);
+		
+		MaskFormatter fPreco = instanciarMascara("###.##");
+		txtPrecoUnitario = new JFormattedTextField(fPreco);
+		txtPrecoUnitario.setBounds(466, 117, 107, 20);
+		contentPane.add(txtPrecoUnitario);
+		txtPrecoUnitario.setColumns(10);
 
 		/*JLabel lblPesquisar = new JLabel("Pesquisar:");
 		lblPesquisar.setBounds(10, 391, 66, 14);
@@ -250,19 +253,7 @@ public class FormProduto extends JFrame {
 		});
 		btnSelecionar.setBounds(200, 405, 107, 23);
 		contentPane.add(btnSelecionar);
-		
-		
-		try {
-			MaskFormatter jF = new MaskFormatter("##.##");
-			txtPrecoUnitario = new JFormattedTextField(jF);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		txtPrecoUnitario.setBounds(466, 117, 107, 20);
-		contentPane.add(txtPrecoUnitario);
-		txtPrecoUnitario.setColumns(10);
-		
+				
 		barra = new JScrollPane(tabela);
 		barra.setBounds(20, 250, 450, 150);
 		contentPane.add(barra);
@@ -287,7 +278,7 @@ public class FormProduto extends JFrame {
 		linhaSelecionada = tabela.getSelectedRow();
 		String idS = String.valueOf(tabela.getModel().getValueAt(linhaSelecionada, 0));
 		int id = Integer.parseInt(idS);
-		prod.setId(id);
+		prod.setId(id);	
 		prod.setApresentacao(txtApresentacao.getText()); 
 		prod.setClasseTerapeutica((ClasseTerapeutica)cboClasseTerapeutica.getSelectedItem());
 		prod.setCodigoBarras(txtCodigoBarras.getText());
@@ -297,13 +288,24 @@ public class FormProduto extends JFrame {
 		prod.setPrecoUnitario(Double.parseDouble(txtPrecoUnitario.getText()));
 	}
 	
+	public MaskFormatter instanciarMascara(String formatacao) {
+		try {
+			MaskFormatter mask = new MaskFormatter(formatacao);
+			return mask;
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null,"Erro ao carregar os campos formatados");
+		}
+		return null;
+	}
+	
 	private static void criaJTable(String filtro) {
 		try {
 			tabela  = new JTable(modelo);
 			modelo.addColumn("ID");
 			modelo.addColumn("Nome Comercial");
-			modelo.addColumn("Forma Farmaco");
+			modelo.addColumn("Apresentação");
 			modelo.addColumn("Codigo de Barras");
+			modelo.addColumn("Forma Farmaco");
 			modelo.addColumn("Principio Ativo");
 			modelo.addColumn("Classe Terapeutica");
 			modelo.addColumn("Preço Unitario");
@@ -315,6 +317,7 @@ public class FormProduto extends JFrame {
 			tabela.getColumnModel().getColumn(4).setPreferredWidth(80);
 			tabela.getColumnModel().getColumn(5).setPreferredWidth(80);
 			tabela.getColumnModel().getColumn(6).setPreferredWidth(80);
+			tabela.getColumnModel().getColumn(7).setPreferredWidth(80);
 			
 			pesquisar(modelo, "");
 		}
@@ -330,14 +333,18 @@ public class FormProduto extends JFrame {
 		try {
 			ArrayList<Produto> prod = ctProduto.listarProduto(filtro);
 			for(Produto p:prod) {
-				String[] dados = new String[10];
+				String[] dados = new String[8];
 				dados[0] = String.valueOf(p.getId());
 				dados[1] = p.getNomeComercial();
 				dados[2] = p.getApresentacao();
-				dados[3] = p.getFormaFarmaco();
-				dados[4] = p.getCodigoBarras();
-
+				dados[3] = p.getCodigoBarras();
+				dados[4] = p.getFormaFarmaco();
+				dados[5] = String.valueOf(p.getPrincipioAtivo());
+				dados[6] = String.valueOf(p.getClasseTerapeutica());
+				dados[7] = String.valueOf(p.getPrecoUnitario());
+				
 				modelo.addRow(dados);
+				
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
